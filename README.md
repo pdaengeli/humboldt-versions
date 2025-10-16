@@ -1,4 +1,4 @@
-# Ansichten der Natur - Text Comparison Tool
+# *Ansichten der Natur* – Text Comparison Tool
 
 Prototype tool for visualizing textual changes across three editions of Humboldt's Ansichten der Natur (1808, 1826, 1849).
 
@@ -6,12 +6,14 @@ Prototype tool for visualizing textual changes across three editions of Humboldt
 
 ### Required Files
 
+```
 /
 ├── compare_with_notes_aligned.py
 ├── viewer_provenance_full.html
 ├── *1808*.xml  (TEI-XML)
 ├── *1826*.xml  (TEI-XML)
 └── *1849*.xml  (TEI-XML)
+```
 
 The script automatically finds XML files by year in the filename.
 
@@ -19,19 +21,23 @@ There is a pipeline to prepare the files in the `data-preparation` directory (in
 
 ### Installation
 
-pip install lxml
+`pip install lxml`
 
 ### Usage
 
 1. Run analysis:
 
-python compare_with_notes_aligned.py
+    ```
+    python compare_with_notes_aligned.py
+    ```
 
 This generates comparison_provenance.json (takes approximately 30 seconds for 350 paragraphs).
 
 2. View results:
 
-python -m http.server 8000
+    ```
+    python -m http.server 8000
+    ```
 
 Then open: http://localhost:8000/viewer_provenance_full.html
 
