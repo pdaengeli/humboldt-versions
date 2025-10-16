@@ -1,4 +1,4 @@
-# *Ansichten der Natur* – Text Comparison Tool
+# *Ansichten der Natur* – Text Comparison Tool (WIP)
 
 Prototype tool for visualizing textual changes across three editions of Humboldt's Ansichten der Natur (1808, 1826, 1849).
 
@@ -17,7 +17,11 @@ Prototype tool for visualizing textual changes across three editions of Humboldt
 
 The script automatically finds XML files by year in the filename.
 
-There is a pipeline to prepare the files in the `data-preparation` directory (invoke the script with e.g. `java -jar /opt/Saxonica/SaxonHE12-9/saxon-he-12.9.jar -xsl:data-preparation/processing/run.xsl -s:data-preparation/processing/run.xsl -it`).
+There is a pipeline to prepare the files in the `data-preparation` directory.  Invoke the script with e.g. 
+
+```
+java -jar /opt/Saxonica/SaxonHE12-9/saxon-he-12.9.jar -xsl:data-preparation/processing/run.xsl -s:data-preparation/processing/run.xsl -it
+```
 
 ### Installation
 
@@ -31,7 +35,7 @@ There is a pipeline to prepare the files in the `data-preparation` directory (in
     python compare_with_notes_aligned.py
     ```
 
-This generates comparison_provenance.json (takes approximately 30 seconds for 350 paragraphs).
+This generates `comparison_provenance`.json (takes approximately 30 seconds for 350 paragraphs).
 
 2. View results:
 
