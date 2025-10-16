@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AvH: Ansichten der Natur - Textgenese</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Crimson Text', Georgia, serif;
+            line-height: 2;
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        .layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+        }
+        
+        .sidebar h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #495057;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .reading-mode {
+            margin-bottom: 2rem;
+        }
+        
+        .reading-mode-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 0.8rem;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-bottom: 0.4rem;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+        
+        .reading-mode-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .reading-mode-item.active {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .reading-mode-radio {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        
+        .stats {
+            margin-bottom: 2rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .filters {
+            margin-bottom: 2rem;
+        }
+        
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        
+        .filter-checkbox {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        
+        .filter-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .filter-dot.orthographic { background: #3498db; }
+        .filter-dot.lexical { background: #2ecc71; }
+        .filter-dot.substitution { background: #f39c12; }
+        .filter-dot.addition { background: #e74c3c; }
+        .filter-dot.deletion { background: #95a5a6; }
+        
+        .toc {
+            font-size: 0.85rem;
+        }
+        
+        .toc-group {
+            margin-bottom: 0.3rem;
+        }
+        
+        .toc-group-header {
+            padding: 0.4rem 0.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .toc-group-header:hover {
+            background: #f8f9fa;
+        }
+        
+        .toc-group-header.expanded {
+            background: #e9ecef;
+        }
+        
+        .toc-group-items {
+            display: none;
+            padding-left: 0.5rem;
+            margin-top: 0.2rem;
+        }
+        
+        .toc-group-items.expanded {
+            display: block;
+        }
+        
+        .toc-item {
+            padding: 0.3rem 0.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+        
+        .toc-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .toc-item.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .toc-badge {
+            font-size: 0.7rem;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            background: #e9ecef;
+            color: #495057;
+        }
+        
+        .toc-item.active .toc-badge {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .main-content {
+            min-height: 100vh;
+        }
+        
+        .legend {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+        }
+        
+        .legend h4 {
+            margin-bottom: 1rem;
+            color: #495057;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .color-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+        
+        .color-box.blue { background: #3498db; }
+        .color-box.red { background: #e74c3c; }
+        .color-box.black { background: #2c3e50; }
+        
+        .paragraph-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+            scroll-margin-top: 100px;
+            position: relative;
+        }
+        
+        .paragraph-card.new-material {
+            border-left: 4px solid #2c3e50;
+        }
+        
+        .paragraph-card.hidden {
+            display: none;
+        }
+        
+        .paragraph-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .paragraph-number {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .paragraph-number a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .paragraph-number .anchor-icon {
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 0.9rem;
+            color: #cbd5e0;
+        }
+        
+        .paragraph-number:hover .anchor-icon {
+            opacity: 1;
+        }
+        
+        .paragraph-badges {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .similarity-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .similarity-badge.high {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .similarity-badge.medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .similarity-badge.low {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .new-badge {
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .paragraph-body {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 2rem;
+            align-items: start;
+        }
+        
+        .unified-text {
+            font-size: 1.05rem;
+            line-height: 2.2;
+            text-align: justify;
+        }
+        
+        .word {
+            display: inline;
+            transition: opacity 0.2s, text-decoration 0.2s, background 0.2s;
+        }
+        
+        .word.blue { color: #3498db; }
+        .word.red { color: #e74c3c; }
+        .word.black { color: #2c3e50; }
+        
+        .word.replaced {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        
+        .word.deleted {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+        
+        .word.filtered-out {
+            opacity: 0.2;
+        }
+        
+        .word.hidden-by-edition {
+            display: none;
+        }
+        
+        .word.comparison-mode {
+            text-decoration: none !important;
+            opacity: 1 !important;
+        }
+        
+        .variant-ref {
+            border-bottom: 1px dotted #999;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .variant-ref:hover {
+            background: #fff3cd;
+        }
+        
+        .note-ref {
+            font-size: 0.75em;
+            vertical-align: super;
+            color: #f39c12;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0 0.2em;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .note-ref:hover {
+            color: #d68910;
+            text-decoration: underline;
+        }
+        
+        .note-ref.edition-1808 { color: #3498db; }
+        .note-ref.edition-1826 { color: #e74c3c; }
+        .note-ref.edition-1849 { color: #2c3e50; }
+        
+        .note-ref.hidden-by-edition {
+            display: none;
+        }
+        
+        .apparatus {
+            font-size: 0.82rem;
+            color: #6c757d;
+            padding-left: 1rem;
+            border-left: 2px solid #e9ecef;
+            max-height: 400px;
+            overflow-y: auto;
+            position: sticky;
+            top: 120px;
+        }
+        
+        .apparatus::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .apparatus::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .apparatus::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+        
+        .apparatus::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+        
+        .apparatus-note {
+            margin-bottom: 0.8rem;
+            padding: 0.4rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            line-height: 1.6;
+            transition: background 0.2s, transform 0.2s;
+        }
+        
+        .apparatus-note.highlighted {
+            background: #fff3cd;
+            transform: translateX(2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .apparatus-note.filtered-out {
+            opacity: 0.3;
+        }
+        
+        .apparatus-note .old {
+            color: #3498db;
+        }
+        
+        .apparatus-note .new {
+            color: #e74c3c;
+        }
+        
+        .apparatus-note .added {
+            color: #2c3e50;
+        }
+        
+        .apparatus-empty {
+            font-style: italic;
+            color: #adb5bd;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 0.3rem;
+        }
+        
+        .category-badge.orthographic {
+            background: #3498db20;
+            color: #3498db;
+        }
+        
+        .category-badge.lexical {
+            background: #2ecc7120;
+            color: #27ae60;
+        }
+        
+        .category-badge.substitution {
+            background: #f39c1220;
+            color: #d68910;
+        }
+        
+        .category-badge.addition {
+            background: #e74c3c20;
+            color: #c0392b;
+        }
+        
+        .category-badge.deletion {
+            background: #95a5a620;
+            color: #7f8c8d;
+        }
+        
+        .notes-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e9ecef;
+        }
+        
+        .notes-section.hidden-by-edition {
+            display: none;
+        }
+        
+        .notes-header {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .note-item {
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            scroll-margin-top: 120px;
+        }
+        
+        .note-item.hidden-by-edition {
+            display: none;
+        }
+        
+        .note-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e9ecef;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .note-badges {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+/*        .note-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }*/
+        
+        .note-number {
+            font-weight: 700;
+            color: #f39c12;
+            margin-right: 0.5rem;
+            font-size: 1.2em;
+        }
+        
+        .note-number a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .note-number .anchor-icon {
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 0.8rem;
+            color: #cbd5e0;
+        }
+        
+        .note-number:hover .anchor-icon {
+            opacity: 1;
+        }
+        
+        .note-edition-badges {
+            display: flex;
+            gap: 0.3rem;
+        }
+        
+        .note-edition-badge {
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .note-edition-badge.edition-1808 {
+            background: #3498db20;
+            color: #3498db;
+        }
+        
+        .note-edition-badge.edition-1826 {
+            background: #e74c3c20;
+            color: #e74c3c;
+        }
+        
+        .note-edition-badge.edition-1849 {
+            background: #2c3e5020;
+            color: #2c3e50;
+        }
+        
+        .note-body {
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 1.5rem;
+            align-items: start;
+        }
+        
+        .note-text {
+            font-size: 0.95rem;
+            line-height: 2;
+        }
+        
+        .note-apparatus {
+            font-size: 0.75rem;
+            color: #6c757d;
+            padding-left: 1rem;
+            border-left: 2px solid #e9ecef;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .note-apparatus::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .note-apparatus::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .note-apparatus::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 2px;
+        }
+        
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            margin-bottom: 0.5rem;
+            z-index: 1000;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #2c3e50;
+        }
+        
+        .similarity-badge:hover .tooltip,
+        .change-stats-badge:hover .tooltip {
+            opacity: 1;
+        }
+        
+        .change-stats-badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: #f8f9fa;
+            color: #495057;
+            font-family: 'Monaco', 'Courier New', monospace;
+            cursor: help;
+            position: relative;
+        }
+        
+        .change-stats-badge .added { color: #28a745; }
+        .change-stats-badge .removed { color: #dc3545; }
+        
+        .loading-indicator {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem;
+            border-left: 4px solid #721c24;
+        }
+        
+        #sentinel {
+            height: 20px;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>AvH: ANSICHTEN DER NATUR · Textgenese 1808–1849</h1>
+        </div>
+    </div>
+    
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="reading-mode">
+                <h3>Textansicht</h3>
+                <label class="reading-mode-item active">
+                    <input type="radio" class="reading-mode-radio" name="edition" value="all" checked>
+                    <span>Alle Ausgaben</span>
+                </label>
+                <label class="reading-mode-item">
+                    <input type="radio" class="reading-mode-radio" name="edition" value="1808">
+                    <span>Nur 1808 (1. Ausgabe)</span>
+                </label>
+                <label class="reading-mode-item">
+                    <input type="radio" class="reading-mode-radio" name="edition" value="1826">
+                    <span>Bis 1826 (2. Ausgabe)</span>
+                </label>
+                <label class="reading-mode-item">
+                    <input type="radio" class="reading-mode-radio" name="edition" value="1849">
+                    <span>Bis 1849 (3. Ausgabe)</span>
+                </label>
+            </div>
+            
+            <div class="stats">
+                <h3>Statistik</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Absätze gesamt:</span>
+                    <span class="stat-value" id="total-count">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Angezeigt:</span>
+                    <span class="stat-value" id="displayed-count">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Neu 1849:</span>
+                    <span class="stat-value" id="new-count">-</span>
+                </div>
+            </div>
+            
+            <div class="filters">
+                <h3>Variantentypen</h3>
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox category-filter" data-category="orthographic" checked>
+                    <span class="filter-dot orthographic"></span>
+                    <span>Orthographisch</span>
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox category-filter" data-category="lexical" checked>
+                    <span class="filter-dot lexical"></span>
+                    <span>Lexikalisch</span>
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox category-filter" data-category="substitution" checked>
+                    <span class="filter-dot substitution"></span>
+                    <span>Ersetzung</span>
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox category-filter" data-category="addition" checked>
+                    <span class="filter-dot addition"></span>
+                    <span>Hinzufügung</span>
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox category-filter" data-category="deletion" checked>
+                    <span class="filter-dot deletion"></span>
+                    <span>Tilgung</span>
+                </label>
+            </div>
+            
+            <div class="toc">
+                <h3>Navigation</h3>
+                <div id="toc-list"></div>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <div class="legend">
+                <h4>Farbcodierung der Textschichten</h4>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="color-box blue"></div>
+                        <span>1808 (1. Ausgabe, Tübingen)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box red"></div>
+                        <span>1826 (2. Ausgabe)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box black"></div>
+                        <span>1849 (3. Ausgabe)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="content">
+                <div class="loading">Lade Textdaten...</div>
+            </div>
+            
+            <div id="sentinel"></div>
+        </main>
+    </div>
+    
+    <script>
+        let allData = [];
+        let displayedCount = 0;
+        const BATCH_SIZE = 25;
+        let isLoading = false;
+        let activeCategories = new Set(['orthographic', 'lexical', 'substitution', 'addition', 'deletion']);
+        let currentEdition = 'all';
+        let currentVisibleParagraph = 1;
+        
+        const categoryLabels = {
+            'orthographic': 'Orthographisch',
+            'lexical': 'Lexikalisch',
+            'substitution': 'Ersetzung',
+            'addition': 'Hinzufügung',
+            'deletion': 'Tilgung'
+        };
+        
+        fetch('comparison_provenance.json')
+            .then(r => {
+                if (!r.ok) throw new Error('Datei nicht gefunden');
+                return r.json();
+            })
+            .then(data => {
+                allData = data.content;
+                console.log(`Loaded ${allData.length} paragraphs`);
+                
+                if (data.metadata && data.metadata.variant_statistics) {
+                    console.log('Variant statistics:', data.metadata.variant_statistics);
+                }
+                
+                updateStats();
+                buildTOC();
+                loadNextBatch();
+                setupIntersectionObserver();
+                setupScrollTracking();
+                
+                if (window.location.hash) {
+                    setTimeout(() => {
+                        const target = document.getElementById(window.location.hash.substring(1));
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 500);
+                }
+            })
+            .catch(err => {
+                document.getElementById('content').innerHTML = `
+                    <div class="error">
+                        <strong>Fehler:</strong> ${err.message}
+                    </div>
+                `;
+            });
+        
+        function updateStats() {
+            const newCount = allData.filter(p => p.data.new_in_1849).length;
+            
+            document.getElementById('total-count').textContent = allData.length;
+            document.getElementById('new-count').textContent = newCount;
+            document.getElementById('displayed-count').textContent = displayedCount;
+        }
+        
+        function buildTOC() {
+            const tocList = document.getElementById('toc-list');
+            tocList.innerHTML = '';
+            
+            for (let groupStart = 0; groupStart < allData.length; groupStart += 10) {
+                const groupEnd = Math.min(groupStart + 10, allData.length);
+                
+                const group = document.createElement('div');
+                group.className = 'toc-group';
+                group.dataset.groupStart = groupStart;
+                group.dataset.groupEnd = groupEnd;
+                
+                const header = document.createElement('div');
+                header.className = 'toc-group-header';
+                header.textContent = `§ ${groupStart + 1}${groupEnd > groupStart + 1 ? '–' + groupEnd : ''}`;
+                
+                header.addEventListener('click', () => {
+                    const items = group.querySelector('.toc-group-items');
+                    if (items.classList.contains('expanded')) {
+                        items.classList.remove('expanded');
+                        header.classList.remove('expanded');
+                    } else {
+                        items.classList.add('expanded');
+                        header.classList.add('expanded');
+                    }
+                });
+                
+                group.appendChild(header);
+                
+                const items = document.createElement('div');
+                items.className = 'toc-group-items';
+                
+                for (let i = groupStart; i < groupEnd; i++) {
+                    const item = allData[i];
+                    const paraNum = i + 1;
+                    
+                    const div = document.createElement('div');
+                    div.className = 'toc-item';
+                    div.dataset.index = i;
+                    div.dataset.paraNum = paraNum;
+                    
+                    const label = document.createElement('span');
+                    label.textContent = `§ ${paraNum}`;
+                    div.appendChild(label);
+                    
+                    if (item.data.new_in_1849) {
+                        const badge = document.createElement('span');
+                        badge.className = 'toc-badge';
+                        badge.textContent = 'NEU';
+                        div.appendChild(badge);
+                    }
+                    
+                    div.addEventListener('click', () => {
+                        scrollToParagraph(paraNum);
+                    });
+                    
+                    items.appendChild(div);
+                }
+                
+                group.appendChild(items);
+                tocList.appendChild(group);
+            }
+        }
+        
+        function scrollToParagraph(paraNum) {
+            const card = document.getElementById(`para-${paraNum}`);
+            if (card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                window.location.hash = `para-${paraNum}`;
+                updateTOCActive(paraNum);
+            } else {
+                const idx = paraNum - 1;
+                while (displayedCount <= idx && displayedCount < allData.length) {
+                    loadNextBatch();
+                }
+                setTimeout(() => {
+                    const card = document.getElementById(`para-${paraNum}`);
+                    if (card) {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        window.location.hash = `para-${paraNum}`;
+                    }
+                }, 100);
+            }
+        }
+        
+        function updateTOCActive(paraNum) {
+            document.querySelectorAll('.toc-item').forEach(item => item.classList.remove('active'));
+            
+            const activeItem = document.querySelector(`.toc-item[data-para-num="${paraNum}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+            
+            expandGroupContaining(paraNum);
+        }
+        
+        function expandGroupContaining(paraNum) {
+            const idx = paraNum - 1;
+            
+            document.querySelectorAll('.toc-group-items').forEach(items => {
+                items.classList.remove('expanded');
+            });
+            document.querySelectorAll('.toc-group-header').forEach(header => {
+                header.classList.remove('expanded');
+            });
+            
+            document.querySelectorAll('.toc-group').forEach(group => {
+                const groupStart = parseInt(group.dataset.groupStart);
+                const groupEnd = parseInt(group.dataset.groupEnd);
+                
+                if (idx >= groupStart && idx < groupEnd) {
+                    const items = group.querySelector('.toc-group-items');
+                    const header = group.querySelector('.toc-group-header');
+                    items.classList.add('expanded');
+                    header.classList.add('expanded');
+                }
+            });
+        }
+        
+        function setupScrollTracking() {
+            let ticking = false;
+            
+            function updateVisibleParagraph() {
+                const paragraphs = document.querySelectorAll('.paragraph-card');
+                const viewportMid = window.innerHeight / 2;
+                
+                let closestParagraph = null;
+                let closestDistance = Infinity;
+                
+                paragraphs.forEach(para => {
+                    const rect = para.getBoundingClientRect();
+                    const paraMid = rect.top + rect.height / 2;
+                    const distance = Math.abs(paraMid - viewportMid);
+                    
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestParagraph = para;
+                    }
+                });
+                
+                if (closestParagraph) {
+                    const paraNum = parseInt(closestParagraph.id.replace('para-', ''));
+                    if (paraNum !== currentVisibleParagraph) {
+                        currentVisibleParagraph = paraNum;
+                        updateTOCActive(paraNum);
+                    }
+                }
+                
+                ticking = false;
+            }
+            
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateVisibleParagraph);
+                    ticking = true;
+                }
+            });
+        }
+        
+        function loadNextBatch() {
+            if (isLoading || displayedCount >= allData.length) return;
+            
+            isLoading = true;
+            const container = document.getElementById('content');
+            
+            if (displayedCount === 0) {
+                container.innerHTML = '';
+            }
+            
+            const endIdx = Math.min(displayedCount + BATCH_SIZE, allData.length);
+            
+            for (let i = displayedCount; i < endIdx; i++) {
+                const card = renderParagraphCard(allData[i], i);
+                container.appendChild(card);
+            }
+            
+            displayedCount = endIdx;
+            updateStats();
+            applyFilters();
+            applyEditionFilter();
+            
+            isLoading = false;
+        }
+        
+        function renderParagraphCard(item, idx) {
+            const paraNum = idx + 1;
+            
+            const card = document.createElement('div');
+            card.id = `para-${paraNum}`;
+            card.className = 'paragraph-card';
+            
+            if (item.data.new_in_1849) {
+                card.classList.add('new-material');
+            }
+            
+            const categories = new Set();
+            item.data.unified_text.forEach(seg => {
+                if (seg.category) categories.add(seg.category);
+            });
+            card.dataset.categories = JSON.stringify([...categories]);
+            
+            const header = document.createElement('div');
+            header.className = 'paragraph-header';
+            
+            const number = document.createElement('div');
+            number.className = 'paragraph-number';
+            
+            const link = document.createElement('a');
+            link.href = `#para-${paraNum}`;
+            link.innerHTML = `§ ${paraNum}<span class="anchor-icon">🔗</span>`;
+            number.appendChild(link);
+            
+            header.appendChild(number);
+            
+            const badges = document.createElement('div');
+            badges.className = 'paragraph-badges';
+            
+            /*if (item.data.new_in_1849) {
+                const badge = document.createElement('span');
+                badge.className = 'new-badge';
+                badge.textContent = 'NEU 1849';
+                badges.appendChild(badge);
+            } else {
+                const scores = item.data.scores || {};
+                ['1826', '1849'].forEach(year => {
+                    if (scores[year]) {
+                        const badge = document.createElement('span');
+                        badge.className = `similarity-badge ${getSimilarityClass(scores[year])}`;
+                        badge.textContent = `${year}: ${(scores[year] * 100).toFixed(0)}%`;
+                        badges.appendChild(badge);
+                    }
+                });
+            }*/
+            if (item.data.new_in_1849) {
+                const badge = document.createElement('span');
+                badge.className = 'new-badge';
+                badge.textContent = 'NEU 1849';
+                badges.appendChild(badge);
+            } else {
+                const scores = item.data.scores || {};
+                const changeStats = calculateChangeStats(item.data.unified_text);
+                
+                // Similarity badges with tooltips
+                ['1826', '1849'].forEach(year => {
+                    if (scores[year]) {
+                        const badge = document.createElement('span');
+                        badge.className = `similarity-badge ${getSimilarityClass(scores[year])}`;
+                        badge.innerHTML = `
+                            ${year}: ${(scores[year] * 100).toFixed(0)}%
+                            <span class="tooltip">
+                                Jaccard-Ähnlichkeit zur Ausgabe von 1808<br>
+                                (gemeinsame Wörter ÷ alle Wörter)
+                            </span>
+                        `;
+                        badges.appendChild(badge);
+                    }
+                });
+                
+                // Change stats badges
+                if (changeStats.added_1826 > 0 || changeStats.deleted_1826 > 0) {
+                    const badge = document.createElement('span');
+                    badge.className = 'change-stats-badge';
+                    badge.innerHTML = `
+                        1826: <span class="added">+${changeStats.added_1826}</span> <span class="removed">−${changeStats.deleted_1826}</span>
+                        <span class="tooltip">
+                            Änderungen gegenüber 1808:<br>
+                            +${changeStats.added_1826} Wörter hinzugefügt<br>
+                            −${changeStats.deleted_1826} Wörter entfernt
+                        </span>
+                    `;
+                    badges.appendChild(badge);
+                }
+                
+                if (changeStats.added_1849 > 0 || changeStats.deleted_1849 > 0) {
+                    const badge = document.createElement('span');
+                    badge.className = 'change-stats-badge';
+                    badge.innerHTML = `
+                        1849: <span class="added">+${changeStats.added_1849}</span> <span class="removed">−${changeStats.deleted_1849}</span>
+                        <span class="tooltip">
+                            Änderungen gegenüber vorheriger Ausgabe:<br>
+                            +${changeStats.added_1849} Wörter hinzugefügt<br>
+                            −${changeStats.deleted_1849} Wörter entfernt
+                        </span>
+                    `;
+                    badges.appendChild(badge);
+                }
+            }
+            
+            header.appendChild(badges);
+            card.appendChild(header);
+            
+            const body = document.createElement('div');
+            body.className = 'paragraph-body';
+            
+            const textDiv = document.createElement('div');
+            textDiv.className = 'unified-text';
+            renderUnifiedText(item.data.unified_text, textDiv, paraNum, item.data.note_positions, item.data.notes);
+            body.appendChild(textDiv);
+            
+            const apparatus = document.createElement('div');
+            apparatus.className = 'apparatus';
+            renderApparatus(item.data.unified_text, apparatus);
+            body.appendChild(apparatus);
+            
+            card.appendChild(body);
+            
+            if (item.data.notes && item.data.notes.length > 0) {
+                const notesSection = renderNotes(item.data.notes, paraNum);
+                if (notesSection) {
+                    card.appendChild(notesSection);
+                }
+            }
+            
+            return card;
+        }
+        
+        function renderUnifiedText(segments, container, paraNum, notePositions, notes) {
+            let currentVariantIdx = 0;
+            let tokenIdx = 0;
+            
+            // Build a map of note numbers to their data
+            const noteMap = {};
+            if (notes) {
+                notes.forEach(note => {
+                    noteMap[note.n] = note;
+                });
+            }
+            
+            segments.forEach((segment, segIdx) => {
+                const span = document.createElement('span');
+                span.className = `word ${segment.color}`;
+                
+                const isVariant = segment.type === 'replaced' || 
+                                 segment.type === 'deleted_1826' || 
+                                 segment.type === 'deleted_1849' ||
+                                 segment.type === 'added_1826' ||
+                                 segment.type === 'added_1849';
+                
+                if (isVariant) {
+                    span.dataset.variantIdx = currentVariantIdx;
+                    currentVariantIdx++;
+                }
+                
+                if (segment.type === 'replaced') {
+                    span.classList.add('replaced', 'variant-ref');
+                } else if (segment.type === 'deleted_1826' || segment.type === 'deleted_1849') {
+                    span.classList.add('deleted', 'variant-ref');
+                } else if (segment.type === 'added_1826' || segment.type === 'added_1849') {
+                    span.classList.add('variant-ref');
+                }
+                
+                if (segment.category) {
+                    span.dataset.category = segment.category;
+                }
+                
+                span.dataset.editions = JSON.stringify(segment.editions || []);
+                span.dataset.type = segment.type || '';
+                
+                span.textContent = segment.text;
+                
+                if (isVariant) {
+                    span.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const varIdx = this.dataset.variantIdx;
+                        const card = this.closest('.paragraph-card');
+                        const apparatusNote = card.querySelector(`.apparatus-note[data-variant-idx="${varIdx}"]`);
+                        
+                        card.querySelectorAll('.apparatus-note.highlighted').forEach(n => n.classList.remove('highlighted'));
+                        card.querySelectorAll('.variant-ref').forEach(w => w.style.background = '');
+                        
+                        if (apparatusNote) {
+                            apparatusNote.classList.add('highlighted');
+                            apparatusNote.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            this.style.background = '#fff3cd';
+                            
+                            setTimeout(() => {
+                                apparatusNote.classList.remove('highlighted');
+                                this.style.background = '';
+                            }, 2000);
+                        }
+                    });
+                }
+                
+                container.appendChild(span);
+                container.appendChild(document.createTextNode(' '));
+                
+                // Check if we need to insert note indicators after this token
+                if (notePositions) {
+                    ['1808', '1826', '1849'].forEach(year => {
+                        const positions = notePositions[year];
+                        if (positions) {
+                            Object.keys(positions).forEach(noteNum => {
+                                const position = positions[noteNum];
+                                if (position === tokenIdx) {
+                                    // Insert note reference here
+                                    const noteRef = document.createElement('a');
+                                    noteRef.className = `note-ref edition-${year}`;
+                                    noteRef.href = `#para-${paraNum}-note-${noteNum}`;
+                                    noteRef.textContent = noteNum;
+                                    noteRef.dataset.edition = year;
+                                    
+                                    noteRef.addEventListener('click', (e) => {
+                                        e.preventDefault();
+                                        const noteItem = document.getElementById(`para-${paraNum}-note-${noteNum}`);
+                                        if (noteItem) {
+                                            noteItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                            window.location.hash = `para-${paraNum}-note-${noteNum}`;
+                                            noteItem.style.background = '#fff3cd';
+                                            setTimeout(() => {
+                                                noteItem.style.background = '';
+                                            }, 2000);
+                                        }
+                                    });
+                                    
+                                    container.appendChild(noteRef);
+                                }
+                            });
+                        }
+                    });
+                }
+                
+                tokenIdx++;
+            });
+        }
+        
+        function renderNotes(notes, paraNum) {
+            if (!notes || notes.length === 0) return null;
+            
+            const section = document.createElement('div');
+            section.className = 'notes-section';
+            
+            const header = document.createElement('div');
+            header.className = 'notes-header';
+            header.textContent = 'Anmerkungen';
+            section.appendChild(header);
+            
+            notes.forEach((note) => {
+                const noteItem = document.createElement('div');
+                noteItem.id = `para-${paraNum}-note-${note.n}`;
+                noteItem.className = 'note-item';
+                noteItem.dataset.editions = JSON.stringify(note.editions || []);
+                
+                const noteHeader = document.createElement('div');
+                noteHeader.className = 'note-header';
+                
+                // Note number with anchor
+                const noteNumber = document.createElement('span');
+                noteNumber.className = 'note-number';
+                
+                const noteLink = document.createElement('a');
+                noteLink.href = `#para-${paraNum}-note-${note.n}`;
+                noteLink.innerHTML = `${note.n}<span class="anchor-icon">🔗</span>`;
+                noteNumber.appendChild(noteLink);
+                
+                noteHeader.appendChild(noteNumber);
+                
+                // Badges container
+                const badgesContainer = document.createElement('div');
+                badgesContainer.className = 'note-badges';
+                badgesContainer.style.display = 'flex';
+                badgesContainer.style.gap = '0.5rem';
+                badgesContainer.style.alignItems = 'center';
+                badgesContainer.style.flexWrap = 'wrap';
+                
+                // Edition year badges
+                const editionBadges = document.createElement('div');
+                editionBadges.className = 'note-edition-badges';
+                (note.editions || []).forEach(year => {
+                    const badge = document.createElement('span');
+                    badge.className = `note-edition-badge edition-${year}`;
+                    badge.textContent = year;
+                    editionBadges.appendChild(badge);
+                });
+                badgesContainer.appendChild(editionBadges);
+                
+                // Add similarity badges if scores exist
+                const scores = note.scores || {};
+                ['1826', '1849'].forEach(year => {
+                    if (scores[year]) {
+                        const badge = document.createElement('span');
+                        badge.className = `similarity-badge ${getSimilarityClass(scores[year])}`;
+                        badge.style.fontSize = '0.7rem';
+                        badge.innerHTML = `
+                            ${year}: ${(scores[year] * 100).toFixed(0)}%
+                            <span class="tooltip">
+                                Jaccard-Ähnlichkeit zur Anmerkung von ${year === '1826' ? '1808' : (scores['1826'] ? '1808' : '1826')}<br>
+                                (gemeinsame Wörter ÷ alle Wörter)
+                            </span>
+                        `;
+                        badgesContainer.appendChild(badge);
+                    }
+                });
+                
+                // Add change stats badges for notes
+                if (note.unified_text) {
+                    const noteChangeStats = calculateChangeStats(note.unified_text);
+                    
+                    if (noteChangeStats.added_1826 > 0 || noteChangeStats.deleted_1826 > 0) {
+                        const badge = document.createElement('span');
+                        badge.className = 'change-stats-badge';
+                        badge.innerHTML = `
+                            1826: <span class="added">+${noteChangeStats.added_1826}</span> <span class="removed">−${noteChangeStats.deleted_1826}</span>
+                            <span class="tooltip">
+                                Änderungen gegenüber 1808:<br>
+                                +${noteChangeStats.added_1826} Wörter hinzugefügt<br>
+                                −${noteChangeStats.deleted_1826} Wörter entfernt
+                            </span>
+                        `;
+                        badgesContainer.appendChild(badge);
+                    }
+                    
+                    if (noteChangeStats.added_1849 > 0 || noteChangeStats.deleted_1849 > 0) {
+                        const badge = document.createElement('span');
+                        badge.className = 'change-stats-badge';
+                        badge.innerHTML = `
+                            1849: <span class="added">+${noteChangeStats.added_1849}</span> <span class="removed">−${noteChangeStats.deleted_1849}</span>
+                            <span class="tooltip">
+                                Änderungen gegenüber vorheriger Ausgabe:<br>
+                                +${noteChangeStats.added_1849} Wörter hinzugefügt<br>
+                                −${noteChangeStats.deleted_1849} Wörter entfernt
+                            </span>
+                        `;
+                        badgesContainer.appendChild(badge);
+                    }
+                }
+                
+                noteHeader.appendChild(badgesContainer);
+                noteItem.appendChild(noteHeader);
+                
+                const noteBody = document.createElement('div');
+                noteBody.className = 'note-body';
+                
+                const noteText = document.createElement('div');
+                noteText.className = 'note-text';
+                renderNoteText(note.unified_text || [], noteText);
+                noteBody.appendChild(noteText);
+                
+                const noteApparatus = document.createElement('div');
+                noteApparatus.className = 'note-apparatus';
+                renderNoteApparatus(note.unified_text || [], noteApparatus);
+                noteBody.appendChild(noteApparatus);
+                
+                noteItem.appendChild(noteBody);
+                section.appendChild(noteItem);
+            });
+            
+            setTimeout(() => {
+                section.querySelectorAll('.note-body').forEach(noteBody => {
+                    const noteText = noteBody.querySelector('.note-text');
+                    const noteApparatus = noteBody.querySelector('.note-apparatus');
+                    if (noteText && noteApparatus) {
+                        const textHeight = noteText.offsetHeight;
+                        const viewportHeight = window.innerHeight;
+                        const maxHeight = Math.min(textHeight, viewportHeight * 0.6);
+                        noteApparatus.style.maxHeight = `${maxHeight}px`;
+                    }
+                });
+            }, 100);
+            
+            return section;
+        }
+        
+        function renderNoteText(segments, container) {
+            let currentVariantIdx = 0;
+            
+            segments.forEach(segment => {
+                const span = document.createElement('span');
+                span.className = `word ${segment.color}`;
+                
+                const isVariant = segment.type === 'replaced' || 
+                                 segment.type === 'deleted_1826' || 
+                                 segment.type === 'deleted_1849' ||
+                                 segment.type === 'added_1826' ||
+                                 segment.type === 'added_1849';
+                
+                if (isVariant) {
+                    span.dataset.variantIdx = currentVariantIdx;
+                    currentVariantIdx++;
+                }
+                
+                if (segment.type === 'replaced') {
+                    span.classList.add('replaced', 'variant-ref');
+                } else if (segment.type === 'deleted_1826' || segment.type === 'deleted_1849') {
+                    span.classList.add('deleted', 'variant-ref');
+                } else if (segment.type === 'added_1826' || segment.type === 'added_1849') {
+                    span.classList.add('variant-ref');
+                }
+                
+                if (segment.category) {
+                    span.dataset.category = segment.category;
+                }
+                
+                span.dataset.editions = JSON.stringify(segment.editions || []);
+                span.dataset.type = segment.type || '';
+                
+                span.textContent = segment.text;
+                
+                if (isVariant) {
+                    span.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const varIdx = this.dataset.variantIdx;
+                        const noteItem = this.closest('.note-item');
+                        const apparatusNote = noteItem.querySelector(`.apparatus-note[data-variant-idx="${varIdx}"]`);
+                        
+                        noteItem.querySelectorAll('.apparatus-note.highlighted').forEach(n => n.classList.remove('highlighted'));
+                        noteItem.querySelectorAll('.variant-ref').forEach(w => w.style.background = '');
+                        
+                        if (apparatusNote) {
+                            apparatusNote.classList.add('highlighted');
+                            apparatusNote.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            this.style.background = '#fff3cd';
+                            
+                            setTimeout(() => {
+                                apparatusNote.classList.remove('highlighted');
+                                this.style.background = '';
+                            }, 2000);
+                        }
+                    });
+                }
+                
+                container.appendChild(span);
+                container.appendChild(document.createTextNode(' '));
+            });
+        }
+        
+        function renderNoteApparatus(segments, container) {
+            const variants = segments.filter(s => 
+                s.type === 'replaced' || 
+                s.type === 'added_1826' || 
+                s.type === 'added_1849' ||
+                s.type === 'deleted_1826' ||
+                s.type === 'deleted_1849'
+            );
+            
+            if (variants.length === 0) {
+                container.innerHTML = '<div class="apparatus-empty">Keine Varianten</div>';
+                return;
+            }
+            
+            variants.forEach((variant, idx) => {
+                const note = document.createElement('div');
+                note.className = 'apparatus-note';
+                note.dataset.variantIdx = idx;
+                
+                if (variant.category) {
+                    note.dataset.category = variant.category;
+                }
+                
+                let content = '';
+                
+                if (variant.type === 'replaced') {
+                    content = `<span class="old">${variant.text}</span> → <span class="new">${variant.replaced_by}</span>`;
+                } else if (variant.type === 'added_1826') {
+                    content = `<span class="new">+${variant.text}</span> <small>(1826)</small>`;
+                } else if (variant.type === 'added_1849') {
+                    content = `<span class="added">+${variant.text}</span> <small>(1849)</small>`;
+                } else if (variant.type.startsWith('deleted')) {
+                    const year = variant.type === 'deleted_1826' ? '1826' : '1849';
+                    content = `<span class="old">−${variant.text}</span> <small>(${year})</small>`;
+                }
+                
+                if (variant.category && categoryLabels[variant.category]) {
+                    content += `<span class="category-badge ${variant.category}">${categoryLabels[variant.category]}</span>`;
+                }
+                
+                note.innerHTML = content;
+                container.appendChild(note);
+            });
+        }
+        
+        function getSimilarityClass(score) {
+            if (score >= 0.7) return 'high';
+            if (score >= 0.4) return 'medium';
+            return 'low';
+        }
+        
+        function renderApparatus(segments, container) {
+            const variants = segments.filter(s => 
+                s.type === 'replaced' || 
+                s.type === 'added_1826' || 
+                s.type === 'added_1849' ||
+                s.type === 'deleted_1826' ||
+                s.type === 'deleted_1849'
+            );
+            
+            if (variants.length === 0) {
+                container.innerHTML = '<div class="apparatus-empty">Keine Varianten</div>';
+                return;
+            }
+            
+            variants.forEach((variant, idx) => {
+                const note = document.createElement('div');
+                note.className = 'apparatus-note';
+                note.dataset.variantIdx = idx;
+                
+                if (variant.category) {
+                    note.dataset.category = variant.category;
+                }
+                
+                let content = '';
+                
+                if (variant.type === 'replaced') {
+                    content = `<span class="old">${variant.text}</span> → <span class="new">${variant.replaced_by}</span>`;
+                } else if (variant.type === 'added_1826') {
+                    content = `<span class="new">+${variant.text}</span> <small>(1826)</small>`;
+                } else if (variant.type === 'added_1849') {
+                    content = `<span class="added">+${variant.text}</span> <small>(1849)</small>`;
+                } else if (variant.type.startsWith('deleted')) {
+                    const year = variant.type === 'deleted_1826' ? '1826' : '1849';
+                    content = `<span class="old">−${variant.text}</span> <small>(${year})</small>`;
+                }
+                
+                if (variant.category && categoryLabels[variant.category]) {
+                    content += `<span class="category-badge ${variant.category}">${categoryLabels[variant.category]}</span>`;
+                }
+                
+                note.innerHTML = content;
+                container.appendChild(note);
+            });
+        }
+        
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !isLoading && displayedCount < allData.length) {
+                        loadNextBatch();
+                    }
+                });
+            }, { 
+                root: null,
+                rootMargin: '200px',
+                threshold: 0.1 
+            });
+            
+            const sentinel = document.getElementById('sentinel');
+            if (sentinel) observer.observe(sentinel);
+        }
+        
+        document.querySelectorAll('.reading-mode-radio').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                currentEdition = e.target.value;
+                
+                document.querySelectorAll('.reading-mode-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                e.target.closest('.reading-mode-item').classList.add('active');
+                
+                applyEditionFilter();
+            });
+        });
+        
+        function applyEditionFilter() {
+            document.querySelectorAll('.paragraph-body .word[data-editions]').forEach(word => {
+                const editions = JSON.parse(word.dataset.editions || '[]');
+                
+                let shouldShow = false;
+                
+                if (currentEdition === 'all') {
+                    shouldShow = true;
+                    word.classList.remove('comparison-mode');
+                } else if (currentEdition === '1808') {
+                    shouldShow = editions.includes('1808');
+                    if (shouldShow) {
+                        word.classList.add('comparison-mode');
+                    }
+                } else if (currentEdition === '1826') {
+                    shouldShow = editions.includes('1808') || editions.includes('1826');
+                    if (shouldShow) {
+                        word.classList.add('comparison-mode');
+                    }
+                } else if (currentEdition === '1849') {
+                    shouldShow = true;
+                    word.classList.remove('comparison-mode');
+                }
+                
+                if (shouldShow) {
+                    word.classList.remove('hidden-by-edition');
+                } else {
+                    word.classList.add('hidden-by-edition');
+                }
+            });
+            
+            document.querySelectorAll('.note-text .word[data-editions]').forEach(word => {
+                const editions = JSON.parse(word.dataset.editions || '[]');
+                
+                let shouldShow = false;
+                
+                if (currentEdition === 'all') {
+                    shouldShow = true;
+                    word.classList.remove('comparison-mode');
+                } else if (currentEdition === '1808') {
+                    shouldShow = editions.includes('1808');
+                    if (shouldShow) {
+                        word.classList.add('comparison-mode');
+                    }
+                } else if (currentEdition === '1826') {
+                    shouldShow = editions.includes('1808') || editions.includes('1826');
+                    if (shouldShow) {
+                        word.classList.add('comparison-mode');
+                    }
+                } else if (currentEdition === '1849') {
+                    shouldShow = true;
+                    word.classList.remove('comparison-mode');
+                }
+                
+                if (shouldShow) {
+                    word.classList.remove('hidden-by-edition');
+                } else {
+                    word.classList.add('hidden-by-edition');
+                }
+            });
+            
+            document.querySelectorAll('.note-ref').forEach(noteRef => {
+                const noteEdition = noteRef.dataset.edition;
+                
+                let shouldShow = false;
+                
+                if (currentEdition === 'all') {
+                    shouldShow = true;
+                } else if (currentEdition === '1808') {
+                    shouldShow = noteEdition === '1808';
+                } else if (currentEdition === '1826') {
+                    shouldShow = noteEdition === '1808' || noteEdition === '1826';
+                } else if (currentEdition === '1849') {
+                    shouldShow = true;
+                }
+                
+                if (shouldShow) {
+                    noteRef.classList.remove('hidden-by-edition');
+                } else {
+                    noteRef.classList.add('hidden-by-edition');
+                }
+            });
+            
+            document.querySelectorAll('.note-item').forEach(noteItem => {
+                const noteEditions = JSON.parse(noteItem.dataset.editions || '[]');
+                
+                let shouldShow = false;
+                
+                if (currentEdition === 'all') {
+                    shouldShow = true;
+                } else if (currentEdition === '1808') {
+                    shouldShow = noteEditions.includes('1808');
+                } else if (currentEdition === '1826') {
+                    shouldShow = noteEditions.includes('1808') || noteEditions.includes('1826');
+                } else if (currentEdition === '1849') {
+                    shouldShow = true;
+                }
+                
+                if (shouldShow) {
+                    noteItem.classList.remove('hidden-by-edition');
+                } else {
+                    noteItem.classList.add('hidden-by-edition');
+                }
+            });
+            
+            document.querySelectorAll('.notes-section').forEach(section => {
+                const hasVisibleNotes = Array.from(section.querySelectorAll('.note-item'))
+                    .some(note => !note.classList.contains('hidden-by-edition'));
+                
+                if (currentEdition === 'all' || hasVisibleNotes) {
+                    section.classList.remove('hidden-by-edition');
+                } else {
+                    section.classList.add('hidden-by-edition');
+                }
+            });
+        }
+        
+        document.querySelectorAll('.category-filter').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const category = e.target.dataset.category;
+                if (e.target.checked) {
+                    activeCategories.add(category);
+                } else {
+                    activeCategories.delete(category);
+                }
+                applyFilters();
+            });
+        });
+        
+        function applyFilters() {
+            document.querySelectorAll('.paragraph-card').forEach(card => {
+                const categories = JSON.parse(card.dataset.categories || '[]');
+                
+                if (categories.length === 0) {
+                    card.classList.remove('hidden');
+                    return;
+                }
+                
+                const hasActiveCategory = categories.some(cat => activeCategories.has(cat));
+                
+                if (hasActiveCategory) {
+                    card.classList.remove('hidden');
+                    
+                    card.querySelectorAll('.word[data-category]').forEach(word => {
+                        if (activeCategories.has(word.dataset.category)) {
+                            word.classList.remove('filtered-out');
+                        } else {
+                            word.classList.add('filtered-out');
+                        }
+                    });
+                    
+                    card.querySelectorAll('.apparatus-note[data-category]').forEach(note => {
+                        if (activeCategories.has(note.dataset.category)) {
+                            note.classList.remove('filtered-out');
+                        } else {
+                            note.classList.add('filtered-out');
+                        }
+                    });
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+        
+        function calculateChangeStats(unifiedText) {
+            const stats = {
+                added_1826: 0,
+                added_1849: 0,
+                deleted_1826: 0,
+                deleted_1849: 0
+            };
+            
+            unifiedText.forEach(segment => {
+                if (segment.type === 'added_1826') stats.added_1826++;
+                else if (segment.type === 'added_1849') stats.added_1849++;
+                else if (segment.type === 'deleted_1826') stats.deleted_1826++;
+                else if (segment.type === 'deleted_1849') stats.deleted_1849++;
+            });
+            
+            return stats;
+        }
+    </script>
+</body>
+</html>
