@@ -40,33 +40,33 @@ jobs:
           # Generate root index with links to all versions
           versions=$(printf "%s\n" v*/ | sed 's:/$::' | sort -V)
           cat > _site/index.html <<'EOF'
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AvH: Ansichten der Natur - Textgenese</title>
-  <style>
-    body { font-family: "Crimson Text", Georgia, serif; background: #f8f9fa; color: #2c3e50; margin: 0; }
-    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-    .header-content { max-width: 960px; margin: 0 auto; }
-    .header h1 { margin: 0; font-weight: 300; letter-spacing: 2px; font-size: 1.6rem; }
-    main { max-width: 960px; margin: 2rem auto; background: white; padding: 1.5rem 2rem; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
-    ul { line-height: 1.8; font-size: 1.05rem; }
-    a { color: #667eea; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <div class="header-content">
-      <h1>AvH: ANSICHTEN DER NATUR · Textgenese 1808–1849</h1>
-    </div>
-  </div>
-  <main>
-    <h2>Verfügbare Versionen</h2>
-    <ul>
-EOF
+          <!DOCTYPE html>
+          <html lang="de">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>AvH: Ansichten der Natur - Textgenese</title>
+            <style>
+              body { font-family: "Crimson Text", Georgia, serif; background: #f8f9fa; color: #2c3e50; margin: 0; }
+              .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+              .header-content { max-width: 960px; margin: 0 auto; }
+              .header h1 { margin: 0; font-weight: 300; letter-spacing: 2px; font-size: 1.6rem; }
+              main { max-width: 960px; margin: 2rem auto; background: white; padding: 1.5rem 2rem; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+              ul { line-height: 1.8; font-size: 1.05rem; }
+              a { color: #667eea; text-decoration: none; }
+              a:hover { text-decoration: underline; }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <div class="header-content">
+                <h1>AvH: ANSICHTEN DER NATUR · Textgenese 1808–1849</h1>
+              </div>
+            </div>
+            <main>
+              <h2>Verfügbare Versionen</h2>
+              <ul>
+          EOF
 
           for v in $versions; do
             printf '      <li><a href="/%s/index.html">%s</a></li>\n' "$v" "$v" >> _site/index.html
