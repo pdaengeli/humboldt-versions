@@ -69,7 +69,7 @@ jobs:
           EOF
 
           for v in $versions; do
-            printf '      <li><a href="/%s/index.html">%s</a></li>\n' "$v" "$v" >> _site/index.html
+            printf '      <li><a href="/humboldt-versions/%s/index.html">%s</a></li>\n' "$v" "$v" >> _site/index.html
           done
 
           cat >> _site/index.html <<'EOF'
