@@ -73,11 +73,11 @@ jobs:
           done
 
           cat >> _site/index.html <<'EOF'
-    </ul>
-  </main>
-</body>
-</html>
-EOF
+              </ul>
+            </main>
+          </body>
+          </html>
+          EOF
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
