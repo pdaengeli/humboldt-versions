@@ -123,11 +123,7 @@ Add a “correction mode” UI that supports stepping through variants:
   - inline vs marginal
   - substitution vs addition vs deletion
   - single-character vs longer / multi-token diffs
-- Actions could include:
-  - mark as “verified”
-  - add editorial note
-  - flag questionable alignment/diff
-  - export corrections as sidecar JSON
+- Corrections will be applied directly in the TEI source files, no need to track them
 
 ### 2) Re-introduction of formatting / typography
 Goal: recover print-level formatting such as:
