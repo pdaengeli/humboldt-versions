@@ -2,6 +2,7 @@
 // - Fixed palette: 1808 yellow, 1826 red, 1849 violet
 // - Comparative view ("all"): inline variants + marginal apparatus
 // - Pure edition views (1808/1826/1849): render full text of that edition with NO variants/appartus
+// - Correction mode (comparative only): bottom-left drawer + next/prev stepping through variants
 // ---------------------------------------------------------------------------
 
 let allData = [];
@@ -23,7 +24,9 @@ const BASE_EDITION = '1849';
 const editionColors = { '1808': '#f5c211', '1826': '#c01c28', '1849': '#8e44ad' };
 const editionOrder  = { '1808': 0, '1826': 1, '1849': 2 };
 
-const spanRegistry = new Map(); // variant-id -> DOM node
+const spanRegistry = new Map();     // variant-id -> DOM node
+const variantMetaById = new Map();  // variant-id -> span object (Phase 2 for correction mode & filtering)
+let correctionMode = null; // will be initialized later (avoid TDZ / load order issues)
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -102,7 +105,6 @@ function reconstructParagraphText(segments, edition) {
 // Tooltip text for marginal placeholders (group identical earlier readings by editions)
 function marginalTooltip(span) {
   if (span.variant_type === 'addition') {
-//    return `Addition: ${span.editions?.join(', ') || ''}`;
     return `Ergänzung: ${span.editions?.join(', ') || ''}`;
   }
   if (span.type === 'replaced' && span.changes?.length) {
@@ -162,6 +164,32 @@ function mergeAdjacentAdditions(spans) {
   }
   return out;
 }
+
+function getStickyTopOffset() {
+  const header = document.querySelector('.header');
+  const legend = document.querySelector('.legend-shell');
+
+  const headerH = header ? header.getBoundingClientRect().height : 0;
+  const legendH = legend ? legend.getBoundingClientRect().height : 0;
+
+  // small breathing room so highlight is not glued to the legend
+  return headerH + legendH + 60; // 16;
+}
+
+function scrollToElement(el) {
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.pageYOffset - getStickyTopOffset();
+  window.scrollTo({ top: y, behavior: 'smooth' });
+}
+
+// Shared scrolling helper for correction mode
+// function scrollToElement(el) {
+//  if (!el) return;
+//  const headerOffset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-offset')) || 0;
+//  const extra = 40; // breathing room under legend
+//  const y = el.getBoundingClientRect().top + window.pageYOffset - headerOffset - extra;
+//  window.scrollTo({ top: y, behavior: 'smooth' });
+// }
 
 // ---------------------------------------------------------------------------
 // Comparative rendering
@@ -224,6 +252,7 @@ function renderSpans(merged, paraNum) {
       const id = `v-${paraNum}-${idx}-${variantIdx++}`;
       el.dataset.variantId = id;
       spanRegistry.set(id, el);
+      variantMetaById.set(id, span); // Phase 2: store span meta for correction mode filters
       spanIds[idx] = id;
     }
   };
@@ -358,8 +387,7 @@ function renderApparatus(merged, spanIds) {
       if (!n.targetId) return;
       const el = spanRegistry.get(n.targetId);
       if (!el) return;
-      const y = el.getBoundingClientRect().top + window.pageYOffset - 170;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      scrollToElement(el);
       el.classList.add('inline-highlight');
       setTimeout(() => el.classList.remove('inline-highlight'), 1200);
     });
@@ -511,6 +539,9 @@ function loadNextBatch(force = false) {
   for (let i = displayedCount; i < end; i++) container.appendChild(renderParagraph(allData[i], i));
   displayedCount = end;
   isLoading = false;
+
+  // Correction mode: refresh index whenever new content arrives
+  if (correctionMode && correctionMode.refresh) correctionMode.refresh();
 }
 
 function ensureLoaded(targetIndex) {
@@ -557,8 +588,7 @@ function buildTOC() {
 function scrollToParagraph(paraNum) {
   const card = document.getElementById(`para-${paraNum}`);
   if (!card) return;
-  const y = card.getBoundingClientRect().top + window.pageYOffset - 170;
-  window.scrollTo({ top: y, behavior: 'smooth' });
+  scrollToElement(card);
 }
 
 function setupIntersectionObserver() {
@@ -629,6 +659,431 @@ document.getElementById('toggle-stats')?.addEventListener('change', (e) => {
 });
 
 // ---------------------------------------------------------------------------
+// Correction mode (bottom-left drawer + stepping)
+
+correctionMode = {
+  enabled: false,
+  open: false,
+  targets: [],
+  idx: -1,
+  filters: {
+    inline: true,
+    marginal: true,
+    substitution: true,
+    addition: true,
+    deletion: true,
+    singleChar: false,  // only single-char (best-effort)
+    multiChar: false    // only multi-char (best-effort)
+  },
+  ui: {
+    root: null,
+    btnToggle: null,
+    panel: null,
+    status: null,
+    btnPrev: null,
+    btnNext: null,
+    btnOpen: null
+  },
+
+
+findBestStartIndex() {
+  if (!this.targets.length) return -1;
+
+  // prefer the first target that is at/under the top of viewport (not hidden)
+  const candidates = this.targets
+    .map((t, i) => ({ i, top: t.el.getBoundingClientRect().top }))
+    .sort((a, b) => a.top - b.top);
+
+  const under = candidates.find(c => c.top >= 0);
+  if (under) return under.i;
+
+  // otherwise we're past all targets currently loaded: use last one
+  return candidates[candidates.length - 1].i;
+},
+
+
+  ensureUI() {
+    if (this.ui.root) return;
+
+    const root = document.createElement('div');
+    root.className = 'correction-drawer';
+    root.innerHTML = `
+      <button class="correction-fab" type="button" title="Korrekturmodus">✓</button>
+      <div class="correction-panel" style="display:none;">
+        <div class="correction-header">
+          <div class="correction-title">Korrekturmodus</div>
+          <button class="correction-close" type="button" title="Schließen">×</button>
+        </div>
+
+        <div class="correction-row">
+          <label class="correction-toggle">
+            <input type="checkbox" class="cm-enable">
+            <span>aktiv</span>
+          </label>
+          <div class="correction-status cm-status">–</div>
+        </div>
+
+        <div class="correction-section">
+          <div class="correction-section-title">Start / Sprung</div>
+          <div class="correction-jump">
+            <label class="correction-jump-label">§</label>
+            <input class="cm-jump-input" type="number" min="1" step="1" placeholder="Absatz">
+            <button class="cm-jump-go" type="button">Go</button>
+          </div>
+          <div class="correction-explain">
+            Tipp: „Go“ lädt/scrollt zum Absatz und setzt die Auswahl auf die nächstfolgende Variante.
+          </div>
+        </div>
+
+        <hr class="correction-hr" />
+
+        <div class="correction-section">
+          <div class="correction-section-title">Filter (1) Ort</div>
+          <div class="correction-filters correction-filters-2col">
+            <label><input type="checkbox" class="cm-filter" data-k="inline" checked> inline</label>
+            <label><input type="checkbox" class="cm-filter" data-k="marginal" checked> marginal</label>
+          </div>
+        </div>
+
+        <div class="correction-section">
+          <div class="correction-section-title">Filter (2) Typ</div>
+          <div class="correction-filters correction-filters-2col">
+            <label><input type="checkbox" class="cm-filter" data-k="substitution" checked> Ersetzung</label>
+            <label><input type="checkbox" class="cm-filter" data-k="addition" checked> Ergänzung</label>
+            <label><input type="checkbox" class="cm-filter" data-k="deletion" checked> Tilgung</label>
+          </div>
+        </div>
+
+        <div class="correction-section">
+          <div class="correction-section-title">Filter (3) Länge (nur Ersetzung)</div>
+          <div class="correction-filters correction-filters-2col">
+            <label title="best-effort: sehr kurze Substitutionen (char-level)">
+              <input type="checkbox" class="cm-filter" data-k="singleChar"> single-char
+            </label>
+            <label title="best-effort: längere Substitutionen">
+              <input type="checkbox" class="cm-filter" data-k="multiChar"> multi-char
+            </label>
+          </div>
+          <div class="correction-explain">
+            Hinweis: Wenn (3) aktiv ist, werden nur Substitutionen gezeigt, die dazu passen.
+          </div>
+        </div>
+
+        <hr class="correction-hr" />
+
+        <div class="correction-section">
+          <div class="correction-section-title">Navigation</div>
+          <div class="correction-nav">
+            <button type="button" class="cm-prev">←</button>
+            <button type="button" class="cm-next">→</button>
+          </div>
+          <div class="correction-hint">
+            Tasten: ←/→ oder j/k · Esc beendet
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(root);
+
+    this.ui.root = root;
+    this.ui.btnOpen = root.querySelector('.correction-fab');
+    this.ui.panel = root.querySelector('.correction-panel');
+    this.ui.status = root.querySelector('.cm-status');
+    this.ui.btnPrev = root.querySelector('.cm-prev');
+    this.ui.btnNext = root.querySelector('.cm-next');
+    this.ui.btnToggle = root.querySelector('.cm-enable');
+
+    const jumpInput = root.querySelector('.cm-jump-input');
+    const jumpGo = root.querySelector('.cm-jump-go');
+
+    const doJump = () => {
+      const n = parseInt(jumpInput?.value, 10);
+      if (!n || n < 1) return;
+
+      // Ensure paragraph exists in DOM (lazy-load)
+      ensureLoaded(n - 1);
+
+      // Scroll to the paragraph card
+      scrollToParagraph(n);
+
+      // Enable correction mode if not enabled (optional convenience)
+      if (!this.enabled) this.setEnabled(true);
+
+      // After scrolling/layout, refresh and select nearest visible variant
+      setTimeout(() => {
+        this.refresh(true);
+        const start = this.findBestStartIndex?.() ?? 0;
+        if (this.targets.length) this.select(start >= 0 ? start : 0, { scroll: false });
+      }, 150);
+    };
+
+    jumpGo?.addEventListener('click', doJump);
+    jumpInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') doJump();
+    });
+
+    root.querySelector('.correction-close')?.addEventListener('click', () => this.setOpen(false));
+    this.ui.btnOpen?.addEventListener('click', () => this.setOpen(!this.open));
+
+    this.ui.btnToggle?.addEventListener('change', () => {
+      this.setEnabled(this.ui.btnToggle.checked);
+    });
+
+    root.querySelectorAll('.cm-filter').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const k = cb.dataset.k;
+        this.filters[k] = cb.checked;
+        this.refresh(true);
+      });
+    });
+
+    this.ui.btnPrev?.addEventListener('click', () => this.prev());
+    this.ui.btnNext?.addEventListener('click', () => this.next());
+  },
+
+  setOpen(open) {
+    this.ensureUI();
+    this.open = open;
+    if (this.ui.panel) this.ui.panel.style.display = open ? 'block' : 'none';
+  },
+
+  setEnabled(enabled) {
+    this.ensureUI();
+
+    // only meaningful in comparative view
+    if (enabled && !isComparativeView()) {
+      enabled = false;
+    }
+
+    this.enabled = enabled;
+    if (this.ui.btnToggle) this.ui.btnToggle.checked = enabled;
+
+    // clear selection when disabling
+    if (!enabled) {
+      this.clearSelection();
+      this.idx = -1;
+      this.updateStatus();
+      return;
+    }
+
+    // build initial index + select first
+    this.refresh(true);
+//    if (this.targets.length) this.select(0, { scroll: true });
+    if (this.targets.length) {
+      const start = this.findBestStartIndex();
+      this.select(start >= 0 ? start : 0, { scroll: false }); // don't jump on enable
+    }
+  },
+
+  // Determine kind/type/length buckets using span meta (best-effort)
+  classifyTarget(variantId, el) {
+    const span = variantMetaById.get(variantId) || null;
+    const kind = el?.classList?.contains('marginal-placeholder') ? 'marginal' : 'inline';
+
+    // normalize variantType for filtering
+    let variantType = span?.variant_type || null;
+    if (!variantType && span?.type === 'replaced') variantType = 'substitution';
+
+    // best-effort single vs multi-char (substitutions only)
+    let isSingleChar = false;
+    let isMultiChar = false;
+    if (span?.type === 'replaced' && Array.isArray(span.changes)) {
+      // If any replace op replaces exactly 1 char, treat as single-char-ish,
+      // else if there is a longer earlier text, treat as multi.
+      const ops = span.changes.flatMap(ch => (ch.char_level || []));
+      const hasReplaceLen1 = ops.some(op => op.operation === 'replace' && ((op.from || '').length <= 1));
+      const hasReplaceLenGt1 = ops.some(op => op.operation === 'replace' && ((op.from || '').length > 1));
+      isSingleChar = hasReplaceLen1 && !hasReplaceLenGt1;
+      isMultiChar = hasReplaceLenGt1 || (span.text && span.changes.some(ch => (ch.text || '').length !== (span.text || '').length));
+    }
+
+    // snippet for UI
+    const snippet = (span?.text || el?.textContent || '').trim().slice(0, 80);
+
+    return { variantId, el, span, kind, variantType, isSingleChar, isMultiChar, snippet };
+  },
+
+  passesFilters(t) {
+    if (t.kind === 'inline' && !this.filters.inline) return false;
+    if (t.kind === 'marginal' && !this.filters.marginal) return false;
+
+    if (t.variantType === 'substitution' && !this.filters.substitution) return false;
+    if (t.variantType === 'addition' && !this.filters.addition) return false;
+    if (t.variantType === 'deletion' && !this.filters.deletion) return false;
+
+    // if singleChar or multiChar filters active, require match (substitutions only)
+    const lengthFiltersOn = this.filters.singleChar || this.filters.multiChar;
+    if (lengthFiltersOn) {
+      const anyMatch = (this.filters.singleChar && t.isSingleChar) || (this.filters.multiChar && t.isMultiChar);
+      // If we cannot classify (both false), we hide when user demands classification
+      if (!anyMatch) return false;
+    }
+
+    return true;
+  },
+
+  refresh(keepCurrent = false) {
+    this.ensureUI();
+
+    // Disable correction mode automatically if leaving comparative view
+    if (!isComparativeView() && this.enabled) {
+      this.setEnabled(false);
+      return;
+    }
+
+    if (!this.enabled) {
+      this.targets = [];
+      this.idx = -1;
+      this.updateStatus();
+      return;
+    }
+
+    // index currently rendered variant elements (in DOM order)
+    const els = Array.from(document.querySelectorAll('[data-variant-id]'));
+    const nextTargets = [];
+    els.forEach(el => {
+      const id = el.dataset.variantId;
+      if (!id) return;
+      const t = this.classifyTarget(id, el);
+      if (this.passesFilters(t)) nextTargets.push(t);
+    });
+
+    // try to keep selection on same variantId
+    let nextIdx = -1;
+    if (keepCurrent && this.idx >= 0 && this.idx < this.targets.length) {
+      const currentId = this.targets[this.idx]?.variantId;
+      if (currentId) nextIdx = nextTargets.findIndex(t => t.variantId === currentId);
+    }
+
+    this.targets = nextTargets;
+
+    if (this.targets.length === 0) {
+      this.clearSelection();
+      this.idx = -1;
+      this.updateStatus();
+      return;
+    }
+
+    if (nextIdx >= 0) {
+      this.idx = nextIdx;
+      // re-apply selection to new DOM node
+      this.select(this.idx, { scroll: false });
+    } else if (this.idx < 0 || this.idx >= this.targets.length) {
+      this.idx = 0;
+      this.select(0, { scroll: false });
+    }
+
+    this.updateStatus();
+  },
+
+  clearSelection() {
+    document.querySelectorAll('.cm-active').forEach(el => el.classList.remove('cm-active'));
+    document.querySelectorAll('.cm-active-note').forEach(el => el.classList.remove('cm-active-note'));
+  },
+
+  updateStatus() {
+    if (!this.ui.status) return;
+    if (!this.enabled) {
+      this.ui.status.textContent = 'inaktiv';
+      return;
+    }
+    if (!this.targets.length) {
+      this.ui.status.textContent = '0 Varianten (Filter)';
+      return;
+    }
+    const cur = this.idx >= 0 ? (this.idx + 1) : 0;
+    this.ui.status.textContent = `${cur}/${this.targets.length}`;
+  },
+
+  select(i, { scroll = true } = {}) {
+    if (!this.enabled) return;
+    if (i < 0 || i >= this.targets.length) return;
+
+    this.clearSelection();
+    this.idx = i;
+
+    const t = this.targets[i];
+    if (t?.el) t.el.classList.add('cm-active');
+
+    // highlight apparatus note too (if present)
+    const note = document.querySelector(`.apparatus-note[data-target="${t.variantId}"]`);
+    if (note) note.classList.add('cm-active-note');
+
+    if (scroll && t?.el) scrollToElement(t.el);
+
+    this.updateStatus();
+  },
+
+  ensureNextTargetLoaded(dir = +1) {
+    // If we are at the end of loaded targets, try loading more paragraphs.
+    // This is the "compromise": we only index loaded DOM, but we can extend it when stepping.
+    if (!this.enabled) return;
+
+    const attemptLoad = () => {
+      if (displayedCount >= allData.length) return false;
+      loadNextBatch(true);
+      return true;
+    };
+
+    // load until we have at least one target ahead (or no more content)
+    for (let tries = 0; tries < 20; tries++) {
+      if (!this.targets.length) return attemptLoad();
+      if (dir > 0) {
+        if (this.idx + 1 < this.targets.length) return true;
+      } else {
+        if (this.idx - 1 >= 0) return true;
+      }
+      const loaded = attemptLoad();
+      if (!loaded) return false;
+      this.refresh(true);
+    }
+    return true;
+  },
+
+  next() {
+    if (!this.enabled) return;
+    this.ensureNextTargetLoaded(+1);
+    if (!this.targets.length) return;
+    const next = Math.min(this.targets.length - 1, this.idx + 1);
+    this.select(next, { scroll: true });
+  },
+
+  prev() {
+    if (!this.enabled) return;
+    // prev is always within loaded DOM; no need to load more
+    if (!this.targets.length) return;
+    const prev = Math.max(0, this.idx - 1);
+    this.select(prev, { scroll: true });
+  }
+};
+
+function installCorrectionModeKeyboard() {
+  document.addEventListener('keydown', (e) => {
+    if (!correctionMode.enabled) return;
+
+    // don’t hijack typing
+    const tag = (document.activeElement?.tagName || '').toLowerCase();
+    const typing = tag === 'input' || tag === 'textarea' || document.activeElement?.isContentEditable;
+    if (typing) return;
+
+    if (e.key === 'Escape') {
+      correctionMode.setEnabled(false);
+      correctionMode.setOpen(false);
+      return;
+    }
+
+    if (e.key === 'ArrowRight' || e.key === 'j') {
+      e.preventDefault();
+      correctionMode.next();
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'k') {
+      e.preventDefault();
+      correctionMode.prev();
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
 // General event wiring
 
 document.addEventListener('change', (e) => {
@@ -636,6 +1091,10 @@ document.addEventListener('change', (e) => {
     currentEdition = e.target.value;
     document.querySelectorAll('.reading-mode-item').forEach(l => l.classList.remove('active'));
     e.target.closest('.reading-mode-item').classList.add('active');
+
+    // auto-disable correction mode when leaving comparative view
+    if (!isComparativeView() && correctionMode?.enabled) correctionMode.setEnabled(false);
+
     rerenderAll();
   }
   if (e.target.id === 'inline-add-max') {
@@ -657,17 +1116,22 @@ document.getElementById('font-minus')?.addEventListener('click', () => {
 function rerenderAll() {
   displayedCount = 0;
   spanRegistry.clear();
+  variantMetaById.clear();
   document.getElementById('content').innerHTML = '';
   loadNextBatch(true);
 }
 
 // ---------------------------------------------------------------------------
-// Bootstrap
+// Bootstrap / initial wiring
 
 document.addEventListener('DOMContentLoaded', () => {
   updateHeaderOffset();
   applyEditionColorsToLegend();
   applyFontScale();
+
+  correctionMode.ensureUI();
+  correctionMode.setOpen(false);
+  installCorrectionModeKeyboard();
 });
 
 window.addEventListener('resize', updateHeaderOffset);
@@ -699,3 +1163,46 @@ function initialHashScroll() {
     setTimeout(() => scrollToParagraph(paraNum), 100);
   }
 }
+
+// ---------------------------------------------------------------------------
+// Legend / settings wiring (kept at bottom so DOM exists)
+
+// const legendPanel = document.getElementById('legend-panel');
+// const colorPanel  = document.getElementById('color-panel');
+
+function setLegendExpanded(expanded) {
+  legendExpanded = expanded;
+  if (legendPanel) legendPanel.classList.toggle('expanded', expanded);
+  if (legendPanel) legendPanel.classList.toggle('collapsed', !expanded);
+  if (legendPanel) legendPanel.style.display = expanded ? 'block' : 'none';
+}
+
+setLegendExpanded(false);
+
+document.getElementById('color-settings')?.addEventListener('click', () => {
+  setLegendExpanded(!legendExpanded);
+});
+
+colorPanel?.querySelectorAll('input[type="color"][data-ed]')?.forEach(input => {
+  input.addEventListener('input', () => {
+    const ed = input.dataset.ed;
+    editionColors[ed] = input.value;
+    applyEditionColorsToLegend();
+    if (isComparativeView()) rerenderAll();
+  });
+});
+
+document.getElementById('color-mode-toggle')?.addEventListener('change', (e) => {
+  variantColorMode = e.target.checked ? 'background' : 'text';
+  if (isComparativeView()) rerenderAll();
+});
+
+document.getElementById('toggle-all-variants')?.addEventListener('change', (e) => {
+  showAllVariants = e.target.checked;
+  if (isComparativeView()) rerenderAll();
+});
+
+document.getElementById('toggle-stats')?.addEventListener('change', (e) => {
+  showStats = !e.target.checked;
+  if (isComparativeView()) rerenderAll();
+});

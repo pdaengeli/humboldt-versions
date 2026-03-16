@@ -44,6 +44,10 @@ This is the analysis/variant view:
 - Inline variants are highlighted (color/underline rules).
 - Marginal apparatus is shown in the right column.
 - Optional settings affect inline vs marginal display.
+- Per-paragraph header shows:
+  - earliest edition badge
+  - edition chips (1808/1826/1849)
+  - optional paragraph stats (similarity and counters)
 
 ### 2) Pure edition views (isolated text)
 - `1. Ausgabe (1808)`
@@ -53,6 +57,7 @@ This is the analysis/variant view:
 In these views the paragraph is reconstructed for the selected edition and rendered as plain running text:
 - **No variant markup** (no color chips, no dotted underlines, no tooltips).
 - **No marginal apparatus** column.
+- Paragraph header is simplified to show only the **selected edition** badge.
 - Purpose: “How it was printed” per edition, without comparative features.
 
 ---
@@ -76,22 +81,57 @@ Setting: **„alle Varianten marginal einblenden“**
 - Additions inline: solid underline, colored by earliest edition.
 - Marginal placeholders: dotted underline, colored by edition-based cue.
 
-### Tooltips (marginal)
+### Tooltips (marginal placeholders)
 Marginal placeholder tooltips are compressed to avoid redundancy:
 - identical earlier readings from multiple editions are grouped, e.g.  
   `1808 1826: Denn wenn → Wenn`
 
 ---
 
+## Correction mode (editorial workflow — current prototype)
+A correction-focused navigation tool is available in **comparative view only**.
+
+### UI
+- Bottom-left **drawer / balloon** (fixed position, does not reflow the layout).
+- Enable/disable toggle (`aktiv`), status indicator (`current/total`).
+- **Jump to paragraph** input (`§ … Go`) to resume work roughly where you left off.
+- Filter groups:
+  1) **Ort**: inline / marginal
+  2) **Typ**: Ersetzung / Ergänzung / Tilgung
+  3) **Länge (nur Ersetzung)**: single-char / multi-char (best-effort classification)
+
+### Navigation
+- Buttons: `←` / `→`
+- Keyboard:
+  - `←` / `→` or `j` / `k`: previous/next
+  - `Esc`: disables correction mode and closes the drawer
+
+### Behaviour
+- Targets are indexed in **document order** from the **currently rendered** content.
+- When stepping:
+  - the selected inline/marginal element is highlighted
+  - the corresponding apparatus entry is highlighted when present
+  - scrolling accounts for the sticky header + legend so highlights do not end up hidden
+- Lazy loading compromise:
+  - correction mode primarily indexes loaded paragraphs
+  - when stepping forward past the end of loaded targets, it will attempt to load the next batch and refresh
+
+### Implementation note (Phase 2)
+To keep filters resilient and avoid tight coupling to rendering branches, each rendered variant gets:
+- a `data-variant-id` on its DOM node (already present)
+- a metadata mapping `variantMetaById.set(variantId, span)` (used for filtering/classification)
+
+---
+
 ## UI features (current)
-- **Sticky legend:** legend stays visible under the sticky page header.
+- **Sticky header** and **sticky legend** (legend stays visible under the header).
 - **Edition colors:** fixed defaults (1808 yellow / 1826 red / 1849 violet), adjustable via color pickers.
-- **Settings panel:** cogwheel toggles settings area.
-- **Font sizing:** `A-` / `A+` controls scale via CSS variable.
-- **Paragraph navigation:** TOC grouped by 10; hash links (`#para-N`) supported with scroll offset.
-- **Lazy loading:** paragraphs rendered in batches via Intersection Observer.
+- **Settings panel:** cogwheel toggles settings area (no auto-scroll/jump).
+- **Font sizing:** `A-` / `A+` font scale controls.
+- **Paragraph navigation:** TOC in groups of 10; hash links (`#para-N`) supported with a scroll offset.
+- **Lazy load:** batch rendering via Intersection Observer.
 - **Apparatus interactions:**
-  - Hovering marginal dotted placeholders highlights the corresponding apparatus entry.
+  - Hovering dotted marginal placeholders highlights the corresponding apparatus entry.
   - Clicking apparatus notes scrolls to the corresponding inline location.
 
 ---
@@ -100,8 +140,8 @@ Marginal placeholder tooltips are compressed to avoid redundancy:
 (Names may vary slightly depending on repo layout; update if paths differ.)
 
 - `index.html` — current UI.
-- `styles.css` — styling (legend stickiness, paragraph layout, apparatus).
-- `app.js` — state + rendering logic (comparative vs edition views, apparatus generation, interactions).
+- `styles.css` — styling (legend stickiness, paragraph layout, apparatus, correction drawer).
+- `app.js` — state + rendering logic (comparative vs edition views, apparatus generation, correction mode).
 - `slot_output.json` — generated Slot JSON (from VM XML).
 - `vm_to_slot.py` — VM XML → Slot JSON converter.
 - `humboldt-vm-parallel-seg.xml` — VM XML input.
@@ -112,20 +152,13 @@ Marginal placeholder tooltips are compressed to avoid redundancy:
 - Variant categories are currently simplified / in flux (sidebar filtering removed in current v3 stage).
 - Apparatus phrasing and grouping is “good enough” for exploration but not yet editorial quality.
 - Typographic features from print (spacing nuances, italics, bold, etc.) are not preserved end-to-end.
+- Correction mode IDs are stable only within a render session (variant ids are generated during rendering). Persisting editorial decisions will require stable IDs (data-level) or a robust matching layer.
 
 ---
 
 ## Next steps / possible enhancements
-### 1) Correction mode (editorial workflow)
-Add a “correction mode” UI that supports stepping through variants:
-- Stepper to move through variants in document order.
-- Optional filtering:
-  - inline vs marginal
-  - substitution vs addition vs deletion
-  - single-character vs longer / multi-token diffs
-- Corrections will be applied directly in the TEI source files, no need to track them
 
-### 2) Re-introduction of formatting / typography
+### 1) Re-introduction of formatting / typography
 Goal: recover print-level formatting such as:
 - spacing fidelity
 - italics, bold, small caps (if present)
@@ -136,10 +169,12 @@ Potential approach:
 - Merge formatting into reconstructed edition text in the frontend.
 - For comparative view: decide whether formatting follows base edition, selected edition, or hybrid rules.
 
-### 3) Apparatus refinement
+### 2) Apparatus refinement
 - More consistent labeling (edition labels, change type labels).
 - Better grouping and de-duplication.
 - Optional “show only marginal” vs “show all” modes.
+
+### 3) Define path towards print
 
 ---
 
