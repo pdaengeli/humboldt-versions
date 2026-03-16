@@ -1,0 +1,4178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../src/vmachine.xsl" type="text/xsl" ?>
+<?xml-model href="../schema/vmachine.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="../schema/vmachine.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+	<teiHeader>
+		<fileDesc>
+			<titleStmt>
+				<title>Testing</title>
+				<author>Foo Bar</author>
+				<editor>Foo Bar</editor>
+			</titleStmt>
+		</fileDesc>
+		<encodingDesc>
+			<projectDesc>
+				<p>This file was created with the aid of LERA for Versioning Machine 5.0</p>
+			</projectDesc>
+			<variantEncoding location="internal" method="parallel-segmentation"/>
+		</encodingDesc>
+	</teiHeader>
+	<text>
+		<front>
+			<div>
+				<listWit>
+					<witness xml:id="1808">1808</witness>
+					<witness xml:id="1826">1826</witness>
+					<witness xml:id="1849">1849</witness>
+				</listWit>
+			</div>
+		</front>
+		<body>
+			<div>
+				<lg>
+					<l n="1">
+						<app>
+							<rdg wit="#1849">Ansichten der Natur </rdg>
+						</app>
+					</l>
+					<l n="2">
+						<app>
+							<rdg wit="#1849">von Alexander von Humboldt. </rdg>
+						</app>
+					</l>
+					<l n="3">
+						<app>
+							<rdg wit="#1849">Erster Band. </rdg>
+						</app>
+					</l>
+					<l n="4">
+						Ansichten der Natur mit wissenschaftlichen Erläuterungen.
+					</l>
+					<l n="5">
+						Von Alexander von Humboldt.
+					</l>
+					<l n="6">
+						Erster Band.
+					</l>
+					<l n="7">
+						<app>
+							<rdg wit="#1826">Zweite verbesserte und vermehrte Ausgabe.</rdg>
+							<rdg wit="#1849">Dritte verbesserte und vermehrte Ausgabe. </rdg>
+						</app>
+					</l>
+					<l n="8">
+						Tübingen,in der J. G. Cotta’schen Buchhandlung.
+					</l>
+					<l n="9">
+						1808.
+					</l>
+					<l n="10">
+						<app>
+							<rdg wit="#1849">Buchdrucherei der J. G. Cotta’schen Buchhandlung in Stuttgart. </rdg>
+						</app>
+					</l>
+					<l n="11">
+						Seinem theuren Bruder Wilhelm von Humboldt, in Rom, der Verfasser. 
+					</l>
+					<l n="12">
+						Vorrede
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">der ersten Ausgabe</rdg>
+							<rdg wit="#1849">zur ersten Ausgabe</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="13">
+						<app>
+							<rdg wit="#1808">Schüchtern</rdg>
+							<rdg wit="#1826">Schüchtern</rdg>
+							<rdg wit="#1849">Schüchtern</rdg>
+						</app>
+						 übergebe ich dem 
+						<app>
+							<rdg wit="#1808">Publicum</rdg>
+							<rdg wit="#1826">Publicum</rdg>
+							<rdg wit="#1849">Publikum</rdg>
+						</app>
+						 eine Reihe von Arbeiten, die im Angesicht 
+						<app>
+							<rdg wit="#1808">grosser</rdg>
+							<rdg wit="#1826">großer</rdg>
+							<rdg wit="#1849">großer</rdg>
+						</app>
+						 Naturgegenstände
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 auf dem 
+						<app>
+							<rdg wit="#1808">Ozean</rdg>
+							<rdg wit="#1826">Ozean</rdg>
+							<rdg wit="#1849">Ocean</rdg>
+						</app>
+						, in den Wäldern des Orinoco, in den Steppen von Venezuela, in der Einöde peruanischer und 
+						<app>
+							<rdg wit="#1808">mexikanischer</rdg>
+							<rdg wit="#1826">mexikanischer</rdg>
+							<rdg wit="#1849">mexicanischer</rdg>
+						</app>
+						 Gebirge
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 entstanden sind. Einzelne Fragmente wurden an Ort und Stelle niedergeschrieben, und nachmals nur in ein Ganzes zusammengeschmolzen. Ueberblick der Natur im 
+						<app>
+							<rdg wit="#1808">Grossen</rdg>
+							<rdg wit="#1826">Großen</rdg>
+							<rdg wit="#1849">großen</rdg>
+						</app>
+						, Beweis von dem Zusammenwirken der Kräfte, Erneuerung des Genusses, 
+						<app>
+							<rdg wit="#1808">den</rdg>
+							<rdg wit="#1826">den</rdg>
+							<rdg wit="#1849">welchen</rdg>
+						</app>
+						 die unmittelbare Ansicht
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">der Tropenländer</rdg>
+							<rdg wit="#1849">der Tropenländer</rdg>
+						</app>
+						 dem fühlenden Menschen gewährt 
+						<app>
+							<rdg wit="#1808">—</rdg>
+							<rdg wit="#1826">—</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 sind die Zwecke, nach denen ich 
+						<app>
+							<rdg wit="#1808">strebte</rdg>
+							<rdg wit="#1826">strebe</rdg>
+							<rdg wit="#1849">strebe</rdg>
+						</app>
+						. Jeder Aufsatz sollte ein in sich geschlossenes 
+						<app>
+							<rdg wit="#1808">Ganze</rdg>
+							<rdg wit="#1826">Ganze</rdg>
+							<rdg wit="#1849">Ganzes</rdg>
+						</app>
+						 ausmachen, in allen sollte 
+						<app>
+							<rdg wit="#1808">Eine</rdg>
+							<rdg wit="#1826">Eine</rdg>
+							<rdg wit="#1849">eine</rdg>
+						</app>
+						 und dieselbe Tendenz sich 
+						<app>
+							<rdg wit="#1808">gleichmässig zeigen</rdg>
+							<rdg wit="#1826">gleichmäßig zeigen</rdg>
+							<rdg wit="#1849">gleichmäßig aussprechen</rdg>
+						</app>
+						. Diese ästhetische Behandlung naturhistorischer Gegenstände hat, trotz der herrlichen Kraft und
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">der</rdg>
+						</app>
+						 Biegsamkeit unserer vaterländischen Sprache, 
+						<app>
+							<rdg wit="#1808">grosse</rdg>
+							<rdg wit="#1826">große</rdg>
+							<rdg wit="#1849">große</rdg>
+						</app>
+						 Schwierigkeiten der Composition. 
+						<app>
+							<rdg wit="#1808">Der</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 Reichthum der Natur 
+						<app>
+							<rdg wit="#1808">veranlasst</rdg>
+							<rdg wit="#1826">veranlaßt</rdg>
+							<rdg wit="#1849">veranlaßt</rdg>
+						</app>
+						 Anhäufung einzelner Bilder
+						<app>
+							<rdg wit="#1808">. Diese</rdg>
+							<rdg wit="#1826">, und</rdg>
+							<rdg wit="#1849">, und</rdg>
+						</app>
+						 Anhäufung 
+						<app>
+							<rdg wit="#1808">aber</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 stört die Ruhe und den Totaleindruck des 
+						<app>
+							<rdg wit="#1808">Naturgemäldes</rdg>
+							<rdg wit="#1826">Gemäldes</rdg>
+							<rdg wit="#1849">Gemäldes</rdg>
+						</app>
+						. Das Gefühl und die Phantasie ansprechend, artet der Styl leicht in eine dichterische Prosa aus. Diese Ideen bedürfen hier keiner Entwickelung, da die nachstehenden Blätter 
+						<app>
+							<rdg wit="#1808">leider! mannichfaltige</rdg>
+							<rdg wit="#1826">leider! mannichfaltige</rdg>
+							<rdg wit="#1849">mannigfaltige</rdg>
+						</app>
+						 Beispiele solcher Verirrungen, solchen Mangels an Haltung darbieten. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="14">
+						Mögen meine Ansichten
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">der Natur</rdg>
+						</app>
+						, trotz dieser 
+						<app>
+							<rdg wit="#1808">Fehler</rdg>
+							<rdg wit="#1826">Fchler</rdg>
+							<rdg wit="#1849">Fehler</rdg>
+						</app>
+						, welche ich selbst leichter rügen als verbessern kann, dem Leser doch einen Theil des Genusses gewähren, 
+						<app>
+							<rdg wit="#1808">den</rdg>
+							<rdg wit="#1826">den</rdg>
+							<rdg wit="#1849">welchen</rdg>
+						</app>
+						 ein empfänglicher Sinn in der unmittelbaren Anschauung 
+						<app>
+							<rdg wit="#1808">der Natur</rdg>
+							<rdg wit="#1826">der Natur</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 findet. Da dieser 
+						<app>
+							<rdg wit="#1808">Genuss</rdg>
+							<rdg wit="#1826">Genuß</rdg>
+							<rdg wit="#1849">Genuß</rdg>
+						</app>
+						 mit der Einsicht in den inneren Zusammenhang der Naturkräfte 
+						<app>
+							<rdg wit="#1808">wächst</rdg>
+							<rdg wit="#1826">wächst</rdg>
+							<rdg wit="#1849">vermehrt wird</rdg>
+						</app>
+						, so 
+						<app>
+							<rdg wit="#1808">habe ich</rdg>
+							<rdg wit="#1826">habe ich</rdg>
+							<rdg wit="#1849">sind</rdg>
+						</app>
+						 jedem Aufsatze wissenschaftliche Erläuterungen und Zusätze beigefügt. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="15">
+						Ueberall habe ich auf den ewigen 
+						<app>
+							<rdg wit="#1808">Einfluss</rdg>
+							<rdg wit="#1826">Einfiuß</rdg>
+							<rdg wit="#1849">Einfluß</rdg>
+						</app>
+						 hingewiesen, welchen die physische Natur auf die moralische Stimmung der Menschheit und auf ihre Schicksale ausübt. Bedrängten Gemüthern sind diese Blätter vorzugsweise gewidmet
+						<app>
+							<rdg wit="#1808">.</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">.</rdg>
+						</app>
+						 „Wer 
+						<app>
+							<rdg wit="#1808">„</rdg>
+							<rdg wit="#1826">„</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						sich herausgerettet aus der 
+						<app>
+							<rdg wit="#1808">stür„mischen Lebenswelle</rdg>
+							<rdg wit="#1826">stür„mischen Lebens welle</rdg>
+							<rdg wit="#1849">stürmischen Lebenswelle“</rdg>
+						</app>
+						,
+						<app>
+							<rdg wit="#1808">”</rdg>
+							<rdg wit="#1826">“</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 folgt mir gern in das 
+						<app>
+							<rdg wit="#1808">Dickigt</rdg>
+							<rdg wit="#1826">Dickigt</rdg>
+							<rdg wit="#1849">Dickicht</rdg>
+						</app>
+						 der Wälder, durch die unabsehbare Steppe und auf den hohen Rücken der Andeskette. Zu ihm spricht der weltrichtende Chor: Auf den Bergen ist 
+						<app>
+							<rdg wit="#1808">Freyheit</rdg>
+							<rdg wit="#1826">Freiheit</rdg>
+							<rdg wit="#1849">Freiheit</rdg>
+						</app>
+						! Der Hauch der Grüfte Steigt nicht hinauf in die reinen Lüfte
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">;</rdg>
+						</app>
+						 Die Welt ist 
+						<app>
+							<rdg wit="#1808">volkommen</rdg>
+							<rdg wit="#1826">vollkommen</rdg>
+							<rdg wit="#1849">vollkommen</rdg>
+						</app>
+						 überall
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 Wo der Mensch nicht hinkommt mit seiner Qual. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="16">
+						<app>
+							<rdg wit="#1826">Vorrede der ersten Ausgabe. </rdg>
+							<rdg wit="#1849">Vorrede zur zweiten und dritten Ausgabe. </rdg>
+						</app>
+					</l>
+					<l n="17">
+						<app>
+							<rdg wit="#1849">Die zwiefache Richtung dieser Schrift (ein sorgsames Bestreben, durch lebendige Darstellungen den Naturgenuß zu erhöhen, zugleich aber nach dem dermaligen Stande der Wissenschaft die Einsicht in das harmonische Zusammenwirken der Kräfte zu vermehren) ist in der Vorrede zur ersten Ausgabe, fast vor einem halben Jahrhundert, bezeichnet worden. Es sind damals schon die mannigfaltigen Hindernisse angegeben, welche der ästhetischen Behandlung großer Naturscenen entgegenstehn. Die Verbindung eines litterarischen und eines rein scientisischen Zweckes, der Wunsch, gleichzeitig die Phantasie zu beschäftigen und durch Vermehrung des Wissens das Leben mit Ideen zu bereichern: machen die Anordnung der einzelnen Theile und das, was als Einheit der Composition gefordert wird, schwer zu erreichen. Trotz dieser ungünstigen Verhältnisse hat das Publikum der unvollkommenen Ausführung meines Unternehmens dauernd ein nachsichtsvolles Wohlwollen geschenkt. </rdg>
+						</app>
+					</l>
+					<l n="18">
+						<app>
+							<rdg wit="#1849">Die zweite Ausgabe der Ansichten der Natur habe ich in Paris im Jahr 1826 besorgt. Zwei Aufsätze: ein „Versuch über den Bau und die Wirkungsart der Vulkane in den verschiedenen Erdstrichen“, und die „Lebenskraft oder der rhodische Genius“, wurden damals zuerst beigefügt. Schiller, in jugendlicher Erinnerung an seine medicinischen Studien, unterhielt sich während meines langen Aufenthalts in Jena gern mit mir über physiologische Gegenstände. Meine Arbeit über die Stimmung der gereizten Muskel- und Nervenfaser durch Berührung mit chemisch verschiedenen Stoffen gab oft unsern Gesprächen eine ernstere Richtung. Es entstand in jener Zeit der kleine Aufsatz von der Lebenskraft. Die Vorliebe, welche Schiller für den „rhodischen Genius“ hatte, den er in seine Zeitschrift der Horen aufnahm, gab mir den Muth ihn wieder abdrucken zu lassen. Mein Bruder berührt in einem Briefe, welcher erst vor kurzem gedruckt worden ist (Wilhelm von Humboldt’s Briefe an eine Freundin Th. II. S. 39), mit Zartheit denselben Gegenstand, setzt aber treffend hinzu: „Die Entwickelung einer physiologischen Idee ist der Zweck des ganzen Aufsatzes. Man liebte in der Zeit, in welcher derselbe geschrieben ist, mehr, als man jetzt thun würde, solche halbdichterische Einkleidungen ernsthafter Wahrheiten.“ </rdg>
+						</app>
+					</l>
+					<l n="19">
+						<app>
+							<rdg wit="#1849">Es ist mir noch im achtzigsten Jahre die Freude geworden, eine dritte Ausgabe meiner Schrift zu vollenden und dieselbe nach den Bedürfnissen der Zeit ganz umzuschmelzen. Fast alle wissenschaftliche Erläuterungen sind ergänzt oder durch neue, inhaltreichere ersetzt worden. Ich habe gehofft den Trieb zum Studium der Natur dadurch zu beleben, daß in dem kleinsten Raume die mannigfaltigsten Resultate gründlicher Beobachtung zusammengedrängt, die Wichtigkeit genauer numerischer Angaben und ihrer sinnigen Vergleichung unter einander erkannt, und dem dogmatischen Halbwissen wie der vornehmen Zweifelsucht gesteuert werde, welche in den sogenannten höheren Kreisen des geselligen Lebens einen langen Besitz haben. </rdg>
+						</app>
+					</l>
+					<l n="20">
+						<app>
+							<rdg wit="#1849">Die Expedition, die ich in Gemeinschaft mit Ehrenberg und Gustav Rose auf Befehl des Kaisers von Rußland im Jahre 1829 in das nördliche Asien (in den Ural, den Altai und an die Ufer des caspischen Meeres) gemacht, fällt zwischen die Epochen der 2ten und 3ten Ausgabe meines Buches. Sie hat wesentlich zur Erweiterung meiner Ansichten beigetragen in allem, was die Gestaltung der Bodenfläche, die Richtung der Gebirgsketten, den Zusammenhang der Steppen und Wüsten, die geographische Verbreitung der Pflanzen nach gemessenen Temperatur-Einflüssen betrifft. Die Unkenntniß, in welcher man so lange über die zwei großen schneebedeckten Gebirgszüge zwischen dem Altai und Himalaya, über den Thian-schan und den Kuen-lün, gewesen ist, hat bei der ungerechten Vernachlässigung chinesischer Quellen die Geographie von Inner-Asien verdunkelt und Phantasien als Resultate der Beobachtung in vielgelesenen Schriften verbreitet. Seit wenigen Monaten sind fast unerwartet der hypsometrischen Vergleichung der culminirenden Gipfel beider Continente wichtige und berichtigende Erweiterungen zugekommen, deren Kunde zuerst in der nachfolgenden Schrift (Bd. I. S. 75—76 und 116—117) hat gegeben werden können. Die von früheren Irrthümern befreiten Höhenbestimmungen zweier Berge in der östlichen Andeskette von Bolivia, des Sorata und Illimani, haben dem Chimborazo seinen alten Rang unter den Schneebergen des Neuen Continents mit Gewißheit noch nicht ganz wieder ertheilt, während im Himalaya die neue trigonometrische Messung des Kinchinjinga (26438 Pariser Fuß) diesem Gipfel den nächsten Platz nach dem, nun ebenfalls trigonometrisch genauer gemessenen Dhawalagiri einräumt. </rdg>
+						</app>
+					</l>
+					<l n="21">
+						<app>
+							<rdg wit="#1849">Um die numerische Gleichförmigkeit mit den zwei vorigen Ausgaben der Ansichten der Natur zu bewahren, sind die Temperatur-Angaben in diesem Werke, wenn nicht das Gegentheil bestimmt ausgesprochen ist, in Graden des 80theiligen Réaumur’schen Thermometers ausgedrückt. Das Fußmaaß ist das altfranzösische, in welchem die Toise 6 Pariser Fuß zählt. Die Meilen sind geographische, deren 15 auf einen Aequatorial-Grad gehen. Die Längen sind vom ersten Meridian der Pariser Sternwarte gerechnet. </rdg>
+						</app>
+					</l>
+					<l n="22">
+						<app>
+							<rdg wit="#1849">Berlin, im März 1849. </rdg>
+						</app>
+					</l>
+					<l n="23">
+						Ueber die Steppen und Wüsten. 
+					</l>
+					<l n="24">
+						<app>
+							<rdg wit="#1808">Am</rdg>
+							<rdg wit="#1826">Am</rdg>
+							<rdg wit="#1849">Am</rdg>
+						</app>
+						 Fuße des hohen Granitrückens, welcher im Jugendalter unseres Planeten, bei Bildung des antillischen Meerbusens, dem Einbruch der Wasser 
+						<app>
+							<rdg wit="#1808">getrozt</rdg>
+							<rdg wit="#1826">getrozt</rdg>
+							<rdg wit="#1849">getrotzt</rdg>
+						</app>
+						 hat, beginnt eine weite
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 unabsehbare Ebene. Wenn man die Bergthäler von 
+						<app>
+							<rdg wit="#1808">Caraccas,</rdg>
+							<rdg wit="#1826">Caracas,</rdg>
+							<rdg wit="#1849">Caracas</rdg>
+						</app>
+						 und den inselreichen See Tacarigua <note place="end" n="1)"></note>, in dem die nahen 
+						<app>
+							<rdg wit="#1808">Pisangstämme</rdg>
+							<rdg wit="#1826">Pisangstämme</rdg>
+							<rdg wit="#1849">Pisang-Stämme</rdg>
+						</app>
+						 sich spiegeln; wenn man die Fluren, welche mit dem zarten
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">und lichten</rdg>
+						</app>
+						 Grün des 
+						<app>
+							<rdg wit="#1808">thaitischen</rdg>
+							<rdg wit="#1826">thaitischen</rdg>
+							<rdg wit="#1849">tahitischen</rdg>
+						</app>
+						 Zuckerschilfes prangen, oder den ernsten Schatten der 
+						<app>
+							<rdg wit="#1808">Cacaogebüsche</rdg>
+							<rdg wit="#1826">Cacaogebüsche</rdg>
+							<rdg wit="#1849">Cacao-Gebüsche</rdg>
+						</app>
+						 zurückläßt: so ruht der Blick im Süden auf Steppen, die scheinbar ansteigend, in schwindender Ferne, den Horizont 
+						<app>
+							<rdg wit="#1808">begränzen</rdg>
+							<rdg wit="#1826">begränzen</rdg>
+							<rdg wit="#1849">begrenzen</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="25">
+						Aus der üppigen Fülle des organischen Lebens tritt der Wanderer betroffen an den öden Rand einer 
+						<app>
+							<rdg wit="#1808">pflanzenleeren</rdg>
+							<rdg wit="#1826">pflanzenleeren</rdg>
+							<rdg wit="#1849">baumlosen, pflanzenarmen</rdg>
+						</app>
+						 Wüste. Kein Hügel, keine Klippe erhebt sich inselförmig in dem unermeßlichen Raume. Nur hier und dort liegen gebrochene 
+						<app>
+							<rdg wit="#1808">Flötzschichten</rdg>
+							<rdg wit="#1826">Flötzschichten</rdg>
+							<rdg wit="#1849">Flözschichten</rdg>
+						</app>
+						 von zweihundert Quadratmeilen Oberfläche, bemerkbar höher als die 
+						<app>
+							<rdg wit="#1808">angränzenden</rdg>
+							<rdg wit="#1826">angränzenden</rdg>
+							<rdg wit="#1849">angrenzenden</rdg>
+						</app>
+						 Theile. Bänke <note place="end" n="2)"></note> nennen die Eingebornen diese Erscheinung, gleichsam 
+						<app>
+							<rdg wit="#1808">im Geist der</rdg>
+							<rdg wit="#1826">im Geist der</rdg>
+							<rdg wit="#1849">ahndungsvoll durch die</rdg>
+						</app>
+						 Sprache den alten Zustand der Dinge 
+						<app>
+							<rdg wit="#1808">ahnend</rdg>
+							<rdg wit="#1826">ahnend</rdg>
+							<rdg wit="#1849">bezeichnend</rdg>
+						</app>
+						, da jene Erhöhungen Untiefen, die Steppen selbst aber der Boden eines großen Mittelmeeres waren. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="26">
+						Noch gegenwärtig ruft oft nächtliche Täuschung diese Bilder der Vorzeit zurück. 
+						<app>
+							<rdg wit="#1808">Denn wenn</rdg>
+							<rdg wit="#1826">Denn wenn</rdg>
+							<rdg wit="#1849">Wenn</rdg>
+						</app>
+						 im raschen Aufsteigen und Niedersinken die leitenden Gestirne den Saum der Ebene erleuchten; oder wenn sie zitternd ihr Bild verdoppeln <note place="end" n="3)"></note>
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 in der untern Schicht der wogenden Dünste
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 glaubt man den küstenlosen 
+						<app>
+							<rdg wit="#1808">Ozean</rdg>
+							<rdg wit="#1826">Ozean</rdg>
+							<rdg wit="#1849">Ocean</rdg>
+						</app>
+						 vor sich zu sehen. Wie dieser
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 erfüllt die Steppe das Gemüth mit dem Gefühl der Unendlichkeit
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">, und durch dies Gefühl, wie den sinnlichen Eindrücken des Raumes sich entwindend, mit geistigen Anregungen höherer Ordnung</rdg>
+						</app>
+						. Aber freundlich zugleich ist der Anblick des klaren Meeresspiegels, in 
+						<app>
+							<rdg wit="#1808">dem sich</rdg>
+							<rdg wit="#1826">dem</rdg>
+							<rdg wit="#1849">welchem</rdg>
+						</app>
+						 die leichtbewegliche
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 sanft aufschäumende Welle
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">sich</rdg>
+							<rdg wit="#1849">sich</rdg>
+						</app>
+						 kräuselt
+						<app>
+							<rdg wit="#1808">. Todt</rdg>
+							<rdg wit="#1826">. Todt</rdg>
+							<rdg wit="#1849">; todt</rdg>
+						</app>
+						 und starr liegt die Steppe hingestreckt, wie die nackte Felsrinde eines verödeten Planeten. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="27">
+						In allen Zonen bietet die Natur das Phänomen dieser großen Ebenen dar; in jeder haben sie einen eigenthümlichen 
+						<app>
+							<rdg wit="#1808">Character;</rdg>
+							<rdg wit="#1826">Character;</rdg>
+							<rdg wit="#1849">Charakter,</rdg>
+						</app>
+						 eine Physiognomie, 
+						<app>
+							<rdg wit="#1808">die</rdg>
+							<rdg wit="#1826">die</rdg>
+							<rdg wit="#1849">welche</rdg>
+						</app>
+						 durch die Verschiedenheit ihres Bodens, durch ihr Klima und durch ihre Höhe über der Oberfläche des Meeres
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 bestimmt wird. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="28">
+						Im nördlichen Europa kann man die Heideländer, 
+						<app>
+							<rdg wit="#1808">die</rdg>
+							<rdg wit="#1826">die</rdg>
+							<rdg wit="#1849">welche,</rdg>
+						</app>
+						 von einem einzigen, alles verdrängenden Pflanzenzuge <note place="end" n="4)"></note> bedeckt, von der Spitze von Jütland sich bis an den Ausfluß der Schelde 
+						<app>
+							<rdg wit="#1808">erstrecken</rdg>
+							<rdg wit="#1826">erstreken</rdg>
+							<rdg wit="#1849">erstrecken</rdg>
+						</app>
+						, als wahre Steppen betrachten
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 aber Steppen von geringer Ausdehnung und 
+						<app>
+							<rdg wit="#1808">hochhüglicher</rdg>
+							<rdg wit="#1826">hochhüglicher</rdg>
+							<rdg wit="#1849">hochhüglichter</rdg>
+						</app>
+						 Oberfläche, wenn man sie mit den Llanos und Pampas von Südamerika, oder gar mit den Grasfluren am 
+						<app>
+							<rdg wit="#1808">Missury</rdg>
+							<rdg wit="#1826">Missoury <note place="end" n="5)"></note> und Kupferflusse</rdg>
+							<rdg wit="#1849">Missouri <note place="end" n="5"></note> und Kupferflusse</rdg>
+						</app>
+						 <note place="end" n="5)"></note> vergleicht, in denen der zottige Bison
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und der 
+						<app>
+							<rdg wit="#1808">langhörnige</rdg>
+							<rdg wit="#1826">kleine</rdg>
+							<rdg wit="#1849">kleine</rdg>
+						</app>
+						 Moschusstier umherschwärmen. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="29">
+						Einen größeren und ernsteren Anblick gewähren die Ebenen im 
+						<app>
+							<rdg wit="#1808">Inneren</rdg>
+							<rdg wit="#1826">Inneren</rdg>
+							<rdg wit="#1849">Innern</rdg>
+						</app>
+						 von Afrika. Gleich der weiten Fläche des 
+						<app>
+							<rdg wit="#1808">stillen Ozeans</rdg>
+							<rdg wit="#1826">stillen Ozeans</rdg>
+							<rdg wit="#1849">Stillen Oceans</rdg>
+						</app>
+						 hat man sie erst in neueren Zeiten zu durchforschen versucht
+						<app>
+							<rdg wit="#1808">. —</rdg>
+							<rdg wit="#1826">: sie sind</rdg>
+							<rdg wit="#1849">; sie sind</rdg>
+						</app>
+						 Theile eines Sandmeeres, welches
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">gegen Osten</rdg>
+							<rdg wit="#1849">gegen Osten</rdg>
+						</app>
+						 fruchtbare Erdstriche von einander trennt
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 oder inselförmig einschließt, wie die Wüste am Basaltgebirge 
+						<app>
+							<rdg wit="#1808">Harutsch</rdg>
+							<rdg wit="#1826">Harudsch</rdg>
+							<rdg wit="#1849">Harudsch</rdg>
+						</app>
+						 <note place="end" n="6)"></note>, wo in der dattelreichen Oasis 
+						<app>
+							<rdg wit="#1808">vom</rdg>
+							<rdg wit="#1826">vom</rdg>
+							<rdg wit="#1849">von</rdg>
+						</app>
+						 Siwah
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 die Trümmer des Ammon-Tempels den ehrwürdigen Sitz früher Menschenbildung bezeichnen. Kein Thau, kein Regen 
+						<app>
+							<rdg wit="#1808">benezt</rdg>
+							<rdg wit="#1826">benezt</rdg>
+							<rdg wit="#1849">benetzt</rdg>
+						</app>
+						 diese öden Flächen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und 
+						<app>
+							<rdg wit="#1808">entwikkelt</rdg>
+							<rdg wit="#1826">entwickelt</rdg>
+							<rdg wit="#1849">entwickelt</rdg>
+						</app>
+						 im glühenden Schooß der Erde den Keim des Pflanzenlebens. Denn heiße Luftsäulen steigen überall aufwärts, lösen die Dünste
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und verscheuchen das vorübereilende Gewölk. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="30">
+						Wo die Wüste sich dem atlantischen 
+						<app>
+							<rdg wit="#1808">Ozean</rdg>
+							<rdg wit="#1826">Ozean</rdg>
+							<rdg wit="#1849">Ocean</rdg>
+						</app>
+						 nähert, wie zwischen 
+						<app>
+							<rdg wit="#1808">Darah</rdg>
+							<rdg wit="#1826">Wadi Nun</rdg>
+							<rdg wit="#1849">Wadi Nun</rdg>
+						</app>
+						 und dem 
+						<app>
+							<rdg wit="#1808">weißen Vorgebürge</rdg>
+							<rdg wit="#1826">Weißen Vorgebürge</rdg>
+							<rdg wit="#1849">Weißen Vorgebirge</rdg>
+						</app>
+						, da strömt die feuchte Meeresluft hin, die Leere zu füllen, welche durch jene senkrechten Winde erregt wird. 
+						<app>
+							<rdg wit="#1808">Dort erquicken kühle Weste den hügelichen Rand der Wüste.</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 Selbst wenn 
+						<app>
+							<rdg wit="#1808">der</rdg>
+							<rdg wit="#1826">de</rdg>
+							<rdg wit="#1849">der</rdg>
+						</app>
+						 Schiffer durch ein Meer, das wiesenartig mit Seetang bedeckt ist, nach der Mündung des Gambia steuert
+						<app>
+							<rdg wit="#1808">, ahnet</rdg>
+							<rdg wit="#1826">, ahnet</rdg>
+							<rdg wit="#1849">; ahndet</rdg>
+						</app>
+						 er, wo ihn 
+						<app>
+							<rdg wit="#1808">plözlich</rdg>
+							<rdg wit="#1826">plözlich</rdg>
+							<rdg wit="#1849">plötzlich</rdg>
+						</app>
+						 der tropische Ostwind verläßt <note place="end" n="7)"></note>, die Nähe des weitverbreiteten wärmestrahlenden Sandes. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="31">
+						Heerden von Gazellen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">und</rdg>
+						</app>
+						 schnellfüßige 
+						<app>
+							<rdg wit="#1808">Strausse, dürstende Pantherthiere und Löwen</rdg>
+							<rdg wit="#1826">Strausse, dürstende Pantherthiere und Löwen</rdg>
+							<rdg wit="#1849">Strauße</rdg>
+						</app>
+						 durchirren 
+						<app>
+							<rdg wit="#1808">in ungleichem Kampfe</rdg>
+							<rdg wit="#1826">in ungleichem Kampfe</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 den 
+						<app>
+							<rdg wit="#1808">unermesslichen</rdg>
+							<rdg wit="#1826">unermeßlichen</rdg>
+							<rdg wit="#1849">unermeßlichen</rdg>
+						</app>
+						 Raum. Rechnet man ab die im Sandmeere neuentdeckten Gruppen quellenreicher Inseln, an deren grünen Ufern die nomadischen Tibbos und 
+						<app>
+							<rdg wit="#1808">Tuaryks</rdg>
+							<rdg wit="#1826">Tuariks</rdg>
+							<rdg wit="#1849">Tuaryks</rdg>
+						</app>
+						 <note place="end" n="8)"></note> schwärmen
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 so ist der übrige Theil der afrikanischen Wüste als dem Menschen unbewohnbar zu betrachten. Auch wagen die 
+						<app>
+							<rdg wit="#1808">angränzenden</rdg>
+							<rdg wit="#1826">angränzenden</rdg>
+							<rdg wit="#1849">angrenzenden</rdg>
+						</app>
+						 gebildeten Völker
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 sie nur periodisch zu betreten. Auf Wegen, die 
+						<app>
+							<rdg wit="#1808">das</rdg>
+							<rdg wit="#1826">das</rdg>
+							<rdg wit="#1849">der</rdg>
+						</app>
+						 Handelsverkehr seit Jahrtausenden unwandelbar bestimmt hat, geht der lange Zug von 
+						<app>
+							<rdg wit="#1808">Fafilet</rdg>
+							<rdg wit="#1826">Tafilet</rdg>
+							<rdg wit="#1849">Tafilet</rdg>
+						</app>
+						 bis 
+						<app>
+							<rdg wit="#1808">Tombuctu</rdg>
+							<rdg wit="#1826">Tombuctu</rdg>
+							<rdg wit="#1849">Tombuktu</rdg>
+						</app>
+						, oder von 
+						<app>
+							<rdg wit="#1808">Fezzan</rdg>
+							<rdg wit="#1826">Mourzouk</rdg>
+							<rdg wit="#1849">Murzuk</rdg>
+						</app>
+						 bis 
+						<app>
+							<rdg wit="#1808">Darfur;</rdg>
+							<rdg wit="#1826">Bornou,</rdg>
+							<rdg wit="#1849">Bornu:</rdg>
+						</app>
+						 kühne Unternehmungen, deren Möglichkeit auf der Existenz des 
+						<app>
+							<rdg wit="#1808">Kamels</rdg>
+							<rdg wit="#1826">Kamels</rdg>
+							<rdg wit="#1849">Kameels</rdg>
+						</app>
+						 beruht, des Schiffs der Wüste <note place="end" n="9)"></note>, wie es die alten Sagen der Ostwelt nennen. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="32">
+						Diese afrikanischen Ebenen füllen einen Raum aus, welcher den des nahen Mittelmeeres fast dreimal 
+						<app>
+							<rdg wit="#1808">übertrift</rdg>
+							<rdg wit="#1826">übertrifft</rdg>
+							<rdg wit="#1849">übertrifst</rdg>
+						</app>
+						. Sie liegen zum Theil unter den Wendekreisen selbst, zum Theil denselben nahe; und diese Lage begründet ihren individuellen 
+						<app>
+							<rdg wit="#1808">Naturcharacter</rdg>
+							<rdg wit="#1826">Naturcharacter</rdg>
+							<rdg wit="#1849">Naturcharakter</rdg>
+						</app>
+						. Dagegen ist in der östlichen Hälfte des alten Continents dasselbe geognostische Phänomen
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">mehr</rdg>
+						</app>
+						 der gemäßigten Zone eigenthümlich. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="33">
+						<app>
+							<rdg wit="#1849">Auf dem Bergrücken von Mittel-Asien zwischen dem Goldberge oder Altai und dem Kuen-lün <note place="end" n="10"></note>, von der chinesischen Mauer an bis jenseits des Himmelsgebirges und gegen den Aral-See hin, in einer Länge von mehreren tausend Meilen, breiten sich, wenn auch nicht die höchsten, doch die größten Steppen der Welt aus. Einen Theil derselben, die Kalmücken- und Kirghisen-Steppen zwischen dem Don, der Wolga, dem caspischen Meere und dem chinesischen Dsaisang-See, also in einer Erstreckung von fast 700 geographischen Meilen, habe ich selbst zu sehen Gelegenheit gehabt, volle dreißig Jahre nach meiner südamerikanischen Reise. Die Vegetation der asiatischen, bisweilen hügeligen und durch Fichtenwälder unterbrochenen Steppen ist gruppenweise viel mannigfaltiger als die der Llanos und Pampas von Caracas und Buenos Aires. Der schönere Theil der Ebenen, von asiatischen Hirtenvölkern bewohnt, ist mit niedrigen Sträuchern üppig weißblühender Rosaceen, mit Kaiserkronen (Fritillarien), Tulpen und Cypripedien geschmückt. Wie die heiße Zone sich im ganzen dadurch auszeichnet, daß alles Vegetative baumartig zu werden strebt, so charakterisirt einige Steppen der asiatischen gemäßigten Zone die wundersame Höhe, zu der sich blühende Kräuter erheben: Saussureen und andere Synanthereen; Schotengewächse, besonders ein Heer von Astragalus-Arten. Wenn man in den niedrigen tatarischen Fuhrwerken sich durch weglose Theile dieser Krautsteppen bewegt, kann man nur aufrecht stehend sich orientiren, und sieht die waldartig dichtgedrängten Pflanzen sich vor den Rädern niederbeugen. Einige dieser asiatischen Steppen sind Grasebenen; andere mit saftigen, immergrünen, gegliederten Kali-Pflanzen bedeckt; viele fernleuchtend von flechtenartig aufsprießendem Salze, das ungleich, wie frischgefallener Schnee, den lettigen Boden verhüllt. </rdg>
+						</app>
+					</l>
+					<l n="34">
+						<app>
+							<rdg wit="#1808">Auf dem Bergrücken von Mittelasien zwischen dem Altai und Mustag <note place="end" n="10)"></note>, von der chinesischen Mauer an bis gegen den Aral-See in einer Länge von 1000 Meilen, breiten sich die höchsten und größten Steppen der Welt aus. Einige sind Grasebenen; andere mit saftigen, immergrünen, gegliederten Kali-Pflanzen geschmückt; viele fernleuchtend von flechtenartig aufsprießendem Salze, das ungleich, wie frischgefallener Schnee, den lettigen Boden deckt. </rdg>
+							<rdg wit="#1826">Auf dem Bergrücken von Mittelasien zwischen dem Goldberge oder Altai und dem Zung-ling <note place="end" n="10)"></note>, von der chinesischen Mauer an bis jenseits des Himmels-Gebirges und gegen den Aral-See hin, in einer Länge von 1000 Meilen, breiten sich die höchsten und größten Steppen der Welt aus. Einige sind Grasebenen; andere mit saftigen, immergrünen, gegliederten Kali - Pflanzen geschmückt; viele fernleuchtend von flechtenartig aufspriesendem Salze, das ungleich, wie frischgefallener Schnee, den lettigen Boden deckt. </rdg>
+						</app>
+					</l>
+					<l n="35">
+						Diese 
+						<app>
+							<rdg wit="#1808">Mongolischen</rdg>
+							<rdg wit="#1826">Mongolischen</rdg>
+							<rdg wit="#1849">mongolischen</rdg>
+						</app>
+						 und 
+						<app>
+							<rdg wit="#1808">Tatarischen</rdg>
+							<rdg wit="#1826">Tatarischen</rdg>
+							<rdg wit="#1849">tatarischen</rdg>
+						</app>
+						 Steppen
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">, durch mannichfaltige Gebirgszüge unterbrochen,</rdg>
+							<rdg wit="#1849">, durch mannigfaltige Gebirgszüge unterbrochen,</rdg>
+						</app>
+						 scheiden die uralte
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 langgebildete Menschheit in 
+						<app>
+							<rdg wit="#1808">Tibet</rdg>
+							<rdg wit="#1826">Tibet</rdg>
+							<rdg wit="#1849">Tübet</rdg>
+						</app>
+						 und Hindostan
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 von den rohen 
+						<app>
+							<rdg wit="#1808">Nordasiatischen</rdg>
+							<rdg wit="#1826">, Nordasiatischen</rdg>
+							<rdg wit="#1849">, nord-asiatischen</rdg>
+						</app>
+						 Völkern. Auch ist ihr Dasein von 
+						<app>
+							<rdg wit="#1808">mannigfaltigem</rdg>
+							<rdg wit="#1826">mannichfaltigem</rdg>
+							<rdg wit="#1849">mannigfaltigem</rdg>
+						</app>
+						 Einfluß auf die wechselnden Schicksale des Menschengeschlechts gewesen. Sie haben die Bevölkerung gegen Süden zusammengedrängt; mehr
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 als
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">der Himalaya, als</rdg>
+							<rdg wit="#1849">der Himalaya, als</rdg>
+						</app>
+						 das Schneegebirge von Sirinagur und Gorka
+						<app>
+							<rdg wit="#1808">, das</rdg>
+							<rdg wit="#1826">, das</rdg>
+							<rdg wit="#1849">den</rdg>
+						</app>
+						 Verkehr der Nationen gestört, und im Norden
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">Asiens</rdg>
+						</app>
+						 unwandelbare 
+						<app>
+							<rdg wit="#1808">Gränzen gesezt</rdg>
+							<rdg wit="#1826">Gränzen gesezt</rdg>
+							<rdg wit="#1849">Grenzen gesetzt</rdg>
+						</app>
+						 der Verbreitung milderer Sitten
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und des schaffenden Kunstsinns. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="36">
+						Aber nicht als hindernde Vormauer allein darf die Geschichte die Ebene von 
+						<app>
+							<rdg wit="#1808">Inner-Asien</rdg>
+							<rdg wit="#1826">Inner - Asien</rdg>
+							<rdg wit="#1849">Inner-Asien</rdg>
+						</app>
+						 betrachten. Unheil und Verwüstung hat sie mehrmals über den Erdkreis gebracht. Hirtenvölker dieser Steppe
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 die 
+						<app>
+							<rdg wit="#1808">Avaren</rdg>
+							<rdg wit="#1826">Avaren</rdg>
+							<rdg wit="#1849">Mongolen</rdg>
+						</app>
+						, 
+						<app>
+							<rdg wit="#1808">Mongolen</rdg>
+							<rdg wit="#1826">Mongolen</rdg>
+							<rdg wit="#1849">Geten</rdg>
+						</app>
+						, Alanen und 
+						<app>
+							<rdg wit="#1808">Uzen</rdg>
+							<rdg wit="#1826">Uzen</rdg>
+							<rdg wit="#1849">Usün,</rdg>
+						</app>
+						 haben die Welt erschüttert. Wenn in dem Lauf der Jahrhunderte frühe 
+						<app>
+							<rdg wit="#1808">Geisteskultur</rdg>
+							<rdg wit="#1826">Geisteskultur</rdg>
+							<rdg wit="#1849">Geistescultur</rdg>
+						</app>
+						, gleich dem 
+						<app>
+							<rdg wit="#1808">erquickenden</rdg>
+							<rdg wit="#1826">erquikenden</rdg>
+							<rdg wit="#1849">erquickenden</rdg>
+						</app>
+						 Sonnenlicht, von Osten nach Westen gewandert ist; so haben späterhin, in derselben Richtung, Barbarei und sittliche 
+						<app>
+							<rdg wit="#1808">Rohheit</rdg>
+							<rdg wit="#1826">Rohheit</rdg>
+							<rdg wit="#1849">Roheit</rdg>
+						</app>
+						 Europa nebelartig zu überziehen gedroht. Ein brauner Hirtenstamm
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">(tukiüischer</rdg>
+							<rdg wit="#1849">(tukiuischer</rdg>
+						</app>
+						 <note place="end" n="11)"></note>,
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">das ist türkischer Abkunft),</rdg>
+							<rdg wit="#1849">d. i. türkischer Abkunft),</rdg>
+						</app>
+						 die 
+						<app>
+							<rdg wit="#1808">Hiongnu</rdg>
+							<rdg wit="#1826">Hiognu</rdg>
+							<rdg wit="#1849">Hiongnu</rdg>
+						</app>
+						, bewohnte in ledernen Gezelten die hohe Steppe von Gobi. 
+						<app>
+							<rdg wit="#1808">Ungestüm brach er hervor aus dem östlichen Theile von Hinter-Asien</rdg>
+							<rdg wit="#1826">Der chinesischen Macht lange furchtbar, ward ein Theil des Stammes südlich nach Inner - Asien zurückgedrängt. Dieser Stoß der Völker pflanzte sich unaufhaltsam bis in das alte Finnenland am Ural fort. Von dort aus brachen Hunnen</rdg>
+							<rdg wit="#1849">Der chinesischen Macht lange furchtbar, ward ein Theil des Stammes südlich nach Inner-Asien zurückgedrängt. Dieser Stoß der Völker pflanzte sich unaufhaltsam bis in das alte Finnenland am Ural fort. Von dort aus brachen Hunnen</rdg>
+						</app>
+						, 
+						<app>
+							<rdg wit="#1808">und erschien plözlich (so geht die dunkele Sage) als</rdg>
+							<rdg wit="#1826">Avaren, Chasaren und mannichfaltige Gemische asiatischer Menschen - Racen hervor:</rdg>
+							<rdg wit="#1849">Avaren, Chasaren und mannigfaltige Gemische asiatischer Menschenracen hervor.</rdg>
+						</app>
+						 Hunnische 
+						<app>
+							<rdg wit="#1808">Kriegsschaar</rdg>
+							<rdg wit="#1826">Kriegsheere erschienen</rdg>
+							<rdg wit="#1849">Kriegsheere erschienen</rdg>
+						</app>
+						 erst an der Wolga, dann in Pannonien, dann an der 
+						<app>
+							<rdg wit="#1808">Loire</rdg>
+							<rdg wit="#1826">Marne</rdg>
+							<rdg wit="#1849">Marne</rdg>
+						</app>
+						 und an den Ufern des Po
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 die schön bepflanzten Fluren verheerend, wo seit Antenors Zeiten die bildende 
+						<app>
+							<rdg wit="#1808">Menschheit</rdg>
+							<rdg wit="#1826">Menschhheit</rdg>
+							<rdg wit="#1849">Menschheit</rdg>
+						</app>
+						 Denkmal auf Denkmal gehäuft. So wehte aus den mongolischen Wüsten ein verpesteter Windeshauch, der auf 
+						<app>
+							<rdg wit="#1808">Cisalpinischem</rdg>
+							<rdg wit="#1826">Cisalpinischem</rdg>
+							<rdg wit="#1849">cisalpinischem</rdg>
+						</app>
+						 Boden die zarte
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 langgepflegte Blüthe der Kunst erstickte. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="37">
+						Von den Salzsteppen Asiens, von den europäischen Heideländern, die im Sommer mit honigreichen
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 röthlichen Blumen prangen, und von den pflanzenleeren Wüsten 
+						<app>
+							<rdg wit="#1808">Afrikas</rdg>
+							<rdg wit="#1826">Afrikas</rdg>
+							<rdg wit="#1849">Afrika’s</rdg>
+						</app>
+						 kehren wir zu den Ebenen von Südamerika zurück, deren Gemälde ich bereits angefangen habe
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 mit rohen Zügen zu entwerfen. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="38">
+						Das Interesse, welches 
+						<app>
+							<rdg wit="#1808">dies</rdg>
+							<rdg wit="#1826">dies</rdg>
+							<rdg wit="#1849">ein solches</rdg>
+						</app>
+						 Gemälde dem Beobachter gewähren kann, ist
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">aber</rdg>
+						</app>
+						 ein reines Naturinteresse. Keine Oase erinnert hier an frühe Bewohner, kein behauener Stein <note place="end" n="12)"></note>, kein 
+						<app>
+							<rdg wit="#1808">verwildeter</rdg>
+							<rdg wit="#1826">verwildeter</rdg>
+							<rdg wit="#1849">verwilderter</rdg>
+						</app>
+						 Fruchtbaum an den Fleiß untergegangener Geschlechter. Wie den Schicksalen der 
+						<app>
+							<rdg wit="#1808">Menschen</rdg>
+							<rdg wit="#1826">Menschheit</rdg>
+							<rdg wit="#1849">Menschheit</rdg>
+						</app>
+						 fremd, allein an die Gegenwart fesselnd
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 liegt dieser Erdwinkel da, ein wilder Schauplatz des freien 
+						<app>
+							<rdg wit="#1808">Thier- und</rdg>
+							<rdg wit="#1826">Thier- und</rdg>
+							<rdg wit="#1849">Thier-und</rdg>
+						</app>
+						 Pflanzenlebens. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="39">
+						Von der Küstenkette von 
+						<app>
+							<rdg wit="#1808">Caraccas</rdg>
+							<rdg wit="#1826">Caracas</rdg>
+							<rdg wit="#1849">Caracas</rdg>
+						</app>
+						 erstreckt sich die Steppe
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 bis zu den Wäldern der 
+						<app>
+							<rdg wit="#1808">Guayana,</rdg>
+							<rdg wit="#1826">Guayana,</rdg>
+							<rdg wit="#1849">Guyana;</rdg>
+						</app>
+						 von 
+						<app>
+							<rdg wit="#1808">dem Gebirge</rdg>
+							<rdg wit="#1826">den Schneebergen</rdg>
+							<rdg wit="#1849">den Schneebergen</rdg>
+						</app>
+						 von Merida, 
+						<app>
+							<rdg wit="#1808">in dem siedende Schwefelquellen unter ewigem Schnee hervordringen</rdg>
+							<rdg wit="#1826">an deren Abhange der Natrum-See Urao ein Gegenstand des religiösen Aberglaubens der Eingebornen ist</rdg>
+							<rdg wit="#1849">an deren Abhange der Natrum-See Urao ein Gegenstand des religiösen Aberglaubens der Eingebornen ist</rdg>
+						</app>
+						, bis zu dem großen Delta, welches der Orinoco an seiner Mündung bildet. Südwestlich zieht sie sich gleich einem Meeresarme <note place="end" n="13)"></note> jenseits der Ufer des Meta und
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">des</rdg>
+							<rdg wit="#1849">des</rdg>
+						</app>
+						 Vichada bis zu den unbesuchten Quellen des Guaviare, 
+						<app>
+							<rdg wit="#1808">oder</rdg>
+							<rdg wit="#1826">oder</rdg>
+							<rdg wit="#1849">und</rdg>
+						</app>
+						 bis zu dem einsamen Gebirgsstock hin, 
+						<app>
+							<rdg wit="#1808">den</rdg>
+							<rdg wit="#1826">den</rdg>
+							<rdg wit="#1849">welchen</rdg>
+						</app>
+						 spanische Kriegsvölker, im Spiel ihrer regsamen Phantasie, den Paramo de la 
+						<app>
+							<rdg wit="#1808">Summa</rdg>
+							<rdg wit="#1826">Suma</rdg>
+							<rdg wit="#1849">Suma</rdg>
+						</app>
+						 Paz, gleichsam den schönen Sitz des ewigen Friedens, nannten. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="40">
+						Diese Steppe nimmt einen Raum von 
+						<app>
+							<rdg wit="#1808">14000</rdg>
+							<rdg wit="#1826">16,000</rdg>
+							<rdg wit="#1849">16000</rdg>
+						</app>
+						 Quadratmeilen ein. Aus geographischer Unkunde hat man sie oft
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">in gleicher Breite,</rdg>
+							<rdg wit="#1849">in gleicher Breite</rdg>
+						</app>
+						 als ununterbrochen bis an die 
+						<app>
+							<rdg wit="#1808">magellanische</rdg>
+							<rdg wit="#1826">magellanische</rdg>
+							<rdg wit="#1849">Magellanische</rdg>
+						</app>
+						 Meerenge fortlaufend geschildert
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 nicht eingedenk der 
+						<app>
+							<rdg wit="#1808">Bergjoche <note place="end" n="14)"></note>, welche die Andeskette östlich aussendet</rdg>
+							<rdg wit="#1826">waldigen Ebene <note place="end" n="14)"></note> des Amazonenflusses</rdg>
+							<rdg wit="#1849">waldigen Ebene des Amazonenflusses</rdg>
+						</app>
+						, 
+						<app>
+							<rdg wit="#1808">und</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 welche 
+						<app>
+							<rdg wit="#1808">die waldige Ebene des Amazonenflusses</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 gegen Norden und Süden von den Grassteppen des Apure und 
+						<app>
+							<rdg wit="#1808">la</rdg>
+							<rdg wit="#1826">des La</rdg>
+							<rdg wit="#1849">des La</rdg>
+						</app>
+						 Plata-Stromes 
+						<app>
+							<rdg wit="#1808">scheiden</rdg>
+							<rdg wit="#1826">begränzt wird</rdg>
+							<rdg wit="#1849">begrenzt wird</rdg>
+						</app>
+						. Die 
+						<app>
+							<rdg wit="#1808">letztern</rdg>
+							<rdg wit="#1826">Andeskette von Cochabamba und die brasilianische Berggruppe senden</rdg>
+							<rdg wit="#1849">Andeskette von Cochabamba und die brasilianische Berggruppe senden</rdg>
+						</app>
+						,
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">zwischen der Provinz Chiquitos und der Landenge von Villabella, einzelne Bergjoche sich entgegen. Eine schmale Ebene vereinigt</rdg>
+							<rdg wit="#1849">zwischen der Provinz Chiquitos und der Landenge von Villabella, einzelne Bergjoche sich entgegen <note place="end" n="14"></note>. Eine schmale Ebene vereinigt</rdg>
+						</app>
+						 die
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">Hyläa des Amazonenflusses mit den</rdg>
+							<rdg wit="#1849">Hyläa des Amazonenflusses mit den</rdg>
+						</app>
+						 Pampas von 
+						<app>
+							<rdg wit="#1808">Buenosayres, übertreffen jene (</rdg>
+							<rdg wit="#1826">Buenosayres. Leztere übertreffen</rdg>
+							<rdg wit="#1849">Buenos Aires. Letztere übertreffen</rdg>
+						</app>
+						die Llanos
+						<app>
+							<rdg wit="#1808">)</rdg>
+							<rdg wit="#1826">von Venezuela</rdg>
+							<rdg wit="#1849">von Venezuela</rdg>
+						</app>
+						 dreimal an Flächeninhalt. Ja ihre Ausdehnung ist so wundervoll groß, daß sie auf der nördlichen Seite durch 
+						<app>
+							<rdg wit="#1808">Palmengebüsche begränzt,</rdg>
+							<rdg wit="#1826">Pahnengebüsche begränzt,</rdg>
+							<rdg wit="#1849">Palmengebüsche begrenzt</rdg>
+						</app>
+						 und auf der südlichen fast mit ewigem Eise bedeckt sind. 
+						<app>
+							<rdg wit="#1808">—</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 Der 
+						<app>
+							<rdg wit="#1808">Casuarähnliche Touyou</rdg>
+							<rdg wit="#1826">Casuarähnliche Touyou</rdg>
+							<rdg wit="#1849">casuar-ähnliche Tuyu (Struthio Rhea)</rdg>
+						</app>
+						 ist diesen Pampas eigenthümlich
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 wie die Colonien 
+						<app>
+							<rdg wit="#1808">verwildeter</rdg>
+							<rdg wit="#1826">verwildeter</rdg>
+							<rdg wit="#1849">verwilderter</rdg>
+						</app>
+						 Hunde <note place="end" n="15)"></note>, welche gesellig in unterirdischen Höhlen wohnen, aber oft blutgierig 
+						<app>
+							<rdg wit="#1808">den Menschen</rdg>
+							<rdg wit="#1826">den-Menschen</rdg>
+							<rdg wit="#1849">den Menschen</rdg>
+						</app>
+						 anfallen, für dessen Vertheidigung ihre Stammväter kämpften. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="41">
+						Gleich
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">dem größten Theile</rdg>
+						</app>
+						 der Wüste 
+						<app>
+							<rdg wit="#1808">Zaara</rdg>
+							<rdg wit="#1826">Zahara</rdg>
+							<rdg wit="#1849">Zahara</rdg>
+						</app>
+						 liegen die Llanos, oder die nördlichste Ebene von Südamerika, in dem heißen Erdgürtel. Dennoch erscheinen sie
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 in jeder Hälfte des Jahres
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 unter einer verschiedenen Gestalt
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 bald verödet, wie das 
+						<app>
+							<rdg wit="#1808">lybische</rdg>
+							<rdg wit="#1826">lybische</rdg>
+							<rdg wit="#1849">libysche</rdg>
+						</app>
+						 Sandmeer
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">;</rdg>
+						</app>
+						 bald
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">als</rdg>
+						</app>
+						 eine Grasflur, wie 
+						<app>
+							<rdg wit="#1808">die hohe Steppe</rdg>
+							<rdg wit="#1826">die hohe Steppe</rdg>
+							<rdg wit="#1849">so viele Steppen</rdg>
+						</app>
+						 von 
+						<app>
+							<rdg wit="#1808">Mittel-Asien</rdg>
+							<rdg wit="#1826">Mittel - Asien</rdg>
+							<rdg wit="#1849">Mittel-Asien</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="42">
+						Es ist ein belohnendes, wenn gleich schwieriges Geschäft der allgemeinen Länderkunde, die Naturbeschaffenheit entlegener Erdstriche mit einander zu vergleichen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und die Resultate dieser Vergleichung in wenigen Zügen darzustellen. Mannigfaltige
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 zum Theil noch wenig entwickelte Ursachen <note place="end" n="16)"></note> vermindern die Dürre und Wärme des neuen Welttheils. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="43">
+						Schmalheit 
+						<app>
+							<rdg wit="#1808">des mannigfaltig-eingeschnittenen Continents; seine</rdg>
+							<rdg wit="#1826">des mannigfaltig-eingeschnittenen Continents in der nördlichen Tropengegend;</rdg>
+							<rdg wit="#1849">der vielfach eingeschnittenen Feste in der nördlichen Tropengegend, wo eine flüssige Grundfläche der Atmosphäre einen minder warmen aufsteigenden Luftstrom darbietet;</rdg>
+						</app>
+						 weite Ausdehnung gegen 
+						<app>
+							<rdg wit="#1808">die beeiseten</rdg>
+							<rdg wit="#1826">die beeiseten</rdg>
+							<rdg wit="#1849">beide beeiste</rdg>
+						</app>
+						 Pole hin; 
+						<app>
+							<rdg wit="#1808">der freie Ozean</rdg>
+							<rdg wit="#1826">ein freier Ozean</rdg>
+							<rdg wit="#1849">ein freier Ocean</rdg>
+						</app>
+						, über den die tropischen 
+						<app>
+							<rdg wit="#1808">Winde</rdg>
+							<rdg wit="#1826">Winde</rdg>
+							<rdg wit="#1849">kühleren Seewinde</rdg>
+						</app>
+						 wegblasen; Flachheit der östlichen Küsten
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">;</rdg>
+						</app>
+						 Ströme kalten Meereswassers
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">aus der antarctischen Region</rdg>
+						</app>
+						, welche 
+						<app>
+							<rdg wit="#1808">vom Feuerlande</rdg>
+							<rdg wit="#1826">vom Feuerlande</rdg>
+							<rdg wit="#1849">, anfänglich von Südwest nach Nordost gerichtet, unter dem Parallelkreis von 35° südlicher Breite an die Küste von Chili anschlagen und an den Küsten von Peru</rdg>
+						</app>
+						 bis 
+						<app>
+							<rdg wit="#1808">gegen Peru hin</rdg>
+							<rdg wit="#1826">gegen Peru hin</rdg>
+							<rdg wit="#1849">zum Cap Pariña</rdg>
+						</app>
+						 nördlich vordringen,
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">sich dann plötzlich gegen Westen wendend;</rdg>
+						</app>
+						 die Zahl quellenreicher Gebirgsketten, deren schneebedeckte Gipfel weit über alle Wolkenschichten emporstreben
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">und an ihrem Abhange herabsteigende Luftströmungen veranlassen</rdg>
+						</app>
+						; die 
+						<app>
+							<rdg wit="#1808">Fülle</rdg>
+							<rdg wit="#1826">Füllo</rdg>
+							<rdg wit="#1849">Fülle der Flüsse von</rdg>
+						</app>
+						 ungeheurer 
+						<app>
+							<rdg wit="#1808">Ströme</rdg>
+							<rdg wit="#1826">Ströme</rdg>
+							<rdg wit="#1849">Breite</rdg>
+						</app>
+						, welche nach vielen Windungen stets die entfernteste Küste suchen; sandlose und darum minder erhitzbare Steppen; undurchdringliche Wälder, welche
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">, den Boden vor den Sonnenstrahlen schützend oder durch ihre Blattflächen wärmestrahlend,</rdg>
+						</app>
+						 die flußreiche Ebene am Aequator ausfüllen, und im Innern des Landes, wo Gebirge und 
+						<app>
+							<rdg wit="#1808">Ozean</rdg>
+							<rdg wit="#1826">Ozean</rdg>
+							<rdg wit="#1849">Ocean</rdg>
+						</app>
+						 am entlegensten sind, ungeheure Massen theils eingesogenen, theils selbsterzeugten Wassers aushauchen
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 — alle diese Verhältnisse gewähren dem flachen Theile von Amerika ein Klima, das mit dem 
+						<app>
+							<rdg wit="#1808">Afrikanischen</rdg>
+							<rdg wit="#1826">Afrikanischen</rdg>
+							<rdg wit="#1849">afrikanischen</rdg>
+						</app>
+						 durch Feuchtigkeit und Kühlung wunderbar contrastirt. In ihnen allein liegt der Grund jenes üppigen
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 saftstrotzenden Pflanzenwuchses, jener Frondosität, welche 
+						<app>
+							<rdg wit="#1808">den eigenthümlichen Character</rdg>
+							<rdg wit="#1826">den eigenthümlichen Character</rdg>
+							<rdg wit="#1849">der eigenthümliche Charakter</rdg>
+						</app>
+						 des 
+						<app>
+							<rdg wit="#1808">neuen</rdg>
+							<rdg wit="#1826">neuen</rdg>
+							<rdg wit="#1849">Neuen</rdg>
+						</app>
+						 Continents 
+						<app>
+							<rdg wit="#1808">bezeichnet</rdg>
+							<rdg wit="#1826">bezeichnet</rdg>
+							<rdg wit="#1849">ist</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="44">
+						Wird daher eine Seite unsers Planeten luftfeuchter als die andere genannt
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 so ist die Betrachtung des gegenwärtigen Zustandes der Dinge hinlänglich, das Problem dieser Ungleichheit zu lösen. Der Physiker braucht die Erklärung solcher Naturerscheinungen nicht in das Gewand geologischer Mythen zu hüllen. Es bedarf der Annahme nicht, als habe sich auf dem uralten Erdkörper
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">in der östlichen und westlichen Hemisphäre</rdg>
+						</app>
+						 ungleichzeitig geschlichtet der verderbliche Streit der Elemente
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">;</rdg>
+						</app>
+						 oder als sei aus der chaotischen Wasserbedeckung Amerika später <note place="end" n="17)"></note>
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 als die übrigen Welttheile hervorgetreten, ein sumpfreiches, von Crocodilen und Schlangen bewohntes Eiland. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="45">
+						Allerdings hat Südamerika, nach der Gestalt seines Umrisses und der Richtung seiner Küsten
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 eine auffallende Aehnlichkeit mit der südwestlichen Halbinsel des alten Continents. Aber innere Structur des Bodens
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und relative Lage zu den 
+						<app>
+							<rdg wit="#1808">angränzenden</rdg>
+							<rdg wit="#1826">angränzenden</rdg>
+							<rdg wit="#1849">angrenzenden</rdg>
+						</app>
+						 Ländermassen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 bringen in Afrika jene wunderbare Dürre hervor, welche in unermeßlichen Räumen der Entwickelung des organischen Lebens entgegensteht. Vier 
+						<app>
+							<rdg wit="#1808">Fünftheil</rdg>
+							<rdg wit="#1826">Fünftheil</rdg>
+							<rdg wit="#1849">Fünftheile</rdg>
+						</app>
+						 von Südamerika liegen jenseits des Aequators
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 also in einer Hemisphäre, welche wegen der 
+						<app>
+							<rdg wit="#1808">größern</rdg>
+							<rdg wit="#1826">größern</rdg>
+							<rdg wit="#1849">größeren</rdg>
+						</app>
+						 Wassermenge und wegen mannigfaltiger 
+						<app>
+							<rdg wit="#1808">andrer</rdg>
+							<rdg wit="#1826">andrer</rdg>
+							<rdg wit="#1849">anderer</rdg>
+						</app>
+						 Ursachen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 kühler und feuchter <note place="end" n="18)"></note>
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 als 
+						<app>
+							<rdg wit="#1808">unsere</rdg>
+							<rdg wit="#1826">unsere</rdg>
+							<rdg wit="#1849">unsre</rdg>
+						</app>
+						 nördliche Halbkugel ist. Dieser 
+						<app>
+							<rdg wit="#1808">letztern</rdg>
+							<rdg wit="#1826">leztern</rdg>
+							<rdg wit="#1849">letzteren</rdg>
+						</app>
+						 gehört dagegen der beträchtlichere Theil von Afrika zu. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="46">
+						Die südamerikanische Steppe, die Llanos, haben, von Osten gegen Westen gemessen, eine dreimal geringere Ausdehnung
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 als die afrikanischen Wüsten. Jene empfangen den tropischen Seewind; diese, unter 
+						<app>
+							<rdg wit="#1808">einem Breiten-Zirkel</rdg>
+							<rdg wit="#1826">einem Breiten Zirkel</rdg>
+							<rdg wit="#1849">Einem Breiten-Zirkel</rdg>
+						</app>
+						 mit Arabien und dem südlichen Persien gelegen, werden von Luftschichten berührt, die über heiße, 
+						<app>
+							<rdg wit="#1808">wärmestralende</rdg>
+							<rdg wit="#1826">wärmestralende</rdg>
+							<rdg wit="#1849">wärmestrahlende</rdg>
+						</app>
+						 Continente hinwehen. Auch hat bereits der ehrwürdige
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 langverkannte Vater der Geschichte, Herodot, im ächten Sinn einer großen Naturansicht, alle Wüsten in 
+						<app>
+							<rdg wit="#1808">Nordafrika</rdg>
+							<rdg wit="#1826">Nordafrika</rdg>
+							<rdg wit="#1849">Nord-Afrika</rdg>
+						</app>
+						, in Yemen, Kerman und 
+						<app>
+							<rdg wit="#1808">Mekhran</rdg>
+							<rdg wit="#1826">Mekhran</rdg>
+							<rdg wit="#1849">Mekran</rdg>
+						</app>
+						 (
+						<app>
+							<rdg wit="#1808">dem</rdg>
+							<rdg wit="#1826">dem</rdg>
+							<rdg wit="#1849">der</rdg>
+						</app>
+						 Gedrosia der Griechen)
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 ja bis Multan in Vorder-Indien hin, als ein einziges 
+						<app>
+							<rdg wit="#1808">zusammenhängendes</rdg>
+							<rdg wit="#1826">zusammenhängendes</rdg>
+							<rdg wit="#1849">zusammenhangendes</rdg>
+						</app>
+						 Sandmeer <note place="end" n="19)"></note> geschildert. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="47">
+						Zu der Wirkung heißer Landwinde gesellt sich in Afrika, so weit wir es kennen, noch der Mangel an großen Flüssen, an 
+						<app>
+							<rdg wit="#1808">inländischen Seen, und an</rdg>
+							<rdg wit="#1826">Wasserdampf-aushauchenden, Kälte-erregenden Wäldern und</rdg>
+							<rdg wit="#1849">Wasserdampf aushauchenden, kälteerregenden Wäldern und</rdg>
+						</app>
+						 hohen Gebirgen. Mit ewigem Eise bedeckt ist 
+						<app>
+							<rdg wit="#1808">bloß</rdg>
+							<rdg wit="#1826">blos</rdg>
+							<rdg wit="#1849">bloß</rdg>
+						</app>
+						 der westliche Theil des Atlas <note place="end" n="20)"></note>, dessen schmales Bergjoch, seitwärts gesehen, den alten Küstenfahrern wie eine 
+						<app>
+							<rdg wit="#1808">einzelnstehende</rdg>
+							<rdg wit="#1826">einzelnstehende</rdg>
+							<rdg wit="#1849">einzeln stehende</rdg>
+						</app>
+						 luftige Himmelsstütze erschien. Oestlich läuft das Gebirge bis gegen Dakul 
+						<app>
+							<rdg wit="#1808">zu</rdg>
+							<rdg wit="#1826">hin</rdg>
+							<rdg wit="#1849">hin</rdg>
+						</app>
+						, wo, 
+						<app>
+							<rdg wit="#1808">izt</rdg>
+							<rdg wit="#1826">jezt</rdg>
+							<rdg wit="#1849">jetzt</rdg>
+						</app>
+						 in Schutt 
+						<app>
+							<rdg wit="#1808">gesunken</rdg>
+							<rdg wit="#1826">versunken</rdg>
+							<rdg wit="#1849">versunken</rdg>
+						</app>
+						, das meergebietende Carthago lag. Als langgedehnte Küstenkette, als gätulische Vormauer, hält 
+						<app>
+							<rdg wit="#1808">sie</rdg>
+							<rdg wit="#1826">sie</rdg>
+							<rdg wit="#1849">es</rdg>
+						</app>
+						 die kühlen Nordwinde
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und mit 
+						<app>
+							<rdg wit="#1808">diesen</rdg>
+							<rdg wit="#1826">ihnen</rdg>
+							<rdg wit="#1849">ihnen</rdg>
+						</app>
+						 die
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 aus dem Mittelmeere aufsteigenden Dämpfe zurück. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="48">
+						<app>
+							<rdg wit="#1808">Wahrscheinlich erhebt sich auch über der untern Schneegränze</rdg>
+							<rdg wit="#1826">Wahrscheinlich erhebt sich auch über der untern Schneegränze</rdg>
+							<rdg wit="#1849">Ueber die untere Schneegrenze erhaben dachte man sich einst</rdg>
+						</app>
+						 das Mondgebirge <note place="end" n="21)"></note>, 
+						<app>
+							<rdg wit="#1808">al Komri</rdg>
+							<rdg wit="#1826">Al Komri</rdg>
+							<rdg wit="#1849">Djebel al-Komr</rdg>
+						</app>
+						, von 
+						<app>
+							<rdg wit="#1808">dem</rdg>
+							<rdg wit="#1826">dem</rdg>
+							<rdg wit="#1849">welchem</rdg>
+						</app>
+						 man 
+						<app>
+							<rdg wit="#1808">fabelt</rdg>
+							<rdg wit="#1826">fabelt</rdg>
+							<rdg wit="#1849">fabelte</rdg>
+						</app>
+						, daß es einen Bergparallel zwischen dem afrikanischen Quito, der hohen Ebene von Habesch, und den Quellen des Senegal 
+						<app>
+							<rdg wit="#1808">bildet</rdg>
+							<rdg wit="#1826">bildet</rdg>
+							<rdg wit="#1849">bilde</rdg>
+						</app>
+						. Selbst die Cordillere von Lupata, die sich an der östlichen Küste von 
+						<app>
+							<rdg wit="#1808">Mosambique</rdg>
+							<rdg wit="#1826">Mosambike und Monomotapa</rdg>
+							<rdg wit="#1849">Mozambique und Monomotapa</rdg>
+						</app>
+						, wie die Andeskette 
+						<app>
+							<rdg wit="#1808">in</rdg>
+							<rdg wit="#1826">in</rdg>
+							<rdg wit="#1849">an</rdg>
+						</app>
+						 der westlichen Küste von Peru, hinzieht, ist
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">in dem goldreichen Manica</rdg>
+							<rdg wit="#1849">in dem goldreichen Machinga und Mocanga</rdg>
+						</app>
+						 mit ewigem Eise bedeckt. Aber diese wasserreichen Gebirge liegen weit entfernt von der ungeheuren Wüste, 
+						<app>
+							<rdg wit="#1808">die</rdg>
+							<rdg wit="#1826">die</rdg>
+							<rdg wit="#1849">welche</rdg>
+						</app>
+						 sich von dem südlichen Abfall des Atlas bis an den 
+						<app>
+							<rdg wit="#1808">östlich-fließenden</rdg>
+							<rdg wit="#1826">östlich fließenden</rdg>
+							<rdg wit="#1849">östlich fließenden</rdg>
+						</app>
+						 Niger erstreckt. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="49">
+						<app>
+							<rdg wit="#1808">Doch</rdg>
+							<rdg wit="#1826">Vielleicht</rdg>
+							<rdg wit="#1849">Vielleicht</rdg>
+						</app>
+						 wären 
+						<app>
+							<rdg wit="#1808">vielleicht</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 alle diese aufgezählten Ursachen der Dürre und Wärme 
+						<app>
+							<rdg wit="#1808">noch</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 nicht hinlänglich, 
+						<app>
+							<rdg wit="#1808">jene</rdg>
+							<rdg wit="#1826">jene</rdg>
+							<rdg wit="#1849">so beträchtliche Theile der</rdg>
+						</app>
+						 afrikanischen Ebenen in ein furchtbares Sandmeer zu verwandeln, hätte nicht 
+						<app>
+							<rdg wit="#1808">einst</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 irgend eine Naturrevolution
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 z. B. der einbrechende 
+						<app>
+							<rdg wit="#1808">Ozean</rdg>
+							<rdg wit="#1826">Ozean</rdg>
+							<rdg wit="#1849">Ocean</rdg>
+						</app>
+						,
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">einst</rdg>
+							<rdg wit="#1849">einst</rdg>
+						</app>
+						 diese flache Gegend ihrer Pflanzendecke und 
+						<app>
+							<rdg wit="#1808">ihrer</rdg>
+							<rdg wit="#1826">der nährenden</rdg>
+							<rdg wit="#1849">der nährenden</rdg>
+						</app>
+						 Dammerde beraubt. Wann diese Erscheinung sich zutrug, welche Kraft den Einbruch bestimmte, ist tief in das Dunkel der Vorzeit gehüllt. Vielleicht war sie Folge des großen Wirbels <note place="end" n="22)"></note>, 
+						<app>
+							<rdg wit="#1808">der</rdg>
+							<rdg wit="#1826">der</rdg>
+							<rdg wit="#1849">welcher</rdg>
+						</app>
+						 die wärmeren 
+						<app>
+							<rdg wit="#1808">mexikanischen</rdg>
+							<rdg wit="#1826">mexikanischen</rdg>
+							<rdg wit="#1849">mexicanischen</rdg>
+						</app>
+						 Gewässer über die Bank von Neufundland an den alten Continent treibt, und durch 
+						<app>
+							<rdg wit="#1808">welche</rdg>
+							<rdg wit="#1826">welche</rdg>
+							<rdg wit="#1849">welchen</rdg>
+						</app>
+						 westindische Cocosnüsse
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">und andere Tropenfrüchte</rdg>
+						</app>
+						 nach Irland und Norwegen gelangen. Wenigstens ist ein Arm dieses Meeresstroms noch gegenwärtig
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 von den Azoren an, gegen Südosten gerichtet
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und schlägt 
+						<app>
+							<rdg wit="#1808">mit Ungestüm</rdg>
+							<rdg wit="#1826">, dem Schiffer Unheil bringend,</rdg>
+							<rdg wit="#1849">, dem Schiffer Unheil bringend,</rdg>
+						</app>
+						 an 
+						<app>
+							<rdg wit="#1808">die</rdg>
+							<rdg wit="#1826">das</rdg>
+							<rdg wit="#1849">das</rdg>
+						</app>
+						 westliche 
+						<app>
+							<rdg wit="#1808">Küste</rdg>
+							<rdg wit="#1826">Dünenufer</rdg>
+							<rdg wit="#1849">Dünenufer</rdg>
+						</app>
+						 von 
+						<app>
+							<rdg wit="#1808">Nordafrika</rdg>
+							<rdg wit="#1826">Afrika</rdg>
+							<rdg wit="#1849">Afrika</rdg>
+						</app>
+						. Auch zeigen alle 
+						<app>
+							<rdg wit="#1808">Meeresufer</rdg>
+							<rdg wit="#1826">Meeresküsten</rdg>
+							<rdg wit="#1849">Meeresküsten</rdg>
+						</app>
+						 (ich erinnere an die 
+						<app>
+							<rdg wit="#1808">Peruanischen</rdg>
+							<rdg wit="#1826">Peruanischen</rdg>
+							<rdg wit="#1849">peruanischen</rdg>
+						</app>
+						 zwischen Amotape und Coquimbo)
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 wie Jahrhunderte, ja vielleicht Jahrtausende, vergehen, bevor 
+						<app>
+							<rdg wit="#1808">sich</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 in heißen regenlosen Erdstrichen, wo weder Lecideen noch andere Flechten <note place="end" n="23)"></note> keimen, der bewegliche Sand 
+						<app>
+							<rdg wit="#1808">mit Kräutern</rdg>
+							<rdg wit="#1826">den Wurzeln der Kräuter einen sichern Standort</rdg>
+							<rdg wit="#1849">den Kräuterwurzeln einen sicheren Standort</rdg>
+						</app>
+						 zu 
+						<app>
+							<rdg wit="#1808">bedecken anfängt</rdg>
+							<rdg wit="#1826">gewähren vermag</rdg>
+							<rdg wit="#1849">gewähren vermag</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="50">
+						Diese Betrachtungen genügen, um zu erklären, warum, trotz der äußern Aehnlichkeit der Länderform, Afrika und Südamerika doch die abweichendsten klimatischen Verhältnisse, den verschiedensten 
+						<app>
+							<rdg wit="#1808">Vegetations-Character</rdg>
+							<rdg wit="#1826">Vegetations-Character</rdg>
+							<rdg wit="#1849">Vegetations-Charakter</rdg>
+						</app>
+						 darbieten. 
+						<app>
+							<rdg wit="#1808">Hat</rdg>
+							<rdg wit="#1826">Ist</rdg>
+							<rdg wit="#1849">Ist</rdg>
+						</app>
+						 aber auch die südamerikanische Steppe 
+						<app>
+							<rdg wit="#1808">eine dünne</rdg>
+							<rdg wit="#1826">mit einer dünnen</rdg>
+							<rdg wit="#1849">mit einer dünnen</rdg>
+						</app>
+						 Rinde fruchtbarer Erde
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">bedeckt</rdg>
+							<rdg wit="#1849">bedeckt</rdg>
+						</app>
+						, wird sie auch periodisch durch Regengüsse getränkt
+						<app>
+							<rdg wit="#1808">, und</rdg>
+							<rdg wit="#1826">, und</rdg>
+							<rdg wit="#1849">und dann</rdg>
+						</app>
+						 mit 
+						<app>
+							<rdg wit="#1808">üppigaufschießendem Graße</rdg>
+							<rdg wit="#1826">üppigaufschießendem Grase</rdg>
+							<rdg wit="#1849">üppig aufschießendem Grase</rdg>
+						</app>
+						 geschmückt; so hat sie doch die 
+						<app>
+							<rdg wit="#1808">angränzenden</rdg>
+							<rdg wit="#1826">angränzenden</rdg>
+							<rdg wit="#1849">angrenzenden</rdg>
+						</app>
+						 Völkerstämme nicht reizen können
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 die schönen Bergthäler von 
+						<app>
+							<rdg wit="#1808">Caraccas</rdg>
+							<rdg wit="#1826">Caracas</rdg>
+							<rdg wit="#1849">Caracas</rdg>
+						</app>
+						, 
+						<app>
+							<rdg wit="#1808">oder</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 das Meeresufer
+						<app>
+							<rdg wit="#1808">, oder</rdg>
+							<rdg wit="#1826">, und</rdg>
+							<rdg wit="#1849">und</rdg>
+						</app>
+						 die Flußwelt des Orinoco zu verlassen, um sich in dieser baum- und quellenleeren Einöde zu verlieren. Daher ward 
+						<app>
+							<rdg wit="#1808">sie auch</rdg>
+							<rdg wit="#1826">die Steppe,</rdg>
+							<rdg wit="#1849">die Steppe,</rdg>
+						</app>
+						 bei der Ankunft europäischer und afrikanischer Ansiedler
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 fast menschenleer gefunden. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="51">
+						<app>
+							<rdg wit="#1808">Zwar</rdg>
+							<rdg wit="#1826">Allerdings</rdg>
+							<rdg wit="#1849">Allerdings</rdg>
+						</app>
+						 sind die Llanos zur Viehzucht 
+						<app>
+							<rdg wit="#1808">allerdings</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 geeignet
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">;</rdg>
+						</app>
+						 aber die Pflege milchgebender Thiere <note place="end" n="24)"></note> war den ursprünglichen Einwohnern des 
+						<app>
+							<rdg wit="#1808">neuen</rdg>
+							<rdg wit="#1826">Neuen</rdg>
+							<rdg wit="#1849">Neuen</rdg>
+						</app>
+						 Continents 
+						<app>
+							<rdg wit="#1808">völlig</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">fast</rdg>
+						</app>
+						 unbekannt. 
+						<app>
+							<rdg wit="#1808">Kein Völkerstamm wußte</rdg>
+							<rdg wit="#1826">Keiner der amerikanischen Völkerstämme wußte</rdg>
+							<rdg wit="#1849">Kaum wußte einer der amerikanischen Völkerstämme</rdg>
+						</app>
+						 die Vortheile zu benutzen, welche die Natur auch in dieser Hinsicht
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">ihnen</rdg>
+							<rdg wit="#1849">ihnen</rdg>
+						</app>
+						 dargeboten hatte.
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">Die amerikanische Menschenrace (eine und dieselbe von 65° nördlicher bis 55° südlicher Breite, die Eskimos etwa abgerechnet) ging vom Jagdleben nicht durch die Stufe des Hirtenlebens zum Ackerbau über.</rdg>
+						</app>
+						 Zwei Arten einheimischer Rinder weiden in den Grasfluren von West-Canada, 
+						<app>
+							<rdg wit="#1808">und</rdg>
+							<rdg wit="#1826">in Quivira, wie</rdg>
+							<rdg wit="#1849">in Quivira, wie</rdg>
+						</app>
+						 um die 
+						<app>
+							<rdg wit="#1808">kolossalen</rdg>
+							<rdg wit="#1826">kolossalen</rdg>
+							<rdg wit="#1849">colossalen</rdg>
+						</app>
+						 Trümmer 
+						<app>
+							<rdg wit="#1808">des Azteken Pallastes</rdg>
+							<rdg wit="#1826">der Azteken Burg</rdg>
+							<rdg wit="#1849">der Azteken-Burg</rdg>
+						</app>
+						, 
+						<app>
+							<rdg wit="#1808">der,</rdg>
+							<rdg wit="#1826">welche, (</rdg>
+							<rdg wit="#1849">welche (</rdg>
+						</app>
+						 ein amerikanisches Palmyra
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">)</rdg>
+							<rdg wit="#1849">)</rdg>
+						</app>
+						 sich verlassen in der Einöde am 
+						<app>
+							<rdg wit="#1808">Gyla-Flusse</rdg>
+							<rdg wit="#1826">Gyla-Flusse</rdg>
+							<rdg wit="#1849">Gila-Flusse</rdg>
+						</app>
+						 erhebt. 
+						<app>
+							<rdg wit="#1808">Der langhörnige</rdg>
+							<rdg wit="#1826">Der langhörnige</rdg>
+							<rdg wit="#1849">Ein langhörniges</rdg>
+						</app>
+						 Mouflon, 
+						<app>
+							<rdg wit="#1808">der</rdg>
+							<rdg wit="#1826">der</rdg>
+							<rdg wit="#1849">ähnlich dem sogenannten</rdg>
+						</app>
+						 Stammvater des 
+						<app>
+							<rdg wit="#1808">Schaafes</rdg>
+							<rdg wit="#1826">Schaafes</rdg>
+							<rdg wit="#1849">Schafes</rdg>
+						</app>
+						, schwärmt auf den dürren und nackten Kalkfelsen von Californien umher. Der südlichen Halbinsel sind die 
+						<app>
+							<rdg wit="#1808">kamelartigen Vicunnas, die</rdg>
+							<rdg wit="#1826">kamelartigen Vicunnas, die</rdg>
+							<rdg wit="#1849">Vicuñas, Huanacos,</rdg>
+						</app>
+						 Alpacas und Lamas eigenthümlich. Aber 
+						<app>
+							<rdg wit="#1808">alle diese nuzbaren Thiere</rdg>
+							<rdg wit="#1826">alle diese nutzbaren Thiere</rdg>
+							<rdg wit="#1849">von diesen nutzbaren Thieren</rdg>
+						</app>
+						 haben
+						<app>
+							<rdg wit="#1808">, das Lama abgerechnet,</rdg>
+							<rdg wit="#1826">, das Lama abgerechnet,</rdg>
+							<rdg wit="#1849">nur die ersten zwei</rdg>
+						</app>
+						 Jahrtausende lang ihre natürliche Freiheit bewahrt. 
+						<app>
+							<rdg wit="#1808">Denn</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 Genuß von Milch und Käse ist, wie der Besitz und die 
+						<app>
+							<rdg wit="#1808">Kultur</rdg>
+							<rdg wit="#1826">Kultur</rdg>
+							<rdg wit="#1849">Cultur</rdg>
+						</app>
+						 mehlreicher Grasarten <note place="end" n="25)"></note>, ein 
+						<app>
+							<rdg wit="#1808">characteristisches</rdg>
+							<rdg wit="#1826">characteristisches</rdg>
+							<rdg wit="#1849">charakteristisches</rdg>
+						</app>
+						 Unterscheidungszeichen der Nationen des alten Welttheils. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="52">
+						Sind daher von diesen einige
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">Stämme</rdg>
+							<rdg wit="#1849">Stämme</rdg>
+						</app>
+						 durch das nördliche Asien auf die Westküste von Amerika übergegangen, und haben sie, 
+						<app>
+							<rdg wit="#1808">Kälte-liebend</rdg>
+							<rdg wit="#1826">Kälte-liebend</rdg>
+							<rdg wit="#1849">kälteliebend</rdg>
+						</app>
+						 <note place="end" n="26)"></note>, den hohen Andesrücken gegen Süden verfolgt; so muß diese Wanderung auf Wegen geschehen sein, auf welchen weder Heerden noch Cerealien den neuen Ankömmling begleiten konnten. Sollte vielleicht 
+						<app>
+							<rdg wit="#1808">ein Stamm</rdg>
+							<rdg wit="#1826">, als das lang erschütterte Reich</rdg>
+							<rdg wit="#1849">, als das lang erschütterte Reich</rdg>
+						</app>
+						 der Hiongnu
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">zerfiel</rdg>
+							<rdg wit="#1849">zerfiel</rdg>
+						</app>
+						, 
+						<app>
+							<rdg wit="#1808">welcher laut den chinesischen Jahrbüchern, unter seinem Anführer Punon in Nordsibirien verschwand, bis Amerika vorgedrungen, und wie</rdg>
+							<rdg wit="#1826">das Fortwälzen dieses mächtigen Stammes auch im Nordosten von China und Corea Völkerzüge veranlaßt haben, bei denen gebildete Asiaten</rdg>
+							<rdg wit="#1849">das Fortwälzen dieses mächtigen Stammes auch im Nordosten von China und Korea Völkerzüge veranlaßt haben, bei denen gebildete Asiaten</rdg>
+						</app>
+						 in 
+						<app>
+							<rdg wit="#1808">Panonien als Hunnen, wie in Corea als Neujapanesen, so in Mexiko als Tulteken oder Azteken erschienen sein? Eine so</rdg>
+							<rdg wit="#1826">den neuen Continent übergingen? Wären diese Ankömmlinge Bewohner von Steppen gewesen, in denen Ackerbau nicht betrieben wird, so würde diese</rdg>
+							<rdg wit="#1849">den Neuen Continent übergingen? Wären diese Ankömmlinge Bewohner von Steppen gewesen, in denen Ackerbau nicht betrieben wird; so würde diese</rdg>
+						</app>
+						 gewagte, durch Sprachvergleichung <note place="end" n="27)"></note> bisher wenig begünstigte Hypothese 
+						<app>
+							<rdg wit="#1808">würde</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 wenigstens den auffallenden Mangel der 
+						<app>
+							<rdg wit="#1808">Getreidearten</rdg>
+							<rdg wit="#1826">eigentlichen Cerealien</rdg>
+							<rdg wit="#1849">eigentlichen Cerealien</rdg>
+						</app>
+						 in 
+						<app>
+							<rdg wit="#1808">dem neuen Continent erklären. Denn</rdg>
+							<rdg wit="#1826">Amerika erklären. Vielleicht landete an den Küsten von Neu - Californien, durch Stürme verschlagen, eine von den Priestercolonien, welche mystische Ideen zu Seefahrten veranlaßte, und von denen</rdg>
+							<rdg wit="#1849">Amerika erklären. Vielleicht landete an den Küsten von Neu-Californien, durch Stürme verschlagen, eine von jenen asiatischen Priester-Colonien, welche mystische Träumereien zu fernen Seefahrten veranlaßten und von denen</rdg>
+						</app>
+						 die 
+						<app>
+							<rdg wit="#1808">Bewohner</rdg>
+							<rdg wit="#1826">Bevölkerungsgeschichte von Japan <note place="end" n="27)"></note> zur Zeit</rdg>
+							<rdg wit="#1849">Bevölkerungsgeschichte von Japan <note place="end" n="29"></note> zur Zeit</rdg>
+						</app>
+						 der 
+						<app>
+							<rdg wit="#1808">asiatischen Steppen waren selbst nicht ackerbauend.</rdg>
+							<rdg wit="#1826">Thsinchi huang ti ein denkwürdiges Beispiel liefert?</rdg>
+							<rdg wit="#1849">Thsinschi-huang-ti ein denkwürdiges Beispiel liefert.</rdg>
+						</app>
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="53">
+						Blieb 
+						<app>
+							<rdg wit="#1808">dennoch</rdg>
+							<rdg wit="#1826">demnach</rdg>
+							<rdg wit="#1849">demnach</rdg>
+						</app>
+						 das Hirtenleben, diese wohlthätige Mittelstufe, welche nomadische Jägerhorden an den grasreichen Boden fesselt
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und gleichsam zum Ackerbau vorbereitet, den Urvölkern 
+						<app>
+							<rdg wit="#1808">Amerikas</rdg>
+							<rdg wit="#1826">Amerika’s</rdg>
+							<rdg wit="#1849">Amerika’s</rdg>
+						</app>
+						 unbekannt; so liegt in dieser Unbekanntschaft selbst der Grund von der Menschenleere der südamerikanischen 
+						<app>
+							<rdg wit="#1808">Steppe</rdg>
+							<rdg wit="#1826">Steppe</rdg>
+							<rdg wit="#1849">Steppen</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808">Desto</rdg>
+							<rdg wit="#1826">Desto</rdg>
+							<rdg wit="#1849">Um so</rdg>
+						</app>
+						 freier haben sich in ihr die Naturkräfte in mannigfaltigen Thiergestalten entwickelt
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 frei, und nur durch sich selbst beschränkt, wie das Pflanzenleben in den Wäldern am Orinoco, wo der 
+						<app>
+							<rdg wit="#1808">Himenee</rdg>
+							<rdg wit="#1826">Himenäe</rdg>
+							<rdg wit="#1849">Hymenäe</rdg>
+						</app>
+						 und dem riesenstämmigen Lorbeer nie die verheerende Hand des Menschen, sondern nur der üppige Andrang schlingender Gewächse
+						<app>
+							<rdg wit="#1808">, drohet</rdg>
+							<rdg wit="#1826">, drohet</rdg>
+							<rdg wit="#1849">droht</rdg>
+						</app>
+						. Agutis, kleine buntgefleckte Hirsche, gepanzerte Armadille, welche rattenartig den 
+						<app>
+							<rdg wit="#1808">unterirdischen Haasen</rdg>
+							<rdg wit="#1826">unterirdischen Haasen</rdg>
+							<rdg wit="#1849">Hasen</rdg>
+						</app>
+						 in seiner
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">unterirdischen</rdg>
+						</app>
+						 Höhle aufschrecken; Heerden 
+						<app>
+							<rdg wit="#1808">träger Chiguires</rdg>
+							<rdg wit="#1826">träger Chiguires</rdg>
+							<rdg wit="#1849">von trägen Chiguiren</rdg>
+						</app>
+						, schön gestreifte Viverren, welche die Luft verpesten; der große ungemähnte Löwe; 
+						<app>
+							<rdg wit="#1808">brasilianische</rdg>
+							<rdg wit="#1826">buntgefleckte Jaguars (hier</rdg>
+							<rdg wit="#1849">buntgefleckte Jaguars (meist</rdg>
+						</app>
+						 Tiger
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">genannt)</rdg>
+							<rdg wit="#1849">genannt)</rdg>
+						</app>
+						, die den jungen selbsterlegten Stier 
+						<app>
+							<rdg wit="#1808">am</rdg>
+							<rdg wit="#1826">am</rdg>
+							<rdg wit="#1849">auf einen</rdg>
+						</app>
+						 Hügel 
+						<app>
+							<rdg wit="#1808">aufwärts</rdg>
+							<rdg wit="#1826">aufwärts</rdg>
+							<rdg wit="#1849">zu</rdg>
+						</app>
+						 schleppen
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">vermögen:</rdg>
+						</app>
+						 — diese und viele andere 
+						<app>
+							<rdg wit="#1808">Thiere</rdg>
+							<rdg wit="#1826">Thiergestalten</rdg>
+							<rdg wit="#1849">Thiergestalten</rdg>
+						</app>
+						 <note place="end" n="28)"></note> durchirren die baumlose Ebene. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="54">
+						Fast nur ihnen bewohnbar, hätte sie keine der nomadischen Völkerhorden, die ohne dies (nach indischer Art) die vegetabilische Nahrung vorziehen, fesseln können, stände nicht hie und da die Fächer-Palme, Mauritia, zerstreut umher. Weit berühmt sind die Vorzüge dieses wohlthätigen Lebensbaumes <note place="end" n="29)"></note>. Er allein ernährt am Ausflusse des Orinoco die unbezwungene Nation der Guaraunen. Hängematten, aus den Blattstielen der Mauritia gewebt, spannen sie künstlich von Stamm zu Stamm, um, 
+						<app>
+							<rdg wit="#1808">während</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 in der Regenzeit
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">, wenn</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 das Delta überschwemmt ist, nach Art der Affen auf den Bäumen zu leben. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="55">
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">Fast nur ihnen bewohnbar, hätte sie keine der nomadischen Völkerhorden, die ohnedies (nach asiatisch-indischer Art) die vegetabilische Nahrung vorziehen, fesseln können, stände nicht hier und da die Fächerpalme, Mauritia, zerstreut umher. Weit berühmt sind die Vorzüge dieses wohlthätigen Lebensbaumes. Er allein ernährt am Ausflusse des Orinoco, nördlich von der Sierra de Imataca, die unbezwungene Nation der Guaraunen. <note place="end" n="31"></note> Als sie zahlreicher und zusammengedrängt waren, erhoben sie nicht bloß ihre Hütten auf abgehauenen Palmenpfosten, die ein horizontales Tafelwerk als Fußboden trugen; sie spannten auch (so geht die Sage) Hangematten, aus den Blattstielen der Mauritia gewebt, künstlich von Stamm zu Stamm, um in der Regenzeit, wenn das Delta überschwemmt ist, nach Art der Affen auf den Bäumen zu leben.</rdg>
+						</app>
+						Diese schwebenden Hütten 
+						<app>
+							<rdg wit="#1808">werden</rdg>
+							<rdg wit="#1826">werden</rdg>
+							<rdg wit="#1849">wurden</rdg>
+						</app>
+						 theilweise mit Letten bedeckt. Auf der feuchten Unterlage 
+						<app>
+							<rdg wit="#1808">schüren</rdg>
+							<rdg wit="#1826">schüren</rdg>
+							<rdg wit="#1849">schürten</rdg>
+						</app>
+						 die Weiber zu 
+						<app>
+							<rdg wit="#1808">häuslichen Bedürfnissen</rdg>
+							<rdg wit="#1826">häuslichen Bedürfnissen</rdg>
+							<rdg wit="#1849">häuslichem Bedürfniß</rdg>
+						</app>
+						 Feuer an. Wer bei Nacht auf dem Flusse 
+						<app>
+							<rdg wit="#1808">vorüberfährt</rdg>
+							<rdg wit="#1826">vorüberfährt</rdg>
+							<rdg wit="#1849">vorüberfuhr</rdg>
+						</app>
+						, 
+						<app>
+							<rdg wit="#1808">sieht</rdg>
+							<rdg wit="#1826">sieht</rdg>
+							<rdg wit="#1849">sah</rdg>
+						</app>
+						 die Flammen
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">reihenweise auflodern,</rdg>
+							<rdg wit="#1849">reihenweise auflodern,</rdg>
+						</app>
+						 hoch in der Luft
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">, von dem Boden getrennt</rdg>
+							<rdg wit="#1849">, von dem Boden getrennt</rdg>
+						</app>
+						. Die Guaraunen verdanken
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">noch jetzt</rdg>
+						</app>
+						 die Erhaltung ihrer physischen und vielleicht selbst ihrer moralischen Unabhängigkeit dem lockeren
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">, halbflüssigen</rdg>
+							<rdg wit="#1849">, halbflüssigen</rdg>
+						</app>
+						 Moorboden, über den sie leichtfüßig fortlaufen, und ihrem Aufenthalt auf den Bäumen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 einer hohen Freistatt, zu der religiöse Begeisterung wohl nie einen amerikanischen Styliten <note place="end" n="30)"></note> leiten wird. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="56">
+						Aber nicht 
+						<app>
+							<rdg wit="#1808">bloß</rdg>
+							<rdg wit="#1826">blos</rdg>
+							<rdg wit="#1849">bloß</rdg>
+						</app>
+						 sichere Wohnung, auch mannigfaltige Speise gewährt die Mauritia. Ehe auf der männlichen Palme die zarte Blüthenscheide ausbricht, und nur in dieser Periode der Pflanzen-Metamorphose, enthält das Mark des Stammes ein sagoartiges Mehl, welches, wie das Mehl der Jatropha-Wurzel, in dünnen 
+						<app>
+							<rdg wit="#1808">brodartigen</rdg>
+							<rdg wit="#1826">brodartigen</rdg>
+							<rdg wit="#1849">brodtähnlichen</rdg>
+						</app>
+						 Scheiben gedörrt wird. Der gegohrne Saft des Baums ist der süße
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 berauschende Palmwein der Guaraunen. Die 
+						<app>
+							<rdg wit="#1808">frischschuppigen</rdg>
+							<rdg wit="#1826">engschuppigen</rdg>
+							<rdg wit="#1849">engschuppigen</rdg>
+						</app>
+						 Früchte, welche röthlichen Tannenzapfen gleichen, geben, wie Pisang und fast alle Früchte der Tropenwelt, eine verschiedenartige Nahrung
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 je 
+						<app>
+							<rdg wit="#1808">nach dem</rdg>
+							<rdg wit="#1826">nachdem</rdg>
+							<rdg wit="#1849">nachdem</rdg>
+						</app>
+						 man sie
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 nach völliger 
+						<app>
+							<rdg wit="#1808">Entwickelung</rdg>
+							<rdg wit="#1826">Entwickelung</rdg>
+							<rdg wit="#1849">Entwicklung</rdg>
+						</app>
+						 ihres Zuckerstoffes, oder früher, im mehlreichen Zustande, genießt. So finden wir
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 auf der untersten Stufe menschlicher Geistesbildung (gleich dem Insect, das auf einzelne Blüthentheile beschränkt ist) die Existenz eines
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">ganzen</rdg>
+						</app>
+						 Völkerstammes an
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">fast</rdg>
+						</app>
+						 einen einzigen Baum gefesselt. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="57">
+						Seit der Entdeckung des 
+						<app>
+							<rdg wit="#1808">neuen</rdg>
+							<rdg wit="#1826">neuen</rdg>
+							<rdg wit="#1849">Neuen</rdg>
+						</app>
+						 Continents 
+						<app>
+							<rdg wit="#1808">ist</rdg>
+							<rdg wit="#1826">ist</rdg>
+							<rdg wit="#1849">sind</rdg>
+						</app>
+						 die 
+						<app>
+							<rdg wit="#1808">Ebene</rdg>
+							<rdg wit="#1826">Ebene</rdg>
+							<rdg wit="#1849">Ebenen (Llanos)</rdg>
+						</app>
+						 dem Menschen bewohnbar geworden. Um 
+						<app>
+							<rdg wit="#1808">das</rdg>
+							<rdg wit="#1826">das</rdg>
+							<rdg wit="#1849">den</rdg>
+						</app>
+						 Verkehr zwischen der Küste und der 
+						<app>
+							<rdg wit="#1808">Guayana</rdg>
+							<rdg wit="#1826">Guayana</rdg>
+							<rdg wit="#1849">Guyana (dem Orinoco-Lande)</rdg>
+						</app>
+						 zu erleichtern, sind 
+						<app>
+							<rdg wit="#1808">selbst hie</rdg>
+							<rdg wit="#1826">hie</rdg>
+							<rdg wit="#1849">hier</rdg>
+						</app>
+						 und da Städte <note place="end" n="31)"></note> an den Steppenflüssen erbaut. 
+						<app>
+							<rdg wit="#1808">Fern von ihnen</rdg>
+							<rdg wit="#1826">Ueberall</rdg>
+							<rdg wit="#1849">Ueberall</rdg>
+						</app>
+						 hat 
+						<app>
+							<rdg wit="#1808">überall</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 Viehzucht in dem unermeßlichen Raume begonnen. Tagereisen von einander entfernt liegen einzelne, mit Rindsfellen gedeckte, 
+						<app>
+							<rdg wit="#1808">mit</rdg>
+							<rdg wit="#1826">aus Schilf und</rdg>
+							<rdg wit="#1849">aus Schilf und</rdg>
+						</app>
+						 Riemen 
+						<app>
+							<rdg wit="#1808">zusammengeflochtene</rdg>
+							<rdg wit="#1826">geflochtene</rdg>
+							<rdg wit="#1849">geflochtene</rdg>
+						</app>
+						 Hütten. Zahllose Schaaren 
+						<app>
+							<rdg wit="#1808">verwildeter</rdg>
+							<rdg wit="#1826">verwildeter</rdg>
+							<rdg wit="#1849">verwilderter</rdg>
+						</app>
+						 Stiere, Pferde und Maulesel
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">(man schätzte sie zur friedlichen Zeit meiner Reise noch auf anderthalb Millionen Köpfe)</rdg>
+						</app>
+						 schwärmen 
+						<app>
+							<rdg wit="#1808">dazwischen</rdg>
+							<rdg wit="#1826">in der Steppe</rdg>
+							<rdg wit="#1849">in der Steppe</rdg>
+						</app>
+						 umher. 
+						<app>
+							<rdg wit="#1808">Ja die</rdg>
+							<rdg wit="#1826">Die</rdg>
+							<rdg wit="#1849">Die</rdg>
+						</app>
+						 ungeheure Vermehrung dieser Thiere der alten Welt ist um so bewundernswürdiger, je mannigfaltiger die Gefahren sind, mit denen sie in diesen Erdstrichen zu kämpfen haben. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="58">
+						Wenn unter dem senkrechten 
+						<app>
+							<rdg wit="#1808">Stral</rdg>
+							<rdg wit="#1826">Stral</rdg>
+							<rdg wit="#1849">Strahl</rdg>
+						</app>
+						 der 
+						<app>
+							<rdg wit="#1808">nie bewölkten</rdg>
+							<rdg wit="#1826">nie bewölkten</rdg>
+							<rdg wit="#1849">niebewölkten</rdg>
+						</app>
+						 Sonne die verkohlte Grasdecke in Staub zerfallen ist, 
+						<app>
+							<rdg wit="#1808">klaft</rdg>
+							<rdg wit="#1826">klafft</rdg>
+							<rdg wit="#1849">klafft</rdg>
+						</app>
+						 der erhärtete Boden auf, als wäre er von mächtigen Erdstößen erschüttert. Berühren ihn dann 
+						<app>
+							<rdg wit="#1808">entgegengesetzte</rdg>
+							<rdg wit="#1826">entgegengesezte</rdg>
+							<rdg wit="#1849">entgegengesetzte</rdg>
+						</app>
+						 Luftströme, 
+						<app>
+							<rdg wit="#1808">und pflanzt</rdg>
+							<rdg wit="#1826">deren Streit</rdg>
+							<rdg wit="#1849">deren Streit</rdg>
+						</app>
+						 sich 
+						<app>
+							<rdg wit="#1808">durch Gegenstoß die kreisende</rdg>
+							<rdg wit="#1826">in kreisender</rdg>
+							<rdg wit="#1849">in kreisender</rdg>
+						</app>
+						 Bewegung 
+						<app>
+							<rdg wit="#1808">fort;</rdg>
+							<rdg wit="#1826">ausgleicht,</rdg>
+							<rdg wit="#1849">ausgleicht,</rdg>
+						</app>
+						 so gewährt die 
+						<app>
+							<rdg wit="#1808">Steppe</rdg>
+							<rdg wit="#1826">Ebene</rdg>
+							<rdg wit="#1849">Ebene</rdg>
+						</app>
+						 einen seltsamen Anblick. Als trichterförmige Wolken <note place="end" n="32)"></note>, 
+						<app>
+							<rdg wit="#1808">deren</rdg>
+							<rdg wit="#1826">die mit ihren</rdg>
+							<rdg wit="#1849">die mit ihren</rdg>
+						</app>
+						 Spitzen an der Erde hingleiten, steigt der Sand dampfartig durch die luftdünne, 
+						<app>
+							<rdg wit="#1808">vielleicht elektrisch geladene,</rdg>
+							<rdg wit="#1826">vielleicht elektrisch-geladene,</rdg>
+							<rdg wit="#1849">electrisch geladene</rdg>
+						</app>
+						 Mitte des Wirbels empor 
+						<app>
+							<rdg wit="#1808">—</rdg>
+							<rdg wit="#1826">—</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 gleich den rauschenden Wasserhosen, die der 
+						<app>
+							<rdg wit="#1808">erfahrene</rdg>
+							<rdg wit="#1826">erfahrene</rdg>
+							<rdg wit="#1849">erfahrne</rdg>
+						</app>
+						 Schiffer fürchtet. Ein trübes,
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">fast</rdg>
+						</app>
+						 strohfarbiges Halblicht wirft die nun 
+						<app>
+							<rdg wit="#1808">scheinbarniedrigere</rdg>
+							<rdg wit="#1826">scheinbar niedrigere</rdg>
+							<rdg wit="#1849">scheinbar niedrigere</rdg>
+						</app>
+						 Himmelsdecke auf die verödete Flur. Der Horizont tritt plötzlich näher. Er verengt die Steppe, wie das Gemüth des Wanderers. Die heiße
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 staubige Erde, 
+						<app>
+							<rdg wit="#1808">die</rdg>
+							<rdg wit="#1826">die</rdg>
+							<rdg wit="#1849">welche</rdg>
+						</app>
+						 im 
+						<app>
+							<rdg wit="#1808">nebelartigverschleierten</rdg>
+							<rdg wit="#1826">nebelartigverschleierten</rdg>
+							<rdg wit="#1849">nebelartig verschleierten</rdg>
+						</app>
+						 Dunstkreise schwebt, vermehrt die erstickende Luftwärme. Statt Kühlung führt der Ostwind neue Gluth herbei, wenn er über den 
+						<app>
+							<rdg wit="#1808">langerhizten</rdg>
+							<rdg wit="#1826">langerhizten</rdg>
+							<rdg wit="#1849">langerhitzten</rdg>
+						</app>
+						 Boden hinweht. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="59">
+						Auch verschwinden 
+						<app>
+							<rdg wit="#1808">allmählig</rdg>
+							<rdg wit="#1826">allmählig</rdg>
+							<rdg wit="#1849">allmählich</rdg>
+						</app>
+						 die Lachen, welche die 
+						<app>
+							<rdg wit="#1808">gelbgebleichte</rdg>
+							<rdg wit="#1826">gelbgebleichte</rdg>
+							<rdg wit="#1849">gelb gebleichte</rdg>
+						</app>
+						 Fächerpalme vor der 
+						<app>
+							<rdg wit="#1808">Verdünstung schüzte</rdg>
+							<rdg wit="#1826">Verdünstung schüzte</rdg>
+							<rdg wit="#1849">Verdunstung schützte</rdg>
+						</app>
+						. Wie im eisigen Norden die Thiere durch Kälte erstarren
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 so schlummert hier
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 unbeweglich
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 das Crocodil und die 
+						<app>
+							<rdg wit="#1808">Boaschlange</rdg>
+							<rdg wit="#1826">Boaschlange</rdg>
+							<rdg wit="#1849">Boa-Schlange</rdg>
+						</app>
+						, tief vergraben 
+						<app>
+							<rdg wit="#1808">im trocknen</rdg>
+							<rdg wit="#1826">im trocknen</rdg>
+							<rdg wit="#1849">in trockenem</rdg>
+						</app>
+						 Letten. Ueberall verkündigt Dürre den Tod
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">;</rdg>
+						</app>
+						 und
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">doch</rdg>
+						</app>
+						 überall verfolgt den Dürstenden, im Spiele des gebogenen Lichtstrahls, das Trugbild des wellenschlagenden Wasserspiegels <note place="end" n="34)"></note>.
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">Ein schmaler Luftstreifen trennt das ferne Palmengebüsch vom Boden. Es schwebt durch Kiemung gehoben bei der Berührung ungleich erwärmter und also ungleich dichter Luftschichten.</rdg>
+						</app>
+						 In 
+						<app>
+							<rdg wit="#1808">dichte</rdg>
+							<rdg wit="#1826">dichte</rdg>
+							<rdg wit="#1849">finstere</rdg>
+						</app>
+						 Staubwolken gehüllt, 
+						<app>
+							<rdg wit="#1808">und</rdg>
+							<rdg wit="#1826">und</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 von Hunger und brennendem Durste geängstigt, schweifen 
+						<app>
+							<rdg wit="#1808">die</rdg>
+							<rdg wit="#1826">die</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 Pferde und Rinder umher
+						<app>
+							<rdg wit="#1808">, erstere</rdg>
+							<rdg wit="#1826">, diese dumpfaufbrüllend, jene</rdg>
+							<rdg wit="#1849">: diese dumpf aufbrüllend; jene</rdg>
+						</app>
+						 mit langgestrecktem Halse 
+						<app>
+							<rdg wit="#1808">hoch</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 gegen den Wind anschnaubend, um durch die Feuchtigkeit des Luftstroms die Nähe einer nicht ganz verdampften Lache zu errathen. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="60">
+						Bedächtiger und verschlagener 
+						<app>
+							<rdg wit="#1808">suchen die Maulthiere</rdg>
+							<rdg wit="#1826">suchen die Maulthiere</rdg>
+							<rdg wit="#1849">, sucht das Maulthier</rdg>
+						</app>
+						 auf andere 
+						<app>
+							<rdg wit="#1808">Art ihren</rdg>
+							<rdg wit="#1826">Art ihren</rdg>
+							<rdg wit="#1849">Weise seinen</rdg>
+						</app>
+						 Durst zu lindern. Eine kugelförmige und dabei vielrippige Pflanze, der Melonen-Cactus <note place="end" n="35)"></note>, verschließt unter seiner 
+						<app>
+							<rdg wit="#1808">stachlichen</rdg>
+							<rdg wit="#1826">stachlichen</rdg>
+							<rdg wit="#1849">stachligen</rdg>
+						</app>
+						 Hülle ein wasserreiches Mark. Mit dem Vorderfuße schlägt das Maulthier die Stacheln seitwärts, und wagt es dann erst die Lippen behutsam zu nähern
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und den kühlen Distelsaft zu trinken. Aber das Schöpfen aus dieser lebendigen vegetabilischen Quelle ist nicht immer gefahrlos; 
+						<app>
+							<rdg wit="#1808">denn</rdg>
+							<rdg wit="#1826">denn</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 oft sieht man Thiere, welche von 
+						<app>
+							<rdg wit="#1808">Cactusstacheln</rdg>
+							<rdg wit="#1826">Cactusstacheln</rdg>
+							<rdg wit="#1849">Cactus-Stacheln</rdg>
+						</app>
+						 am Hufe gelähmt 
+						<app>
+							<rdg wit="#1808">worden</rdg>
+							<rdg wit="#1826">sind</rdg>
+							<rdg wit="#1849">sind</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="61">
+						Folgt 
+						<app>
+							<rdg wit="#1808">endlich</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 auf die brennende Hitze des Tages die Kühlung der 
+						<app>
+							<rdg wit="#1808">gleichlangen</rdg>
+							<rdg wit="#1826">gleichlangen</rdg>
+							<rdg wit="#1849">, hier immer gleich langen</rdg>
+						</app>
+						 Nacht
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 so können Rinder und Pferde selbst dann nicht 
+						<app>
+							<rdg wit="#1808">ruhen</rdg>
+							<rdg wit="#1826">der Ruhe sich erfreuen</rdg>
+							<rdg wit="#1849">sich der Ruhe erfreuen</rdg>
+						</app>
+						. Ungeheure Fledermäuse 
+						<app>
+							<rdg wit="#1808">verfolgen sie</rdg>
+							<rdg wit="#1826">saugen ihnen,</rdg>
+							<rdg wit="#1849">saugen ihnen,</rdg>
+						</app>
+						 während des Schlafes, 
+						<app>
+							<rdg wit="#1808">saugen ihnen</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 vampyrartig das Blut aus
+						<app>
+							<rdg wit="#1808">, und</rdg>
+							<rdg wit="#1826">, oder</rdg>
+							<rdg wit="#1849">; oder</rdg>
+						</app>
+						 hängen sich an dem Rücken fest, wo sie eiternde Wunden erregen, in 
+						<app>
+							<rdg wit="#1808">denen</rdg>
+							<rdg wit="#1826">welche</rdg>
+							<rdg wit="#1849">welche</rdg>
+						</app>
+						 Mosquitos, Hippoboscen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und eine Schaar stechender 
+						<app>
+							<rdg wit="#1808">Insekten</rdg>
+							<rdg wit="#1826">Insekten</rdg>
+							<rdg wit="#1849">Insecten</rdg>
+						</app>
+						 sich ansiedeln. So führen die Thiere ein schmerzenvolles Leben, wenn vor der Gluth der Sonne das Wasser auf dem Erdboden verschwindet. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="62">
+						Tritt endlich nach langer Dürre die wohlthätige Regenzeit ein
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 so verändert <note place="end" n="36)"></note> sich plötzlich die Scene in der Steppe. Das tiefe Blau des bis dahin nie bewölkten Himmels wird lichter. Kaum erkennt man bei Nacht den schwarzen Raum im Sternbild des südlichen Kreuzes. Der sanfte phosphorartige Schimmer der Magellanischen Wolken verlischt. Selbst die scheitelrechten Gestirne des Adlers und des Schlangenträgers leuchten mit zitterndem, minder planetarischem Lichte. Wie ein entlegenes Gebirge
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 erscheint einzelnes Gewölk im Süden
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">, senkrecht aufsteigend am Horizonte</rdg>
+						</app>
+						. Nebelartig breiten
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">allmählich</rdg>
+						</app>
+						 die
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">vermehrten</rdg>
+						</app>
+						 Dünste sich über 
+						<app>
+							<rdg wit="#1808">dem</rdg>
+							<rdg wit="#1826">dem</rdg>
+							<rdg wit="#1849">den</rdg>
+						</app>
+						 Zenith aus. 
+						<app>
+							<rdg wit="#1808">—</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 Den belebenden Regen verkündigt der ferne Donner. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="63">
+						Kaum ist die Oberfläche der Erde 
+						<app>
+							<rdg wit="#1808">benezt;</rdg>
+							<rdg wit="#1826">benezt;</rdg>
+							<rdg wit="#1849">benetzt,</rdg>
+						</app>
+						 so überzieht sich die duftende Steppe mit Kyllingien, mit vielrispigem Paspalum
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und 
+						<app>
+							<rdg wit="#1808">mit</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 mannigfaltigen Gräsern. Vom Lichte gereizt
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 entfalten krautartige Mimosen 
+						<app>
+							<rdg wit="#1808">die</rdg>
+							<rdg wit="#1826">die</rdg>
+							<rdg wit="#1849">ihre gesenkt</rdg>
+						</app>
+						 schlummernden Blätter, und begrüßen die aufgehende Sonne, wie der Frühgesang der Vögel
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und die sich 
+						<app>
+							<rdg wit="#1808">öfnenden</rdg>
+							<rdg wit="#1826">öfnenden</rdg>
+							<rdg wit="#1849">öffnenden</rdg>
+						</app>
+						 Blüthen der Wasserpflanzen. Pferde und Rinder weiden nun 
+						<app>
+							<rdg wit="#1808">im frohen Genuß</rdg>
+							<rdg wit="#1826">im frohen Genuß</rdg>
+							<rdg wit="#1849">in frohem Genusse</rdg>
+						</app>
+						 des Lebens. 
+						<app>
+							<rdg wit="#1808">Im hochaufschießenden Grase versteckt sich der schöngefleckte</rdg>
+							<rdg wit="#1826">Im hochaufschießenden Grase versteckt sich der schöngefleckte</rdg>
+							<rdg wit="#1849">Das hoch aufschießende Gras birgt den schöngefleckten</rdg>
+						</app>
+						 Jaguar
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">. Im sicheren Versteck auflauernd</rdg>
+						</app>
+						 und 
+						<app>
+							<rdg wit="#1808">erhascht die vorüberziehenden Thiere</rdg>
+							<rdg wit="#1826">erhascht die vorüberziehenden Thiere</rdg>
+							<rdg wit="#1849">die Weite des einigen Sprunges vorsichtig messend</rdg>
+						</app>
+						, 
+						<app>
+							<rdg wit="#1808">im leichten Sprunge, kazenartig</rdg>
+							<rdg wit="#1826">im leichten Sprunge, katzenartig</rdg>
+							<rdg wit="#1849">erhascht er die vorüberziehenden Thiere</rdg>
+						</app>
+						,
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">katzenartig</rdg>
+						</app>
+						 wie der asiatische Tiger. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="64">
+						Bisweilen sieht man (so erzählen die 
+						<app>
+							<rdg wit="#1808">Eingebohrenen</rdg>
+							<rdg wit="#1826">Eingebohrenen</rdg>
+							<rdg wit="#1849">Eingeborenen</rdg>
+						</app>
+						) an den Ufern der Sümpfe den befeuchteten Letten sich langsam und schollenweise erheben <note place="end" n="37)"></note>
+						<app>
+							<rdg wit="#1808">, dann plötzlich mit</rdg>
+							<rdg wit="#1826">. Mit</rdg>
+							<rdg wit="#1849">. <note place="end" n="39"></note> Mit</rdg>
+						</app>
+						 heftigem Getöse, wie beim Ausbruche kleiner 
+						<app>
+							<rdg wit="#1808">Schlammvulcane</rdg>
+							<rdg wit="#1826">Schlammvulcane</rdg>
+							<rdg wit="#1849">Schlammvulkane</rdg>
+						</app>
+						,
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">wird</rdg>
+							<rdg wit="#1849">wird</rdg>
+						</app>
+						 die aufgewühlte Erde 
+						<app>
+							<rdg wit="#1808">wolkenartig auffliegen</rdg>
+							<rdg wit="#1826">hoch in die Luft geschleudert</rdg>
+							<rdg wit="#1849">hoch in die Luft geschleudert</rdg>
+						</app>
+						. Wer des Anblicks kundig ist, flieht die Erscheinung; denn eine riesenhafte Wasserschlange oder ein gepanzertes Crocodil
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 steigen aus der Gruft hervor, durch den ersten Regenguß
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 aus dem 
+						<app>
+							<rdg wit="#1808">Scheintod erwecket</rdg>
+							<rdg wit="#1826">Scheintode erwecket</rdg>
+							<rdg wit="#1849">Scheintode erweckt</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="65">
+						Schwellen 
+						<app>
+							<rdg wit="#1808">allmählig</rdg>
+							<rdg wit="#1826">nun allmählig</rdg>
+							<rdg wit="#1849">nun allmählich</rdg>
+						</app>
+						 die Flüsse, welche die Ebene südlich 
+						<app>
+							<rdg wit="#1808">begränzen,</rdg>
+							<rdg wit="#1826">begränzen,</rdg>
+							<rdg wit="#1849">begrenzen:</rdg>
+						</app>
+						 der Arauca, der Apure und der Payara; so zwingt die Natur dieselben Thiere, welche in der ersten Jahreshälfte auf dem wasserleeren, staubigen Boden vor Durst verschmachteten, als Amphibien zu leben. Ein Theil der Steppe erscheint nun wie ein unermeßliches 
+						<app>
+							<rdg wit="#1808">Binnen-Wasser</rdg>
+							<rdg wit="#1826">Binnen-Wasser</rdg>
+							<rdg wit="#1849">Binnenwasser</rdg>
+						</app>
+						 <note place="end" n="38)"></note>. Die Mutterpferde ziehen sich mit den Füllen auf die höheren Bänke zurück, welche 
+						<app>
+							<rdg wit="#1808">lange,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 inselförmig
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 über dem Seespiegel hervorragen. Mit jedem Tage verengt sich der trockene Raum. Aus Mangel an Weide schwimmen die zusammengedrängten Thiere stundenlang umher, und nähren sich kärglich von der blühenden Grasrispe, die sich über dem braungefärbten gährenden Wasser erhebt. Viele Füllen ertrinken
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">;</rdg>
+						</app>
+						 viele werden von den Crocodilen erhascht, mit dem zackigen Schwanze zerschmettert, und verschlungen. 
+						<app>
+							<rdg wit="#1808">Auch nicht</rdg>
+							<rdg wit="#1826">Nicht</rdg>
+							<rdg wit="#1849">Nicht</rdg>
+						</app>
+						 selten bemerkt man Pferde und Rinder, 
+						<app>
+							<rdg wit="#1808">die den</rdg>
+							<rdg wit="#1826">die dem</rdg>
+							<rdg wit="#1849">welche, dem</rdg>
+						</app>
+						 Rachen dieser blutgierigen 
+						<app>
+							<rdg wit="#1808">Eidexen</rdg>
+							<rdg wit="#1826">Eidexen</rdg>
+							<rdg wit="#1849">, riesenhaften Eidechsen</rdg>
+						</app>
+						 entschlüpft, die Spur des spitzigen Zahnes am Schenkel tragen. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="66">
+						<app>
+							<rdg wit="#1808">Dieser</rdg>
+							<rdg wit="#1826">Dieser</rdg>
+							<rdg wit="#1849">Ein solcher</rdg>
+						</app>
+						 Anblick erinnert unwillkührlich den ernsten Beobachter an die Biegsamkeit, mit welcher die alles aneignende Natur gewisse Thiere und Pflanzen begabt hat. Wie die mehlreichen Früchte der Ceres,
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">so</rdg>
+							<rdg wit="#1849">so</rdg>
+						</app>
+						 sind Stier und Roß dem Menschen über den ganzen Erdkreis gefolgt
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 vom Ganges bis an den 
+						<app>
+							<rdg wit="#1808">Platastrom</rdg>
+							<rdg wit="#1826">Platastrom</rdg>
+							<rdg wit="#1849">Plata-Strom</rdg>
+						</app>
+						, von der afrikanischen Meeresküste bis zur Gebirgsebene des Antisana, welche höher
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 als der Kegelberg von Teneriffa liegt <note place="end" n="39)"></note>. Hier 
+						<app>
+							<rdg wit="#1808">ist es</rdg>
+							<rdg wit="#1826">schüzt</rdg>
+							<rdg wit="#1849">schützt</rdg>
+						</app>
+						 die nordische Birke, dort die Dattelpalme
+						<app>
+							<rdg wit="#1808">, welche</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 den ermüdeten Stier vor dem Strahl der Mittagssonne 
+						<app>
+							<rdg wit="#1808">schützt</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						. Dieselbe Thiergattung, welche im östlichen Europa mit Bären und Wölfen kämpft, wird unter einem anderen Himmelsstriche von den Angriffen der Tiger und der Crocodile bedroht! 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="67">
+						Aber nicht die Crocodile und der Jaguar allein stellen den südamerikanischen Pferden nach; auch unter den Fischen haben sie einen gefährlichen Feind. Die Sumpfwasser von Bera und Rastro <note place="end" n="40)"></note> sind mit zahllosen 
+						<app>
+							<rdg wit="#1808">elektrischen</rdg>
+							<rdg wit="#1826">elektrischen</rdg>
+							<rdg wit="#1849">electrischen</rdg>
+						</app>
+						 Aalen gefüllt, deren schleimiger
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 gelbgefleckter Körper aus jedem Theile die erschütternde Kraft nach 
+						<app>
+							<rdg wit="#1808">Willkür</rdg>
+							<rdg wit="#1826">Willkür</rdg>
+							<rdg wit="#1849">Willkühr</rdg>
+						</app>
+						 aussendet. Diese Gymnoten haben 5 bis 6 Fuß Länge. Sie sind mächtig genug
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 die größten Thiere zu tödten, wenn sie ihre nervenreichen Organe auf einmal in günstiger Richtung entladen. 
+						<app>
+							<rdg wit="#1808">In der That mußte die</rdg>
+							<rdg wit="#1826">Die</rdg>
+							<rdg wit="#1849">Die</rdg>
+						</app>
+						 Steppenstraße von Uritucu
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">mußte</rdg>
+							<rdg wit="#1849">mußte</rdg>
+						</app>
+						 einst verändert werden, weil 
+						<app>
+							<rdg wit="#1808">sie sich</rdg>
+							<rdg wit="#1826">sie sich</rdg>
+							<rdg wit="#1849">sich die Gymnoten</rdg>
+						</app>
+						 in solcher Menge in einem Flüßchen angehäuft hatten, daß jährlich vor Betäubung viele Pferde in der Fuhrt ertranken. Auch fliehen alle 
+						<app>
+							<rdg wit="#1808">andere</rdg>
+							<rdg wit="#1826">andere</rdg>
+							<rdg wit="#1849">anderen</rdg>
+						</app>
+						 Fische die Nähe dieser furchtbaren Aale. Selbst den Angelnden am hohen Ufer 
+						<app>
+							<rdg wit="#1808">schrecken</rdg>
+							<rdg wit="#1826">schrekken</rdg>
+							<rdg wit="#1849">schrecken</rdg>
+						</app>
+						 sie, wenn die feuchte Schnur ihm die Erschütterung aus der Ferne zuleitet. So bricht 
+						<app>
+							<rdg wit="#1808">elektrisches Feuer tief</rdg>
+							<rdg wit="#1826">elektrisches Feuer tief</rdg>
+							<rdg wit="#1849">hier electrisches Feuer</rdg>
+						</app>
+						 aus dem 
+						<app>
+							<rdg wit="#1808">Schooß</rdg>
+							<rdg wit="#1826">Schooß</rdg>
+							<rdg wit="#1849">Schooße</rdg>
+						</app>
+						 der Gewässer aus. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="68">
+						Ein malerisches Schauspiel gewährt der Fang der Gymnoten. Man jagt Maulthiere und Pferde in einen Sumpf, 
+						<app>
+							<rdg wit="#1808">den</rdg>
+							<rdg wit="#1826">den</rdg>
+							<rdg wit="#1849">welchen</rdg>
+						</app>
+						 die Indianer eng umzingeln
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 bis der ungewohnte 
+						<app>
+							<rdg wit="#1808">Lermen</rdg>
+							<rdg wit="#1826">Lermen</rdg>
+							<rdg wit="#1849">Lärmen</rdg>
+						</app>
+						 die muthigen Fische zum Angriff reizt. Schlangenartig sieht man sie auf dem Wasser schwimmen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und sich, verschlagen, unter den Bauch der Pferde drängen. 
+						<app>
+							<rdg wit="#1808">Viele der letzteren erliegen unter</rdg>
+							<rdg wit="#1826">Von diesen erliegen viele unter</rdg>
+							<rdg wit="#1849">Von diesen erliegen viele</rdg>
+						</app>
+						 der Stärke unsichtbarer Schläge. Mit gesträubter Mähne
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 schnaubend, wilde Angst im funkelnden Auge, fliehen andere das tobende Ungewitter. Aber die Indianer
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 mit langen Bambusstäben bewaffnet, treiben sie in die Mitte der Lache zurück. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="69">
+						<app>
+							<rdg wit="#1808">Allmählig</rdg>
+							<rdg wit="#1826">Allmählig</rdg>
+							<rdg wit="#1849">Allmählich</rdg>
+						</app>
+						 läßt die Wuth des ungleichen Kampfes nach. Wie entladene Wolken zerstreuen sich die ermüdeten 
+						<app>
+							<rdg wit="#1808">Gymnoten</rdg>
+							<rdg wit="#1826">Gymnoten</rdg>
+							<rdg wit="#1849">Fische</rdg>
+						</app>
+						. Sie bedürfen einer langen Ruhe und einer reichlichen Nahrung, um zu sammeln, was sie an galvanischer Kraft verschwendet 
+						<app>
+							<rdg wit="#1808">haben</rdg>
+							<rdg wit="#1826">hahen</rdg>
+							<rdg wit="#1849">haben</rdg>
+						</app>
+						. Schwächer und schwächer erschüttern nun 
+						<app>
+							<rdg wit="#1808">allmählig</rdg>
+							<rdg wit="#1826">allmählig</rdg>
+							<rdg wit="#1849">allmählich</rdg>
+						</app>
+						 ihre Schläge. Vom Geräusch der stampfenden Pferde erschreckt, nahen sie sich furchtsam dem Ufer, wo sie durch Harpune verwundet
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und mit dürrem, nicht 
+						<app>
+							<rdg wit="#1808">leitenden</rdg>
+							<rdg wit="#1826">leitendem</rdg>
+							<rdg wit="#1849">leitendem</rdg>
+						</app>
+						 Holze auf die Steppe gezogen werden. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="70">
+						Dies ist der wunderbare Kampf der Pferde und Fische. Was unsichtbar die lebendige Waffe dieser Wasserbewohner ist; was, durch die Berührung feuchter und ungleichartiger Theile <note place="end" n="41)"></note> erweckt, in allen Organen der Thiere und Pflanzen umtreibt
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">;</rdg>
+						</app>
+						 was die weite Himmelsdecke donnernd entflammt, was Eisen an Eisen bindet
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und den stillen wiederkehrenden Gang der leitenden Nadel lenkt
+						<app>
+							<rdg wit="#1808">;</rdg>
+							<rdg wit="#1826">;</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 alles, wie die Farbe des getheilten 
+						<app>
+							<rdg wit="#1808">Lichtstrals</rdg>
+							<rdg wit="#1826">Lichtstrals</rdg>
+							<rdg wit="#1849">Lichtstrahls</rdg>
+						</app>
+						, fließt aus 
+						<app>
+							<rdg wit="#1808">einer</rdg>
+							<rdg wit="#1826">einer</rdg>
+							<rdg wit="#1849">Einer</rdg>
+						</app>
+						 Quelle; alles schmilzt in eine ewige
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 allverbreitete Kraft zusammen. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="71">
+						Ich könnte hier 
+						<app>
+							<rdg wit="#1808">diesen</rdg>
+							<rdg wit="#1826">diesen</rdg>
+							<rdg wit="#1849">den</rdg>
+						</app>
+						 gewagten Versuch eines Naturgemäldes der Steppe schließen. Aber
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 wie auf dem 
+						<app>
+							<rdg wit="#1808">Ozean</rdg>
+							<rdg wit="#1826">Ozean</rdg>
+							<rdg wit="#1849">Ocean</rdg>
+						</app>
+						 die Phantasie sich gern mit den Bildern ferner Küsten beschäftigt; so werfen auch wir, ehe die große Ebene uns entschwindet, vorher einen flüchtigen Blick auf die Erdstriche, welche die Steppe 
+						<app>
+							<rdg wit="#1808">begränzen</rdg>
+							<rdg wit="#1826">begränzen</rdg>
+							<rdg wit="#1849">begrenzen</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="72">
+						<app>
+							<rdg wit="#1808">Afrikas</rdg>
+							<rdg wit="#1826">Afrika’s</rdg>
+							<rdg wit="#1849">Afrika’s</rdg>
+						</app>
+						 nördliche Wüste scheidet die beiden Menschenarten, welche ursprünglich demselben Welttheil angehören
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und deren unausgeglichener Zwist so alt
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 als die Mythe von Osiris und Typhon <note place="end" n="42)"></note>
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 scheint. Nördlich vom Atlas wohnen schlicht- und langhaarige Völkerstämme von gelber Farbe und kaukasischer Gesichtsbildung. Dagegen leben südlich vom Senegal, gegen Sudan hin, Negerhorden, die auf mannigfaltigen Stufen der Civilisation gefunden werden. In Mittel-Asien ist
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 durch die mongolische Steppe, sibirische Barbarei von der uralten Menschenbildung 
+						<app>
+							<rdg wit="#1808">in</rdg>
+							<rdg wit="#1826">in</rdg>
+							<rdg wit="#1849">auf</rdg>
+						</app>
+						 der Halbinsel von Hindostan getrennt. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="73">
+						Auch die südamerikanischen Ebenen 
+						<app>
+							<rdg wit="#1808">begränzen</rdg>
+							<rdg wit="#1826">begränzen</rdg>
+							<rdg wit="#1849">begrenzen</rdg>
+						</app>
+						 das Gebiet europäischer 
+						<app>
+							<rdg wit="#1808">Halbkultur</rdg>
+							<rdg wit="#1826">Halbkultur</rdg>
+							<rdg wit="#1849">Halbcultur</rdg>
+						</app>
+						 <note place="end" n="43)"></note>. Nördlich
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 zwischen der Gebirgskette von Venezuela
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und dem antillischen Meere, liegen gewerbsame Städte, reinliche Dörfer
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und sorgsam bebaute Fluren an einander gedrängt. Selbst Kunstsinn 
+						<app>
+							<rdg wit="#1808">und</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 wissenschaftliche Bildung
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">und die edle Liebe zur Bürgerfreiheit</rdg>
+							<rdg wit="#1849">und die edle Liebe zu Bürgerfreiheit</rdg>
+						</app>
+						 sind längst darinnen erwacht. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="74">
+						Gegen Süden umgiebt die Steppe eine schaudervolle Wildniß. Tausendjährige Wälder, ein undurchdringliches 
+						<app>
+							<rdg wit="#1808">Dickigt</rdg>
+							<rdg wit="#1826">Dickigt</rdg>
+							<rdg wit="#1849">Dickicht</rdg>
+						</app>
+						 erfüllen den feuchten Erdstrich zwischen dem Orinoco und dem 
+						<app>
+							<rdg wit="#1808">Amazonen-Strome</rdg>
+							<rdg wit="#1826">Amazonen-Strome</rdg>
+							<rdg wit="#1849">Amazonenstrome</rdg>
+						</app>
+						. Mächtige, bleifarbige <note place="end" n="44)"></note> Granitmassen verengen das 
+						<app>
+							<rdg wit="#1808">Bette</rdg>
+							<rdg wit="#1826">Bette</rdg>
+							<rdg wit="#1849">Bett</rdg>
+						</app>
+						 der schäumenden Flüsse. 
+						<app>
+							<rdg wit="#1808">Berg</rdg>
+							<rdg wit="#1826">Berg</rdg>
+							<rdg wit="#1849">Berge</rdg>
+						</app>
+						 und 
+						<app>
+							<rdg wit="#1808">Wald</rdg>
+							<rdg wit="#1826">Wald</rdg>
+							<rdg wit="#1849">Wälder</rdg>
+						</app>
+						 hallen wieder von dem Donner der stürzenden Wasser, von dem Gebrüll des
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">tigerartigen</rdg>
+						</app>
+						 Jaguar, 
+						<app>
+							<rdg wit="#1808">und</rdg>
+							<rdg wit="#1826">und</rdg>
+							<rdg wit="#1849">von</rdg>
+						</app>
+						 dem dumpfen
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 regenverkündenden <note place="end" n="45)"></note> Geheul der bärtigen Affen. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="75">
+						Wo der seichte Strom eine Sandbank übrig läßt, da liegen mit offenem Rachen, unbeweglich wie Felsstücke hingestreckt, oft mit Vögeln <note place="end" n="46)"></note> bedeckt, die ungeschlachten Körper der Crocodile. 
+					</l>
+					<l n="76">
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">Wo der seichte Strom eine Sandbank übrig läßt, da liegen mit offenem Rachen, unbeweglich wie Felsstücke hingestreckt, oft mit Vögeln <note place="end" n="46)"></note> bedeckt, die ungeschlachten Körper der Crocodile.</rdg>
+							<rdg wit="#1849">Wo der seichte Strom eine Sandbank übrig läßt, da liegen mit offenem Rachen, unbeweglich wie Felsstücke hingestreckt, oft bedeckt mit Vögeln <note place="end" n="48"></note>, die ungeschlachten Körper der Crocodile.</rdg>
+						</app>
+						Den Schwanz um einen Baumast befestigt, zusammengerollt, lauert am Ufer, ihrer Beute gewiß, die 
+						<app>
+							<rdg wit="#1808">tiegerfleckige Boaschlange</rdg>
+							<rdg wit="#1826">tiegerfleckige Boaschlange</rdg>
+							<rdg wit="#1849">schachbrett-fleckige Boa-Schlange</rdg>
+						</app>
+						. Schnell
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">entrollt und</rdg>
+						</app>
+						 vorgestreckt
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 ergreift sie in der 
+						<app>
+							<rdg wit="#1808">Fuhrt</rdg>
+							<rdg wit="#1826">Fuhrt</rdg>
+							<rdg wit="#1849">Furth</rdg>
+						</app>
+						 den jungen Stier oder das schwächere Wildpret, und zwängt 
+						<app>
+							<rdg wit="#1808">mühsam</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 den Raub, in Geifer gehüllt,
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">mühsam</rdg>
+							<rdg wit="#1849">mühsam</rdg>
+						</app>
+						 durch den schwellenden <note place="end" n="47)"></note> Hals. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="77">
+						In dieser großen und wilden Natur leben mannigfaltige Geschlechter der Menschen. Durch wunderbare Verschiedenheit der Sprachen gesondert, sind einige nomadisch, dem Ackerbau fremd, Ameisen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 Gummi und Erde genießend <note place="end" n="48)"></note>, ein Auswurf der Menschheit
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">, (</rdg>
+							<rdg wit="#1849">(</rdg>
+						</app>
+						 wie die Otomaken und Jaruren
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">);</rdg>
+							<rdg wit="#1849">);</rdg>
+						</app>
+						 andere angesiedelt, von 
+						<app>
+							<rdg wit="#1808">selbst erzielten</rdg>
+							<rdg wit="#1826">selbst erzielten</rdg>
+							<rdg wit="#1849">selbsterzielten</rdg>
+						</app>
+						 Früchten genährt, verständig und sanfterer Sitten
+						<app>
+							<rdg wit="#1808">, (</rdg>
+							<rdg wit="#1826">)</rdg>
+							<rdg wit="#1849">(</rdg>
+						</app>
+						wie die Maquiritarer und 
+						<app>
+							<rdg wit="#1808">Makos</rdg>
+							<rdg wit="#1826">Makos</rdg>
+							<rdg wit="#1849">Macos</rdg>
+						</app>
+						). Große Räume zwischen dem Cassiquiare und dem Atabapo sind nur vom Tapir und von geselligen Affen, nicht von Menschen, bewohnt. In Felsen gegrabene Bilder <note place="end" n="49)"></note> beweisen, daß 
+						<app>
+							<rdg wit="#1808">einst</rdg>
+							<rdg wit="#1826">einst</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 auch diese Einöde
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">einst</rdg>
+						</app>
+						 der Sitz höherer Cultur war. Sie zeugen für die wechselnden Schicksale der Völker
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">;</rdg>
+						</app>
+						 wie
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">es auch</rdg>
+						</app>
+						 die 
+						<app>
+							<rdg wit="#1808">Form biegsamer</rdg>
+							<rdg wit="#1826">Form biegsamer</rdg>
+							<rdg wit="#1849">ungleich entwickelten, biegsamen</rdg>
+						</app>
+						 Sprachen
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">thun</rdg>
+						</app>
+						, 
+						<app>
+							<rdg wit="#1808">die</rdg>
+							<rdg wit="#1826">die</rdg>
+							<rdg wit="#1849">welche</rdg>
+						</app>
+						 zu den 
+						<app>
+							<rdg wit="#1808">unauslöschlichsten</rdg>
+							<rdg wit="#1826">unvergänglichsten</rdg>
+							<rdg wit="#1849">ältesten und unvergänglichsten historischen</rdg>
+						</app>
+						 Denkmälern der Menschheit gehören. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="78">
+						Wenn aber in der Steppe Tiger und Crocodile mit Pferden und Rindern kämpfen; so sehen wir 
+						<app>
+							<rdg wit="#1808">dagegen</rdg>
+							<rdg wit="#1826">dagegen</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 an ihrem waldigen Ufer, in den Wildnissen der 
+						<app>
+							<rdg wit="#1808">Guayana</rdg>
+							<rdg wit="#1826">Guayana</rdg>
+							<rdg wit="#1849">Guyana</rdg>
+						</app>
+						, ewig den Menschen gegen den Menschen gerüstet. Mit unnatürlicher Begier trinken hier 
+						<app>
+							<rdg wit="#1808">ganze</rdg>
+							<rdg wit="#1826">ganze</rdg>
+							<rdg wit="#1849">einzelne</rdg>
+						</app>
+						 Völkerstämme das ausgesogene Blut 
+						<app>
+							<rdg wit="#1808">ihres Feindes</rdg>
+							<rdg wit="#1826">ihres Feindes</rdg>
+							<rdg wit="#1849">ihrer Feinde</rdg>
+						</app>
+						; andere würgen 
+						<app>
+							<rdg wit="#1808">ihn</rdg>
+							<rdg wit="#1826">ihn</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						, scheinbar waffenlos
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und doch zum Morde vorbereitet <note place="end" n="50)"></note>, mit vergiftetem Daum-Nagel. Die 
+						<app>
+							<rdg wit="#1808">schwächern</rdg>
+							<rdg wit="#1826">schwächern</rdg>
+							<rdg wit="#1849">schwächeren</rdg>
+						</app>
+						 Horden, wenn sie das sandige Ufer betreten, vertilgen sorgsam mit den Händen die Spur ihrer schüchternen Tritte. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="79">
+						So bereitet der Mensch auf der untersten Stufe thierischer 
+						<app>
+							<rdg wit="#1808">Rohheit</rdg>
+							<rdg wit="#1826">Rohheit</rdg>
+							<rdg wit="#1849">Roheit</rdg>
+						</app>
+						, so im Scheinglanze seiner höheren Bildung
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 sich stets ein mühevolles Leben. So verfolgt den Wanderer über den weiten Erdkreis, über Meer und Land, wie den Geschichtsforscher durch alle Jahrhunderte, das einförmige, trostlose Bild des entzweiten Geschlechts. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="80">
+						Darum versenkt, wer im 
+						<app>
+							<rdg wit="#1808">ungeschlichteten</rdg>
+							<rdg wit="#1826">ungesclichteten</rdg>
+							<rdg wit="#1849">ungeschlichteten</rdg>
+						</app>
+						 Zwist der Völker nach geistiger Ruhe strebt, gern den Blick in das stille Leben der Pflanzen
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 und in der heiligen Naturkraft inneres Wirken; oder
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 hingegeben dem angestammten Triebe, der seit Jahrtausenden der Menschen Brust durchglüht, blickt er ahndungsvoll aufwärts zu den hohen Gestirnen, welche in ungestörtem Einklang die alte
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">,</rdg>
+						</app>
+						 ewige Bahn vollenden. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="81">
+						Erläuterungen und Zusätze.
+					</l>
+					<l n="82">
+						1
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">(S. 3.</rdg>
+						</app>
+						) Der See Tacarigua. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					<l n="83">
+						Wenn man durch das Innere von Südamerika, von der Küste von 
+						<app>
+							<rdg wit="#1808">Caraccas</rdg>
+							<rdg wit="#1826">Caracas</rdg>
+							<rdg wit="#1849">Caracas</rdg>
+						</app>
+						 oder Venezuela bis gegen die brasilianische 
+						<app>
+							<rdg wit="#1808">Gränze</rdg>
+							<rdg wit="#1826">Gränze</rdg>
+							<rdg wit="#1849">Grenze</rdg>
+						</app>
+						, vom 10ten Grade nördlicher Breite bis zum Aequator vordringt
+						<app>
+							<rdg wit="#1808">,</rdg>
+							<rdg wit="#1826">,</rdg>
+							<rdg wit="#1849">:</rdg>
+						</app>
+						 so durchstreicht man zuerst eine hohe Gebirgskette
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849">(die Küstenkette von Caracas)</rdg>
+						</app>
+						, die von Westen gegen Osten gerichtet ist; 
+						<app>
+							<rdg wit="#1808">zweitens</rdg>
+							<rdg wit="#1826">dann</rdg>
+							<rdg wit="#1849">dann</rdg>
+						</app>
+						 die großen baumleeren Steppen oder Ebenen (los Llanos), welche sich vom 
+						<app>
+							<rdg wit="#1808">Fuß</rdg>
+							<rdg wit="#1826">Fuß</rdg>
+							<rdg wit="#1849">Fuße</rdg>
+						</app>
+						 der Küstenkette bis an das linke Ufer des Orinoco ausdehnen; 
+						<app>
+							<rdg wit="#1808">drittens</rdg>
+							<rdg wit="#1826">endlich</rdg>
+							<rdg wit="#1849">endlich</rdg>
+						</app>
+						 die Bergreihe, welche die Cataracten von Atures und Maypure veranlaßt 
+						<app>
+							<rdg wit="#1808">und zwischen</rdg>
+							<rdg wit="#1826">. Zwischen</rdg>
+							<rdg wit="#1849">. Zwischen</rdg>
+						</app>
+						 den Quellen des Rio
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">Branco und Rio</rdg>
+							<rdg wit="#1849">Branco und Rio</rdg>
+						</app>
+						 Esquibo 
+						<app>
+							<rdg wit="#1808">und Mao</rdg>
+							<rdg wit="#1826">läuft diese Bergreihe, welche ich Sierra Parime nenne,</rdg>
+							<rdg wit="#1849">läuft nämlich diese Bergreihe, welche ich Sierra Parime nenne, von den Cataracten östlich</rdg>
+						</app>
+						 gegen die
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826">holländische und</rdg>
+							<rdg wit="#1849">holländische und</rdg>
+						</app>
+						 französische Guyana 
+						<app>
+							<rdg wit="#1808">fortläuft (Sierra de la Parime),</rdg>
+							<rdg wit="#1826">fort. Sie ist der Sitz der wunderbaren Mythen des Dorado</rdg>
+							<rdg wit="#1849">fort. Sie ist der Sitz der wunderbaren Mythen des Dorado</rdg>
+						</app>
+						 und 
+						<app>
+							<rdg wit="#1808">endlich viertens einen Theil der waldreichen</rdg>
+							<rdg wit="#1826">an sie gränzt südwärts die waldreiche</rdg>
+							<rdg wit="#1849">ein, in viele Jöcher rostförmig getheiltes Massengebirge. An sie grenzt südwärts die waldreiche</rdg>
+						</app>
+						 Ebene, in 
+						<app>
+							<rdg wit="#1808">der</rdg>
+							<rdg wit="#1826">welcher</rdg>
+							<rdg wit="#1849">welcher</rdg>
+						</app>
+						 der Rio Negro und 
+						<app>
+							<rdg wit="#1808">Amazonenstrohm</rdg>
+							<rdg wit="#1826">Amazonenstrom</rdg>
+							<rdg wit="#1849">Amazonenstrom</rdg>
+						</app>
+						 sich ihr Bette gebildet haben. Wer 
+						<app>
+							<rdg wit="#1808">sich</rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+						 von diesen geographischen Verhältnissen näher 
+						<app>
+							<rdg wit="#1808">unterrichten</rdg>
+							<rdg wit="#1826">unterrichtet seyn</rdg>
+							<rdg wit="#1849">unterrichtet sein</rdg>
+						</app>
+						 will, 
+						<app>
+							<rdg wit="#1808">werfe einen flüchtigen Blick auf</rdg>
+							<rdg wit="#1826">werfe einen flüchtigen Blick auf</rdg>
+							<rdg wit="#1849">vergleiche</rdg>
+						</app>
+						 die große 
+						<app>
+							<rdg wit="#1808">Karte</rdg>
+							<rdg wit="#1826">Karte</rdg>
+							<rdg wit="#1849">Carte</rdg>
+						</app>
+						 von 
+						<app>
+							<rdg wit="#1808">La Cruz Olmedilla</rdg>
+							<rdg wit="#1826">la Cruz Olmedilla</rdg>
+							<rdg wit="#1849">la Cruz-Olmedilla (1775)</rdg>
+						</app>
+						, aus der 
+						<app>
+							<rdg wit="#1808">so viele neuere</rdg>
+							<rdg wit="#1826">alle neueren <note place="foot" n="*)">Z. B. die Karte von Bonne zu Raynal’s Werke, die Carte générale de la Guiane von Buache, die Carte de la Capitainerie générale de Caracas von Poirson (zu De Pons Voyage à la Terre Ferme). La Cruz selbst (1775) hat übrigens Solano’s frühere Arbeiten und vielleicht Caulin’s Karte vom Orinoco (1759) benuzt. In Poirson’s neuer Karte von 1805 ist die Breite der Festung von S. Carlos del Rio Negro aus meinen astronomischen Briefen an Lalande entlehnt, die Länge hingegen ist wie in Buache’s Karte um 2 Grad fehlerhaft geblieben! Die wahre Länge ist nach meiner Beobachtung 69° 58′ 39″ westlich von Paris.</note> Karten von Südamerika</rdg>
+							<rdg wit="#1849">fast alle neueren Carten von Südamerika</rdg>
+						</app>
+						 <note place="foot" n="*)">Z. B. die Karte von Bonne zu Raynal’s Werke, die Carte générale de la Guiane von Buache, die Carte de la Capitainerie générale de Caracas von</note> entstanden sind, 
+						<app>
+							<rdg wit="#1808">die jedoch</rdg>
+							<rdg wit="#1826">und die</rdg>
+							<rdg wit="#1849">mit der Carte von Columbia, welche,</rdg>
+						</app>
+						 nach meinen eigenen astronomischen Ortsbestimmungen 
+						<app>
+							<rdg wit="#1808">die wesentlichsten Veränderungen erleiden müssen</rdg>
+							<rdg wit="#1826">die wesentlichsten Veränderungen erleiden muß</rdg>
+							<rdg wit="#1849">entworfen, ich im Jahr 1825 herausgegeben</rdg>
+						</app>
+						. 
+						<app>
+							<rdg wit="#1808"></rdg>
+							<rdg wit="#1826"></rdg>
+							<rdg wit="#1849"></rdg>
+						</app>
+					</l>
+					
+				</lg>
+			</div>
+		</body>
+	</text>
+</TEI>
