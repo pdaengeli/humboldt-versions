@@ -3,6 +3,9 @@
 // - Comparative view ("all"): inline variants + marginal apparatus
 // - Pure edition views (1808/1826/1849): render full text of that edition with NO variants/appartus
 // - Correction mode (comparative only): bottom-left drawer + next/prev stepping through variants
+//   + focus toggles (hide right variants column, hide paragraph stats)
+// - Improvement: For paragraphs whose earliest edition is 1849, suppress redundant "addition" marginalization
+//   (additions render as plain running text; no apparatus note)
 // ---------------------------------------------------------------------------
 
 let allData = [];
@@ -26,7 +29,7 @@ const editionOrder  = { '1808': 0, '1826': 1, '1849': 2 };
 
 const spanRegistry = new Map();     // variant-id -> DOM node
 const variantMetaById = new Map();  // variant-id -> span object (Phase 2 for correction mode & filtering)
-let correctionMode = null; // will be initialized later (avoid TDZ / load order issues)
+let correctionMode = null;          // initialized later (avoid TDZ / load order issues)
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -172,8 +175,8 @@ function getStickyTopOffset() {
   const headerH = header ? header.getBoundingClientRect().height : 0;
   const legendH = legend ? legend.getBoundingClientRect().height : 0;
 
-  // small breathing room so highlight is not glued to the legend
-  return headerH + legendH + 60; // 16;
+  // breathing room so highlight is not glued to the legend
+  return headerH + legendH + 60;
 }
 
 function scrollToElement(el) {
@@ -181,15 +184,6 @@ function scrollToElement(el) {
   const y = el.getBoundingClientRect().top + window.pageYOffset - getStickyTopOffset();
   window.scrollTo({ top: y, behavior: 'smooth' });
 }
-
-// Shared scrolling helper for correction mode
-// function scrollToElement(el) {
-//  if (!el) return;
-//  const headerOffset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-offset')) || 0;
-//  const extra = 40; // breathing room under legend
-//  const y = el.getBoundingClientRect().top + window.pageYOffset - headerOffset - extra;
-//  window.scrollTo({ top: y, behavior: 'smooth' });
-// }
 
 // ---------------------------------------------------------------------------
 // Comparative rendering
@@ -242,7 +236,7 @@ function renderCharLevelSubstitution(span) {
   return wrapper;
 }
 
-function renderSpans(merged, paraNum) {
+function renderSpans(merged, paraNum, paraBaseEd) {
   const frag = document.createDocumentFragment();
   const spanIds = new Array(merged.length).fill(null);
   let variantIdx = 0;
@@ -252,7 +246,7 @@ function renderSpans(merged, paraNum) {
       const id = `v-${paraNum}-${idx}-${variantIdx++}`;
       el.dataset.variantId = id;
       spanRegistry.set(id, el);
-      variantMetaById.set(id, span); // Phase 2: store span meta for correction mode filters
+      variantMetaById.set(id, span); // store span meta for correction mode filters
       spanIds[idx] = id;
     }
   };
@@ -260,6 +254,17 @@ function renderSpans(merged, paraNum) {
   merged.forEach((span, idx) => {
     const txt = editionText(span, currentEdition);
     if (txt === null) return;
+
+    // If the paragraph first appears in 1849, additions are not meaningful as "variants".
+    // Render them as plain text and never push to the margin or apparatus.
+    if (paraBaseEd === '1849' && span.variant_type === 'addition') {
+      const el = document.createElement('span');
+      el.className = 'word'; // plain
+      el.textContent = txt;
+      // Don't register: these would be "variants" everywhere in an 1849-only paragraph.
+      frag.appendChild(el);
+      return;
+    }
 
     if (isInline(span)) {
       // Additions inline
@@ -327,7 +332,7 @@ function renderSpans(merged, paraNum) {
   return { frag, spanIds };
 }
 
-function renderApparatus(merged, spanIds) {
+function renderApparatus(merged, spanIds, paraBaseEd) {
   const appDiv = document.createElement('div');
   appDiv.className = 'apparatus';
   const notes = [];
@@ -337,6 +342,9 @@ function renderApparatus(merged, spanIds) {
 
     // additions
     if (span.variant_type === 'addition') {
+      // suppress redundant additions in paragraphs first appearing in 1849
+      if (paraBaseEd === '1849') return;
+
       if (span.display !== 'inline' || showAllVariants) {
         notes.push({ text: span.text, colorEd: span.earliest_edition || span.editions?.[0], targetId });
       }
@@ -419,13 +427,16 @@ function renderParagraph(item, idx) {
   const center = document.createElement('div');
   center.className = 'paragraph-badges-group';
 
+  let paraBaseEd = null;
+
   if (isComparativeView()) {
-    const baseEd = paragraphBaseEdition(item.data.unified_text || []);
+    paraBaseEd = paragraphBaseEdition(item.data.unified_text || []);
+
     const baseBadge = document.createElement('span');
     baseBadge.className = 'new-badge';
     baseBadge.style.background = '#111';
     baseBadge.style.color = '#fff';
-    baseBadge.textContent = baseEd;
+    baseBadge.textContent = paraBaseEd;
 
     const baseInfo = document.createElement('span');
     baseInfo.className = 'info-icon';
@@ -517,11 +528,11 @@ function renderParagraph(item, idx) {
 
   const textDiv = document.createElement('div');
   textDiv.className = 'unified-text';
-  const { frag, spanIds } = renderSpans(merged, paraNum);
+  const { frag, spanIds } = renderSpans(merged, paraNum, paraBaseEd || '1849');
   textDiv.appendChild(frag);
   body.appendChild(textDiv);
 
-  const appDiv = renderApparatus(merged, spanIds);
+  const appDiv = renderApparatus(merged, spanIds, paraBaseEd || '1849');
   body.appendChild(appDiv);
 
   card.appendChild(body);
@@ -541,7 +552,7 @@ function loadNextBatch(force = false) {
   isLoading = false;
 
   // Correction mode: refresh index whenever new content arrives
-  if (correctionMode && correctionMode.refresh) correctionMode.refresh();
+  if (correctionMode && correctionMode.refresh) correctionMode.refresh(true);
 }
 
 function ensureLoaded(targetIndex) {
@@ -616,7 +627,7 @@ function setupScrollTracking() {
 }
 
 // ---------------------------------------------------------------------------
-// Legend / settings wiring
+// Legend / settings wiring (single instance)
 
 const legendPanel = document.getElementById('legend-panel');
 const colorPanel  = document.getElementById('color-panel');
@@ -685,22 +696,20 @@ correctionMode = {
     btnOpen: null
   },
 
+  findBestStartIndex() {
+    if (!this.targets.length) return -1;
 
-findBestStartIndex() {
-  if (!this.targets.length) return -1;
+    // prefer the first target that is at/under the top of viewport (not hidden)
+    const candidates = this.targets
+      .map((t, i) => ({ i, top: t.el.getBoundingClientRect().top }))
+      .sort((a, b) => a.top - b.top);
 
-  // prefer the first target that is at/under the top of viewport (not hidden)
-  const candidates = this.targets
-    .map((t, i) => ({ i, top: t.el.getBoundingClientRect().top }))
-    .sort((a, b) => a.top - b.top);
+    const under = candidates.find(c => c.top >= 0);
+    if (under) return under.i;
 
-  const under = candidates.find(c => c.top >= 0);
-  if (under) return under.i;
-
-  // otherwise we're past all targets currently loaded: use last one
-  return candidates[candidates.length - 1].i;
-},
-
+    // otherwise we're past all targets currently loaded: use last one
+    return candidates[candidates.length - 1].i;
+  },
 
   ensureUI() {
     if (this.ui.root) return;
@@ -732,6 +741,19 @@ findBestStartIndex() {
           </div>
           <div class="correction-explain">
             Tipp: „Go“ lädt/scrollt zum Absatz und setzt die Auswahl auf die nächstfolgende Variante.
+          </div>
+        </div>
+
+        <hr class="correction-hr" />
+
+        <div class="correction-section">
+          <div class="correction-section-title">Fokus</div>
+          <div class="correction-filters correction-filters-2col">
+            <label><input type="checkbox" class="cm-focus" data-k="hideApparatus" checked> Varianten ausblenden (Spalte rechts)</label>
+            <label><input type="checkbox" class="cm-focus" data-k="hideStats" checked> Stats ausblenden</label>
+          </div>
+          <div class="correction-explain">
+            Fokus-Modus reduziert Ablenkungen während des Steppens (wirkt nur in Korrekturmodus).
           </div>
         </div>
 
@@ -800,16 +822,11 @@ findBestStartIndex() {
       const n = parseInt(jumpInput?.value, 10);
       if (!n || n < 1) return;
 
-      // Ensure paragraph exists in DOM (lazy-load)
       ensureLoaded(n - 1);
-
-      // Scroll to the paragraph card
       scrollToParagraph(n);
 
-      // Enable correction mode if not enabled (optional convenience)
       if (!this.enabled) this.setEnabled(true);
 
-      // After scrolling/layout, refresh and select nearest visible variant
       setTimeout(() => {
         this.refresh(true);
         const start = this.findBestStartIndex?.() ?? 0;
@@ -834,6 +851,18 @@ findBestStartIndex() {
         const k = cb.dataset.k;
         this.filters[k] = cb.checked;
         this.refresh(true);
+      });
+    });
+
+    root.querySelectorAll('.cm-focus').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const k = cb.dataset.k;
+        if (k === 'hideApparatus') {
+          document.body.classList.toggle('cm-hide-apparatus', cb.checked && this.enabled);
+        }
+        if (k === 'hideStats') {
+          document.body.classList.toggle('cm-hide-stats', cb.checked && this.enabled);
+        }
       });
     });
 
@@ -863,12 +892,20 @@ findBestStartIndex() {
       this.clearSelection();
       this.idx = -1;
       this.updateStatus();
+
+      // reset focus overrides when leaving correction mode
+      document.body.classList.remove('cm-hide-apparatus', 'cm-hide-stats');
       return;
     }
 
-    // build initial index + select first
+    // apply focus overrides from current UI state
+    const hideApp = this.ui.root?.querySelector('.cm-focus[data-k="hideApparatus"]')?.checked;
+    const hideStats = this.ui.root?.querySelector('.cm-focus[data-k="hideStats"]')?.checked;
+    document.body.classList.toggle('cm-hide-apparatus', !!hideApp);
+    document.body.classList.toggle('cm-hide-stats', !!hideStats);
+
+    // build initial index + pick start near viewport
     this.refresh(true);
-//    if (this.targets.length) this.select(0, { scroll: true });
     if (this.targets.length) {
       const start = this.findBestStartIndex();
       this.select(start >= 0 ? start : 0, { scroll: false }); // don't jump on enable
@@ -888,18 +925,18 @@ findBestStartIndex() {
     let isSingleChar = false;
     let isMultiChar = false;
     if (span?.type === 'replaced' && Array.isArray(span.changes)) {
-      // If any replace op replaces exactly 1 char, treat as single-char-ish,
-      // else if there is a longer earlier text, treat as multi.
       const ops = span.changes.flatMap(ch => (ch.char_level || []));
       const hasReplaceLen1 = ops.some(op => op.operation === 'replace' && ((op.from || '').length <= 1));
       const hasReplaceLenGt1 = ops.some(op => op.operation === 'replace' && ((op.from || '').length > 1));
       isSingleChar = hasReplaceLen1 && !hasReplaceLenGt1;
-      isMultiChar = hasReplaceLenGt1 || (span.text && span.changes.some(ch => (ch.text || '').length !== (span.text || '').length));
+
+      // fallback: treat as multi if any replace op is >1 or if earlier vs base lengths differ
+      isMultiChar =
+        hasReplaceLenGt1 ||
+        (span.text && span.changes.some(ch => (ch.text || '').length !== (span.text || '').length));
     }
 
-    // snippet for UI
     const snippet = (span?.text || el?.textContent || '').trim().slice(0, 80);
-
     return { variantId, el, span, kind, variantType, isSingleChar, isMultiChar, snippet };
   },
 
@@ -915,7 +952,6 @@ findBestStartIndex() {
     const lengthFiltersOn = this.filters.singleChar || this.filters.multiChar;
     if (lengthFiltersOn) {
       const anyMatch = (this.filters.singleChar && t.isSingleChar) || (this.filters.multiChar && t.isMultiChar);
-      // If we cannot classify (both false), we hide when user demands classification
       if (!anyMatch) return false;
     }
 
@@ -966,7 +1002,6 @@ findBestStartIndex() {
 
     if (nextIdx >= 0) {
       this.idx = nextIdx;
-      // re-apply selection to new DOM node
       this.select(this.idx, { scroll: false });
     } else if (this.idx < 0 || this.idx >= this.targets.length) {
       this.idx = 0;
@@ -1015,8 +1050,6 @@ findBestStartIndex() {
   },
 
   ensureNextTargetLoaded(dir = +1) {
-    // If we are at the end of loaded targets, try loading more paragraphs.
-    // This is the "compromise": we only index loaded DOM, but we can extend it when stepping.
     if (!this.enabled) return;
 
     const attemptLoad = () => {
@@ -1025,14 +1058,15 @@ findBestStartIndex() {
       return true;
     };
 
-    // load until we have at least one target ahead (or no more content)
     for (let tries = 0; tries < 20; tries++) {
       if (!this.targets.length) return attemptLoad();
+
       if (dir > 0) {
         if (this.idx + 1 < this.targets.length) return true;
       } else {
         if (this.idx - 1 >= 0) return true;
       }
+
       const loaded = attemptLoad();
       if (!loaded) return false;
       this.refresh(true);
@@ -1050,7 +1084,6 @@ findBestStartIndex() {
 
   prev() {
     if (!this.enabled) return;
-    // prev is always within loaded DOM; no need to load more
     if (!this.targets.length) return;
     const prev = Math.max(0, this.idx - 1);
     this.select(prev, { scroll: true });
@@ -1059,7 +1092,7 @@ findBestStartIndex() {
 
 function installCorrectionModeKeyboard() {
   document.addEventListener('keydown', (e) => {
-    if (!correctionMode.enabled) return;
+    if (!correctionMode?.enabled) return;
 
     // don’t hijack typing
     const tag = (document.activeElement?.tagName || '').toLowerCase();
@@ -1163,46 +1196,3 @@ function initialHashScroll() {
     setTimeout(() => scrollToParagraph(paraNum), 100);
   }
 }
-
-// ---------------------------------------------------------------------------
-// Legend / settings wiring (kept at bottom so DOM exists)
-
-// const legendPanel = document.getElementById('legend-panel');
-// const colorPanel  = document.getElementById('color-panel');
-
-function setLegendExpanded(expanded) {
-  legendExpanded = expanded;
-  if (legendPanel) legendPanel.classList.toggle('expanded', expanded);
-  if (legendPanel) legendPanel.classList.toggle('collapsed', !expanded);
-  if (legendPanel) legendPanel.style.display = expanded ? 'block' : 'none';
-}
-
-setLegendExpanded(false);
-
-document.getElementById('color-settings')?.addEventListener('click', () => {
-  setLegendExpanded(!legendExpanded);
-});
-
-colorPanel?.querySelectorAll('input[type="color"][data-ed]')?.forEach(input => {
-  input.addEventListener('input', () => {
-    const ed = input.dataset.ed;
-    editionColors[ed] = input.value;
-    applyEditionColorsToLegend();
-    if (isComparativeView()) rerenderAll();
-  });
-});
-
-document.getElementById('color-mode-toggle')?.addEventListener('change', (e) => {
-  variantColorMode = e.target.checked ? 'background' : 'text';
-  if (isComparativeView()) rerenderAll();
-});
-
-document.getElementById('toggle-all-variants')?.addEventListener('change', (e) => {
-  showAllVariants = e.target.checked;
-  if (isComparativeView()) rerenderAll();
-});
-
-document.getElementById('toggle-stats')?.addEventListener('change', (e) => {
-  showStats = !e.target.checked;
-  if (isComparativeView()) rerenderAll();
-});

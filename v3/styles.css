@@ -332,7 +332,72 @@ body { font-family: 'Crimson Text', Georgia, serif; line-height: 2; color: #2c3e
   border-radius: 4px;
 }
 
+/* Correction focus: hide apparatus column */
+body.cm-hide-apparatus .paragraph-body {
+  grid-template-columns: 1fr;
+}
+body.cm-hide-apparatus .apparatus {
+  display: none !important;
+}
+
+/* Correction focus: hide paragraph stats (right header column) */
+body.cm-hide-stats .paragraph-header .paragraph-badges {
+  display: none !important;
+}
+
 /* Misc */
 .loading { text-align: center; padding: 4rem 2rem; font-size: 1.2rem; color: #6c757d; font-style: italic; }
 .error { background: #f8d7da; color: #721c24; padding: 1.5rem; border-radius: 8px; margin: 2rem; border-left: 4px solid #721c24; }
 #sentinel { height: 20px; margin: 2rem 0; }
+
+
+/* -------------------------------------------------------
+   Responsive layout
+------------------------------------------------------- */
+
+/* small-screen notice: hidden by default */
+.min-width-notice {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: rgba(248, 249, 250, 0.98);
+  padding: 24px;
+}
+
+.min-width-notice-inner {
+  max-width: 720px;
+  margin: 15vh auto 0 auto;
+  background: #fff;
+  border: 1px solid #dde1e7;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+/* 1) Hide sidebar on narrower viewports; main gets full width */
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .sidebar {
+    display: none;
+  }
+}
+
+/* 2) Ultra-small screens: show notice and hide the app */
+@media (max-width: 760px) {
+  .min-width-notice {
+    display: block;
+  }
+
+  /* hide underlying app UI to avoid unusable layout */
+  .header,
+  .layout,
+  .correction-drawer {
+    display: none !important;
+  }
+}
