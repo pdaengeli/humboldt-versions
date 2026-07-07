@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AvH: Ansichten der Natur - Textgenese</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="min-width-notice" role="note" aria-live="polite">
+    <div class="min-width-notice-inner">
+      <strong>Hinweis:</strong> Diese Anwendung erfordert eine Bildschirmbreite von mindestens
+      <span class="min-width-value">760</span> Pixel.
+    </div>
+  </div>
+
+  <div class="header">
+    <div class="header-content">
+      <h1>AvH: ANSICHTEN DER NATUR · Textgenese 1808–1849</h1>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+<!--      <div class="notice">
+        Variantentypen/categories outdated, work in progress
+      </div>
+-->
+      <div class="reading-mode">
+        <h3>Textansicht</h3>
+        <label class="reading-mode-item active">
+          <input type="radio" class="reading-mode-radio" name="edition" value="all" checked>
+          <span>Alle Ausgaben (vergleichend)</span>
+        </label>
+        <label class="reading-mode-item">
+          <input type="radio" class="reading-mode-radio" name="edition" value="1808">
+          <span>1. Ausgabe (1808)</span>
+        </label>
+        <label class="reading-mode-item">
+          <input type="radio" class="reading-mode-radio" name="edition" value="1826">
+          <span>2. Ausgabe (1826)</span>
+        </label>
+        <label class="reading-mode-item">
+          <input type="radio" class="reading-mode-radio" name="edition" value="1849">
+          <span>3. Ausgabe (1849)</span>
+        </label>
+      </div>
+
+      <div class="toc">
+        <h3>Navigation</h3>
+        <div id="toc-list"></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="legend-shell">
+        <div id="legend-title">Farbcodierung der Textschichten</div>
+
+        <div class="legend-row">
+          <div class="legend-items">
+            <div class="legend-item">
+              <div class="color-box blue"></div>
+              <span>1808 (1. Ausgabe, Tübingen)</span>
+            </div>
+            <div class="legend-item">
+              <div class="color-box red"></div>
+              <span>1826 (2. Ausgabe)</span>
+            </div>
+            <div class="legend-item">
+              <div class="color-box black"></div>
+              <span>1849 (3. Ausgabe)</span>
+            </div>
+          </div>
+          <div class="legend-actions">
+            <button id="font-minus" class="font-btn" title="Schrift verkleinern">A-</button>
+            <button id="font-plus" class="font-btn" title="Schrift vergrößern">A+</button>
+            <button id="color-settings" title="Einstellungen (Farben, Variantendarstellung)">⚙️</button>
+          </div>
+        </div>
+
+        <div id="legend-panel" class="collapsed">
+          <div id="color-panel" class="settings-grid">
+            <div class="settings-col">
+              <div class="settings-group">
+                <label>1808 <input type="color" data-ed="1808" value="#f5c211"></label>
+                <label>1826 <input type="color" data-ed="1826" value="#c01c28"></label>
+                <label>1849 <input type="color" data-ed="1849" value="#8e44ad"></label>
+              </div>
+              <label class="inline-toggle">
+                <input type="checkbox" id="color-mode-toggle">
+                <span>Hintergrundfarbe statt Schriftfarbe</span>
+              </label>
+            </div>
+            <div class="settings-col">
+              <div class="settings-group">
+                <label class="inline-toggle">
+                  <input type="checkbox" id="toggle-all-variants">
+                  <span>alle Varianten marginal einblenden</span>
+                </label>
+                <label class="inline-toggle">
+                  <input type="checkbox" id="toggle-stats">
+                  <span>Absatzstatistiken ausblenden</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="content">
+        <div class="loading">Lade Textdaten...</div>
+      </div>
+
+      <div id="sentinel"></div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

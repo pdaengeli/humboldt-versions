@@ -1,0 +1,1 @@
+# slotbuilder: TEI VM XML → slot JSON conversion package
