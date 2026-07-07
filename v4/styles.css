@@ -127,6 +127,24 @@ body { font-family: 'Crimson Text', Georgia, serif; line-height: 2; color: #2c3e
   border-radius: 2px;
 }
 
+.lera-anchor {
+  display: inline-block;
+  margin-left: -1.6em;   /* push a bit left of first token */
+  margin-right: 0.25em;
+  opacity: 0.3;
+  color: currentColor;
+  pointer-events: none;
+  user-select: none;
+}
+
+.lera-anchor::before {
+  content: "⚓";
+}
+
+/* Optional: if you ever want to visualize multiplicity */
+.lera-anchor[data-count="2"]::before { content: "⚓"; } /* still single marker by design */
+.lera-anchor[data-count="3"]::before { content: "⚓"; }
+
 /* Paragraph cards */
 .paragraph-card {
   background: white;

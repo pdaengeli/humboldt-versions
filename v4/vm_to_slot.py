@@ -46,6 +46,20 @@ def normalize_literal(raw: str) -> str:
         s = s + " "
     return s
 
+ANCHOR_CHAR = "⚓"
+
+def strip_leading_anchors(s: str):
+    """
+    Remove leading anchor chars from a literal chunk and return:
+    (cleaned_text, anchor_count)
+    """
+    if not s:
+        return s, 0
+    m = re.match(rf"^\s*({re.escape(ANCHOR_CHAR)}+)\s*", s)
+    if not m:
+        return s, 0
+    count = len(m.group(1))
+    return s[m.end():], count
 
 def earliest(ed_list):
     order = {e: i for i, e in enumerate(EDITIONS)}
@@ -508,11 +522,11 @@ def extract_reading_text_and_runs(rdg: ET.Element) -> Tuple[str, List[Dict]]:
     runs = [r for r in merge_runs(runs) if r["start"] < r["end"]]
     return text, runs
 
-
-def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]]]:
+def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], int]:
     segments: List[Dict] = []
     edition_runs_map: Dict[str, List[Dict]] = {e: [] for e in EDITIONS}
     edition_cursor: Dict[str, int] = {e: 0 for e in EDITIONS}
+    paragraph_anchor_count = 0
 
     current_literal: List[str] = []
 
@@ -540,9 +554,16 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]]]:
             })
 
     def flush_literal():
+        nonlocal paragraph_anchor_count
         if current_literal:
             raw = "".join(current_literal)
             s = normalize_literal(raw)
+
+            # strip LERA anchor chars from literal text and store metadata count
+            s, c = strip_leading_anchors(s)
+            if c:
+                paragraph_anchor_count += c
+
             if s.strip():
                 span = {
                     "text": s,
@@ -690,7 +711,7 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]]]:
     for ed in EDITIONS:
         edition_runs_map[ed] = merge_runs(edition_runs_map[ed])
 
-    return segments, edition_runs_map
+    return segments, edition_runs_map, paragraph_anchor_count
 
 
 def build_slots(root) -> Dict:
@@ -707,7 +728,7 @@ def build_slots(root) -> Dict:
 
     for idx, l in enumerate(l_elems):
         num = l.get("n")
-        segments, format_runs = build_segments_from_l(l)
+        segments, format_runs, paragraph_anchor_count = build_segments_from_l(l)
 
         para_stats = compute_para_stats(segments)
         add_to_global(global_stats, para_stats)
@@ -727,7 +748,8 @@ def build_slots(root) -> Dict:
                 "stats": para_stats,
                 "edition_text": edition_text,
                 "format_runs": format_runs,
-                "format_notes": []
+                "format_notes": [],
+                "anchor_count": paragraph_anchor_count
             }
         })
 

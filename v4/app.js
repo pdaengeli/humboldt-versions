@@ -865,6 +865,16 @@ function renderParagraph(item, idx) {
   const textDiv = document.createElement('div');
   textDiv.className = 'unified-text';
   const { frag, spanIds } = renderSpans(merged, paraNum, paraBaseEd || '1849', item);
+  // paragraph anchor marker (single visual cue)
+  const anchorCount = item?.data?.anchor_count || 0;
+  if (anchorCount > 0) {
+    const a = document.createElement('span');
+    a.className = 'lera-anchor';
+    a.dataset.count = String(anchorCount);
+    a.setAttribute('aria-hidden', 'true');
+    // prepend before first token in this paragraph
+    textDiv.appendChild(a);
+  }
   textDiv.appendChild(frag);
   body.appendChild(textDiv);
 
