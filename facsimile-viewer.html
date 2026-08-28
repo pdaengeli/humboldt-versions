@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IIIF 3-up Compare with Pagination</title>
+  <style>
+    :root {
+      --gap: 8px;
+      --bg: #111;
+      --panel: #1b1b1b;
+      --text: #eaeaea;
+      --muted: #aaa;
+      --border: #333;
+    }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+    .app {
+      height: 100%;
+      padding: var(--gap);
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* Floating toolbar */
+    .toolbar {
+      position: absolute;
+      bottom: var(--gap);   /* was top */
+      left: var(--gap);
+      top: auto;            /* ensure top is unset */
+      z-index: 1000;
+      width: min(980px, calc(100% - (var(--gap) * 2)));
+      background: rgba(27, 27, 27, 0.96);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    }
+    .toolbar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+    }
+    .toolbar-title {
+      font-size: 13px;
+      color: var(--muted);
+      user-select: none;
+    }
+    .toolbar-toggle {
+      background: #2b2b2b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      line-height: 1;
+      font-size: 16px;
+    }
+    .toolbar-body {
+      display: grid;
+      gap: 6px;
+      padding: 0 10px 10px;
+    }
+    .toolbar.collapsed .toolbar-body { display: none; }
+
+    .toolbar .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 2px;
+    }
+    .toolbar button {
+      background: #2b2b2b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+    .toolbar button:hover { background: #353535; }
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .viewers {
+      height: 100%;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap);
+    }
+    .viewer-wrap {
+      min-width: 0;
+      min-height: 0;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+    .panel-top {
+      border-bottom: 1px solid var(--border);
+      padding: 6px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #181818;
+    }
+    .panel-controls {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .panel-controls button {
+      background: #2b2b2b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 8px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .panel-controls button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .viewer { width: 100%; height: 100%; }
+    .badge {
+      position: absolute;
+      top: 34px;
+      left: 8px;
+      z-index: 20;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      font-size: 12px;
+      padding: 2px 8px;
+      pointer-events: none;
+    }
+
+    @media (max-width: 1100px) {
+      .viewers { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
+      .toolbar { width: calc(100% - (var(--gap) * 2)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="toolbar collapsed" id="toolbar">
+      <div class="toolbar-head">
+        <div class="toolbar-title">IIIF Compare (manifest-aware pagination)</div>
+        <button id="toolbarToggle" class="toolbar-toggle" aria-expanded="false" title="Expand controls">▾</button>
+      </div>
+      <div class="toolbar-body">
+        <div class="actions">
+          <button id="copyLinkBtn" title="Copy current state as URL">Copy share link</button>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">
+            <input id="syncChk" type="checkbox" checked />
+            Sync pan/zoom
+          </label>
+        </div>
+        <div class="hint">
+          URL params: <code>?1808=&lt;canvasUrl&gt;&amp;1826=&lt;canvasUrl&gt;&amp;1849=&lt;canvasUrl&gt;&amp;sync=1</code><br/>
+          Each column paginates through its configured manifest(s). 1826 uses merged vol.1+vol.2.
+        </div>
+      </div>
+    </div>
+
+    <div class="viewers">
+      <div class="viewer-wrap">
+        <div class="panel-top">
+          <strong>1808</strong>
+          <div class="panel-controls">
+            <button id="prev-1808">◀ Prev</button>
+            <span id="page-1808">–</span>
+            <button id="next-1808">Next ▶</button>
+          </div>
+        </div>
+        <div class="badge" id="badge-1808">loading…</div>
+        <div id="v-1808" class="viewer"></div>
+      </div>
+
+      <div class="viewer-wrap">
+        <div class="panel-top">
+          <strong>1826</strong>
+          <div class="panel-controls">
+            <button id="prev-1826">◀ Prev</button>
+            <span id="page-1826">–</span>
+            <button id="next-1826">Next ▶</button>
+          </div>
+        </div>
+        <div class="badge" id="badge-1826">loading…</div>
+        <div id="v-1826" class="viewer"></div>
+      </div>
+
+      <div class="viewer-wrap">
+        <div class="panel-top">
+          <strong>1849</strong>
+          <div class="panel-controls">
+            <button id="prev-1849">◀ Prev</button>
+            <span id="page-1849">–</span>
+            <button id="next-1849">Next ▶</button>
+          </div>
+        </div>
+        <div class="badge" id="badge-1849">loading…</div>
+        <div id="v-1849" class="viewer"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+  <script>
+    const MANIFESTS = {
+      "1808": [
+        "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb10723515/manifest"
+      ],
+      "1826": [
+        "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb10075834/manifest",
+        "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb10075835/manifest"
+      ],
+      "1849": [
+        "https://www.e-rara.ch/i3f/v20/17777473/manifest"
+      ]
+    };
+
+    const YEARS = ["1808", "1826", "1849"];
+    const $ = (id) => document.getElementById(id);
+
+    // Toolbar collapse
+    const toolbar = $("toolbar");
+    const toolbarToggle = $("toolbarToggle");
+    function setToolbarCollapsed(collapsed) {
+      toolbar.classList.toggle("collapsed", collapsed);
+      toolbarToggle.setAttribute("aria-expanded", String(!collapsed));
+      // bottom-docked: collapsed should indicate "expand upward"
+      toolbarToggle.textContent = collapsed ? "▴" : "▾";
+      toolbarToggle.title = collapsed ? "Expand controls" : "Collapse controls";
+    }
+    toolbarToggle.addEventListener("click", () => {
+      setToolbarCollapsed(!toolbar.classList.contains("collapsed"));
+    });
+
+    const syncChk = $("syncChk");
+
+    const viewers = {
+      "1808": OpenSeadragon({
+        id: "v-1808",
+        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+        showNavigator: true
+      }),
+      "1826": OpenSeadragon({
+        id: "v-1826",
+        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+        showNavigator: true
+      }),
+      "1849": OpenSeadragon({
+        id: "v-1849",
+        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+        showNavigator: true
+      })
+    };
+
+    // Per-year document state
+    const docs = {
+      "1808": { canvases: [], idx: 0 },
+      "1826": { canvases: [], idx: 0 },
+      "1849": { canvases: [], idx: 0 }
+    };
+
+    let syncing = false;
+
+    async function fetchJson(url) {
+      const res = await fetch(url, { credentials: "omit" });
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+      return res.json();
+    }
+
+    function canvasId(c) {
+      return c.id || c["@id"] || null;
+    }
+
+    function extractCanvasesFromManifest(manifest) {
+      const type = manifest.type || manifest["@type"] || "";
+
+      // IIIF Presentation v2
+      if (type === "sc:Manifest" || Array.isArray(manifest.sequences)) {
+        const seq = manifest.sequences?.[0];
+        return Array.isArray(seq?.canvases) ? seq.canvases : [];
+      }
+
+      // IIIF Presentation v3
+      if (type === "Manifest" || Array.isArray(manifest.items)) {
+        return Array.isArray(manifest.items) ? manifest.items : [];
+      }
+
+      return [];
+    }
+
+    function pickCanvasImageService(canvas) {
+      // v2 canvas.images[0].resource.service
+      if (Array.isArray(canvas.images) && canvas.images.length) {
+        const svc = canvas.images[0]?.resource?.service;
+        if (svc) return Array.isArray(svc) ? svc[0] : svc;
+      }
+
+      // v3 canvas.items[].items[].body.service
+      if (Array.isArray(canvas.items)) {
+        for (const ap of canvas.items) {
+          for (const ann of (ap.items || [])) {
+            const body = ann.body;
+            if (!body) continue;
+            if (Array.isArray(body.service) && body.service.length) return body.service[0];
+            if (body.service) return body.service;
+          }
+        }
+      }
+
+      throw new Error("No image service found on canvas");
+    }
+
+    function imageServiceToInfoJson(service) {
+      const id = service?.id || service?.["@id"];
+      if (!id) throw new Error("Image service missing id/@id");
+      return id.replace(/\/+$/, "") + "/info.json";
+    }
+
+    async function tileSourceFromCanvasUrl(url) {
+      const c = await fetchJson(url);
+      const service = pickCanvasImageService(c);
+      return imageServiceToInfoJson(service);
+    }
+
+    async function loadDocCanvases(year) {
+      const manifestUrls = MANIFESTS[year];
+      const all = [];
+      for (const murl of manifestUrls) {
+        const m = await fetchJson(murl);
+        const canvases = extractCanvasesFromManifest(m);
+        all.push(...canvases);
+      }
+      docs[year].canvases = all;
+      docs[year].idx = 0;
+    }
+
+    function setBadge(year, text) { $("badge-" + year).textContent = text; }
+
+    function updatePagerUi(year) {
+      const d = docs[year];
+      const total = d.canvases.length;
+      const i = d.idx;
+      $("page-" + year).textContent = total ? `${i + 1} / ${total}` : "0 / 0";
+      $("prev-" + year).disabled = i <= 0;
+      $("next-" + year).disabled = i >= total - 1;
+      setBadge(year, total ? `${year} · page ${i + 1}` : `${year} · no pages`);
+    }
+
+    async function openYearAtIndex(year, index, updateHistory = true) {
+      const d = docs[year];
+      if (!d.canvases.length) return;
+      d.idx = Math.max(0, Math.min(index, d.canvases.length - 1));
+      const canvas = d.canvases[d.idx];
+      const cid = canvasId(canvas);
+      if (!cid) throw new Error(`Canvas at index ${d.idx} has no id/@id`);
+
+      const tile = await tileSourceFromCanvasUrl(cid);
+      viewers[year].close();
+      viewers[year].open(tile);
+
+      updatePagerUi(year);
+      if (updateHistory) updateUrlFromCurrentCanvases();
+    }
+
+    function updateUrlFromCurrentCanvases() {
+      const p = new URLSearchParams(location.search);
+      for (const y of YEARS) {
+        const d = docs[y];
+        if (d.canvases.length) {
+          const cid = canvasId(d.canvases[d.idx]);
+          if (cid) p.set(y, cid);
+        }
+      }
+      p.set("sync", syncChk.checked ? "1" : "0");
+      history.replaceState(null, "", `${location.pathname}?${p.toString()}`);
+    }
+
+    function findCanvasIndexByUrl(year, url) {
+      const target = (url || "").trim();
+      if (!target) return -1;
+      return docs[year].canvases.findIndex(c => canvasId(c) === target);
+    }
+
+    async function init() {
+      try {
+        // load all manifest maps first
+        await Promise.all(YEARS.map(loadDocCanvases));
+
+        const p = new URLSearchParams(location.search);
+
+        // if URL contains specific canvas IDs, use them; else default first page
+        for (const y of YEARS) {
+          const requestedCanvas = p.get(y);
+          let idx = 0;
+          if (requestedCanvas) {
+            const found = findCanvasIndexByUrl(y, requestedCanvas);
+            if (found >= 0) idx = found;
+          }
+          await openYearAtIndex(y, idx, false);
+        }
+
+        const sync = p.get("sync");
+        if (sync !== null) syncChk.checked = sync === "1";
+
+        updateUrlFromCurrentCanvases();
+      } catch (e) {
+        console.error(e);
+        alert("Failed to initialize viewer: " + e.message);
+      }
+    }
+
+    // Pager button wiring
+    for (const y of YEARS) {
+      $("prev-" + y).addEventListener("click", async () => {
+        await openYearAtIndex(y, docs[y].idx - 1);
+      });
+      $("next-" + y).addEventListener("click", async () => {
+        await openYearAtIndex(y, docs[y].idx + 1);
+      });
+    }
+
+    // Copy link
+    $("copyLinkBtn").addEventListener("click", async () => {
+      updateUrlFromCurrentCanvases();
+      try {
+        await navigator.clipboard.writeText(location.href);
+        alert("Share link copied.");
+      } catch {
+        alert("Could not copy automatically. Copy this URL manually:\n" + location.href);
+      }
+    });
+
+    // Sync pan/zoom
+    function wireSync(sourceYear) {
+      const sourceViewer = viewers[sourceYear];
+      const propagate = () => {
+        if (!syncChk.checked || syncing) return;
+        const srcVp = sourceViewer.viewport;
+        if (!srcVp) return;
+
+        syncing = true;
+        const center = srcVp.getCenter(true);
+        const zoom = srcVp.getZoom(true);
+
+        for (const y of YEARS) {
+          if (y === sourceYear) continue;
+          const target = viewers[y];
+          if (!target.viewport) continue;
+          target.viewport.panTo(center, true);
+          target.viewport.zoomTo(zoom, null, true);
+          target.viewport.applyConstraints();
+        }
+        syncing = false;
+      };
+      sourceViewer.addHandler("zoom", propagate);
+      sourceViewer.addHandler("pan", propagate);
+    }
+
+    YEARS.forEach(wireSync);
+    syncChk.addEventListener("change", updateUrlFromCurrentCanvases);
+
+    setToolbarCollapsed(true);
+    init();
+  </script>
+</body>
+</html>
