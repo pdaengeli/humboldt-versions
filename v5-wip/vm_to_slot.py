@@ -46,6 +46,7 @@ def normalize_literal(raw: str) -> str:
         s = s + " "
     return s
 
+
 ANCHOR_CHAR = "⚓"
 SECTION_CHAR = "∬"
 
@@ -53,18 +54,16 @@ REF_MARKER_PATTERN = re.compile(r"※\s*REF\s+id=([^\s※]+)\s*※")
 NOTE_MARKER_PATTERN = re.compile(r"†\s*NOTE\s+([^\s†]+)(?:\s+LEMMA\s+([^†]*?))?\s*†")
 
 
-def strip_leading_anchors(s: str):
+def clean_analysis_text(raw: str) -> Tuple[str, int]:
     """
-    Remove leading anchor chars from a literal chunk and return:
-    (cleaned_text, anchor_count)
+    Remove analysis-stage special characters like anchors from a text chunk.
+    Returns: (cleaned_text, anchor_count)
     """
-    if not s:
-        return s, 0
-    m = re.match(rf"^\s*({re.escape(ANCHOR_CHAR)}+)\s*", s)
-    if not m:
-        return s, 0
-    count = len(m.group(1))
-    return s[m.end():], count
+    if not raw:
+        return "", 0
+    anchor_count = raw.count(ANCHOR_CHAR)
+    cleaned = raw.replace(ANCHOR_CHAR, "")
+    return cleaned, anchor_count
 
 
 def _infer_wit_to_edition(wit: str):
@@ -88,7 +87,6 @@ def extract_and_remove_iiif_markers_with_context(l_elem) -> Dict[str, List[Dict]
     metadata_by_edition = {e: [] for e in EDITIONS}
 
     def process(e, current_edition=None):
-        # Process element text
         if e.text:
             for match in re.finditer(pattern, e.text):
                 url = match.group(1).strip()
@@ -98,16 +96,13 @@ def extract_and_remove_iiif_markers_with_context(l_elem) -> Dict[str, List[Dict]
             if e.text == "":
                 e.text = None
 
-        # Process children
         for child in list(e):
-            # If this is an rdg, determine its edition
             ed_context = current_edition
             if child.tag == f"{{{NS['tei']}}}rdg":
                 ed_context = _infer_wit_to_edition(child.get("wit", "")) or current_edition
 
             process(child, ed_context)
 
-            # Process child tail
             if child.tail:
                 for match in re.finditer(pattern, child.tail):
                     url = match.group(1).strip()
@@ -699,7 +694,8 @@ def merge_runs(runs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 def extract_text_and_runs_from_node(node: ET.Element, active_styles: List[str], buf: List[str], runs: List[Dict]):
     if node.text:
-        txt = normalize_literal(node.text)
+        txt, _ = clean_analysis_text(node.text)
+        txt = normalize_literal(txt)
         if txt:
             start = len("".join(buf))
             buf.append(txt)
@@ -712,7 +708,8 @@ def extract_text_and_runs_from_node(node: ET.Element, active_styles: List[str], 
         extract_text_and_runs_from_node(child, child_styles, buf, runs)
 
         if child.tail:
-            tail = normalize_literal(child.tail)
+            tail, _ = clean_analysis_text(child.tail)
+            tail = normalize_literal(tail)
             if tail:
                 start = len("".join(buf))
                 buf.append(tail)
@@ -772,15 +769,9 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
             })
 
     def flush_literal():
-        nonlocal paragraph_anchor_count
         if current_literal:
             raw = "".join(current_literal)
             s = normalize_literal(raw)
-
-            s, c = strip_leading_anchors(s)
-            if c:
-                paragraph_anchor_count += c
-
             if s.strip():
                 span = {
                     "text": s,
@@ -796,7 +787,9 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
             current_literal.clear()
 
     if l_elem.text:
-        current_literal.append(l_elem.text)
+        txt, c = clean_analysis_text(l_elem.text)
+        paragraph_anchor_count += c
+        current_literal.append(txt)
 
     for child in l_elem:
         if child.tag == f"{{{NS['tei']}}}app":
@@ -897,12 +890,18 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
                             push_to_edition(ed, ed_txt, rdg_runs.get(ed, []))
 
             if child.tail:
-                current_literal.append(child.tail)
+                txt, c = clean_analysis_text(child.tail)
+                paragraph_anchor_count += c
+                current_literal.append(txt)
         else:
             if child.text:
-                current_literal.append(child.text)
+                txt, c = clean_analysis_text(child.text)
+                paragraph_anchor_count += c
+                current_literal.append(txt)
             if child.tail:
-                current_literal.append(child.tail)
+                txt, c = clean_analysis_text(child.tail)
+                paragraph_anchor_count += c
+                current_literal.append(txt)
 
     flush_literal()
     segments = [s for s in segments if s["text"]]

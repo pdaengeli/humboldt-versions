@@ -590,31 +590,23 @@ function mergeAdjacentFormatNotes(notes) {
 // ---------------------------------------------------------------------------
 // Helpers
 
-function isVisuallyEmptyParagraph(item) {
-  if (!item || !item.data) return true;
+function isVisiblyEmpty(item) {
+  if (!item?.data) return true;
 
-  const textByEd = item.data.edition_text || {};
   const unified = item.data.unified_text || [];
   const notesByEd = item.data.notes || {};
+  const editionText = item.data.edition_text || {};
 
-  // any visible edition text?
-  const hasText = Object.values(textByEd).some(t => String(t || '').trim().length > 0);
-  if (hasText) {
-    // still consider paragraphs with only whitespace and no meaningful content as empty
-    const hasNonWhitespace = Object.values(textByEd).some(t => String(t || '').replace(/\s+/g, '').length > 0);
-    if (hasNonWhitespace) return false;
-  }
+  const hasVisibleText =
+    unified.some(s => String(s?.text || '').trim().length > 0) ||
+    Object.values(editionText).some(t => String(t || '').trim().length > 0);
 
-  // any visible unified text?
-  if (unified.some(s => String(s?.text || '').trim().length > 0)) return false;
+  const hasUsefulNotes =
+    ['1808', '1826', '1849'].some(ed =>
+      (notesByEd[ed] || []).some(n => ['note_ref', 'note_entry', 'section'].includes(n?.type))
+    );
 
-  // any note refs / note entries / section markers?
-  for (const ed of ['1808', '1826', '1849']) {
-    const notes = notesByEd[ed] || [];
-    if (notes.some(n => ['note_ref', 'note_entry', 'section'].includes(n?.type))) return false;
-  }
-
-  return true;
+  return !(hasVisibleText || hasUsefulNotes);
 }
 
 function isComparativeView() { return currentEdition === 'all'; }
@@ -1262,8 +1254,26 @@ function renderParagraph(item, idx) {
     card.classList.add('note-block', 'note-block-cont');
   }
 
+
   const header = document.createElement('div');
-  header.className = 'paragraph-header';
+  header.className = 'paragraph-header paragraph-header-collapsed';
+  header.setAttribute('aria-expanded', 'false');
+
+  // clickable strip at the top
+  const headerToggle = document.createElement('button');
+  headerToggle.type = 'button';
+  headerToggle.className = 'paragraph-header-toggle';
+  headerToggle.setAttribute('aria-label', 'Absatzmetadaten ein-/ausblenden');
+
+  const headerLine = document.createElement('span');
+  headerLine.className = 'paragraph-header-line';
+
+  const headerYear = document.createElement('span');
+  headerYear.className = 'paragraph-header-year';
+
+  // Back side / revealed metadata container
+  const headerMeta = document.createElement('div');
+  headerMeta.className = 'paragraph-header-meta';
 
   // Left: paragraph number
   const num = document.createElement('div');
@@ -1278,22 +1288,14 @@ function renderParagraph(item, idx) {
 
   if (isComparativeView()) {
     paraBaseEd = paragraphBaseEdition(item.data.unified_text || []);
-
-    const baseBadge = document.createElement('span');
-    baseBadge.className = 'new-badge';
-    baseBadge.style.background = '#111';
-    baseBadge.style.color = '#fff';
-    baseBadge.textContent = paraBaseEd;
-
-    const baseInfo = document.createElement('span');
-    baseInfo.className = 'info-icon';
-    baseInfo.title = 'Basistext: zeigt an, in welcher Version der Absatz erstmals vorkam';
-    baseInfo.textContent = 'ℹ';
+    header.dataset.baseEdition = paraBaseEd;
+    header.style.setProperty('--header-line-color', editionColors[paraBaseEd || currentEdition] || '#8e44ad');
+    headerYear.textContent = paraBaseEd;
 
     const chipsWrap = document.createElement('div');
     chipsWrap.className = 'edition-chips';
 
-    ['1808','1826','1849'].forEach(ed => {
+    ['1808', '1826', '1849'].forEach(ed => {
       const chip = document.createElement('span');
       chip.className = 'new-badge';
       chip.style.background = 'transparent';
@@ -1303,14 +1305,18 @@ function renderParagraph(item, idx) {
       chipsWrap.appendChild(chip);
     });
 
+    const baseInfo = document.createElement('span');
+    baseInfo.className = 'info-icon';
+    baseInfo.title = 'Basistext: zeigt an, in welcher Version der Absatz erstmals vorkam';
+    baseInfo.textContent = 'ℹ';
+
     const chipsInfo = document.createElement('span');
     chipsInfo.className = 'info-icon';
     chipsInfo.title = 'Varianten: zeigt an, welche Zeichen in früheren Fassungen abwichen';
     chipsInfo.textContent = 'ℹ';
 
-    center.appendChild(baseBadge);
-    center.appendChild(baseInfo);
     center.appendChild(chipsWrap);
+    center.appendChild(baseInfo);
     center.appendChild(chipsInfo);
   } else {
     center.classList.add('plain-edition-chip');
@@ -1321,6 +1327,10 @@ function renderParagraph(item, idx) {
     chip.style.border = `1px solid ${editionColors[currentEdition] || '#000'}`;
     chip.textContent = editionLabel(currentEdition);
     center.appendChild(chip);
+
+    header.dataset.baseEdition = currentEdition;
+    header.style.setProperty('--header-line-color', editionColors[currentEdition] || '#8e44ad');
+    headerYear.textContent = editionLabel(currentEdition);
   }
 
   // Right: stats (comparative only) + IIIF button
@@ -1343,7 +1353,6 @@ function renderParagraph(item, idx) {
     statsDiv.appendChild(c);
   }
 
-  // Add IIIF button if URLs are available
   const iiifUrls = getLastIiifUrlsForParagraph(allData, idx);
   const hasAnyUrl = iiifUrls['1808'] || iiifUrls['1826'] || iiifUrls['1849'];
 
@@ -1360,10 +1369,26 @@ function renderParagraph(item, idx) {
     }
   }
 
-  header.appendChild(num);
-  header.appendChild(center);
-  header.appendChild(statsDiv);
+  headerToggle.appendChild(headerLine);
+  headerToggle.appendChild(headerYear);
+
+  headerMeta.appendChild(num);
+  headerMeta.appendChild(center);
+  headerMeta.appendChild(statsDiv);
+
+  header.appendChild(headerToggle);
+  header.appendChild(headerMeta);
   card.appendChild(header);
+
+  card.classList.add('paragraph-card-collapsed');
+
+  headerToggle.addEventListener('click', () => {
+    const expanded = card.classList.toggle('paragraph-card-expanded');
+    card.classList.toggle('paragraph-card-collapsed', !expanded);
+    header.classList.toggle('paragraph-header-collapsed', !expanded);
+    header.classList.toggle('paragraph-header-expanded', expanded);
+    header.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  });
 
   const body = document.createElement('div');
   body.className = 'paragraph-body';
@@ -1371,6 +1396,10 @@ function renderParagraph(item, idx) {
   // Plain edition view: single-column, no apparatus, no variants
   if (!isComparativeView()) {
     body.classList.add('plain-edition-view');
+
+    header.dataset.baseEdition = currentEdition;
+
+    header.style.setProperty('--header-line-color', editionColors[currentEdition] || '#8e44ad');
 
     const textDiv = document.createElement('div');
     textDiv.className = 'unified-text';
@@ -1405,11 +1434,12 @@ function renderParagraph(item, idx) {
 
   // paragraph anchor marker (single visual cue)
   const anchorCount = item?.data?.anchor_count || 0;
-  if (anchorCount > 0) {
+  if (anchorCount > 0 && correctionMode?.enabled) {
     const a = document.createElement('span');
     a.className = 'lera-anchor';
     a.dataset.count = String(anchorCount);
     a.setAttribute('aria-hidden', 'true');
+    a.title = 'LERA-Anker';
     textDiv.appendChild(a);
   }
   textDiv.appendChild(frag);
@@ -1436,7 +1466,10 @@ function loadNextBatch(force = false) {
   isLoading = true;
   const container = document.getElementById('content');
   const end = Math.min(displayedCount + BATCH_SIZE, allData.length);
-  for (let i = displayedCount; i < end; i++) container.appendChild(renderParagraph(allData[i], i));
+  for (let i = displayedCount; i < end; i++) {
+    if (isVisiblyEmpty(allData[i])) continue;
+    container.appendChild(renderParagraph(allData[i], i));
+  }
   displayedCount = end;
   isLoading = false;
 
@@ -2147,7 +2180,7 @@ fetch('slot_output.json')
   .then(r => { if (!r.ok) throw new Error('Datei nicht gefunden'); return r.json(); })
   .then(data => {
     metaData = data.meta || {};
-    allData = (data.content || []).filter(item => !isVisuallyEmptyParagraph(item));
+    allData = data.content || [];
     buildNoteLinkRegistry();
     document.getElementById('content').innerHTML = '';
     buildSectionTOC();

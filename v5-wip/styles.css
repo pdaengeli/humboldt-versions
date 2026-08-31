@@ -206,6 +206,96 @@ body { font-family: 'Crimson Text', Georgia, serif; line-height: 2; color: #2c3e
   text-decoration: underline;
 }
 
+/* Collapsible paragraph header */
+.paragraph-card-collapsed .paragraph-header-meta {
+  display: none;
+}
+
+.paragraph-card-expanded .paragraph-header-meta {
+  display: grid;
+}
+
+.paragraph-header {
+  display: block;
+  padding: 0;
+  margin-bottom: 1rem;
+  user-select: none;
+}
+
+.paragraph-header-toggle {
+  position: relative;
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.45rem 0;
+  user-select: none;
+  min-height: 1.8rem;
+}
+
+.paragraph-header-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  transform: translateY(-50%);
+  background: var(--header-line-color, var(--color-1849));
+  opacity: 0.95;
+}
+
+/*.paragraph-header-year {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0 0.55rem;
+  background: #f8f9fa;
+  color: var(--header-line-color, var(--color-1849));
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  line-height: 1.2;
+}*/
+
+.paragraph-header-year {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: fit-content;
+  margin-left: 39vw;
+  margin-right: auto;
+  padding: 0 0.55rem;
+  background: #f8f9fa;
+  color: var(--header-line-color, var(--color-1849));
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.paragraph-header-toggle:hover .paragraph-header-line {
+  opacity: 1;
+}
+
+.paragraph-header-toggle:hover .paragraph-header-year {
+  background: rgba(248, 249, 250, 0.92);
+}
+
+.paragraph-header-meta {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.45rem;
+}
+
+.paragraph-card-expanded .paragraph-header-toggle {
+  margin-bottom: 0.35rem;
+}
 
 /* Paragraph cards */
 .paragraph-card {
@@ -327,7 +417,7 @@ body { font-family: 'Crimson Text', Georgia, serif; line-height: 2; color: #2c3e
   margin-bottom: 0.25rem;
 }
 
-.paragraph-header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; }
+/*.paragraph-header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; }*/
 .paragraph-number { font-size: 1rem; font-weight: 700; color: #667eea; display: flex; align-items: center; gap: 0.5rem; }
 .paragraph-number a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
 .paragraph-number .anchor-icon { opacity: 0; transition: opacity 0.2s; font-size: 0.9rem; color: #cbd5e0; }
