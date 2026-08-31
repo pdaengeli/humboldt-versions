@@ -181,6 +181,32 @@ body { font-family: 'Crimson Text', Georgia, serif; line-height: 2; color: #2c3e
 .lera-anchor[data-count="2"]::before { content: "⚓"; } /* still single marker by design */
 .lera-anchor[data-count="3"]::before { content: "⚓"; }
 
+.note-ref-link {
+  text-decoration: none;
+  vertical-align: super;
+  font-size: 0.78em;
+  line-height: 1;
+  margin-left: 0.05em;
+}
+.note-ref-link:hover {
+  text-decoration: underline;
+}
+
+.note-back-link {
+  display: inline-block;
+  margin-left: -1.6em !important;
+  text-decoration: none;
+  margin-right: 0.35em;
+  margin-left: -0.2em;
+  opacity: 0.75;
+  font-size: 0.9em;
+}
+.note-back-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+
 /* Paragraph cards */
 .paragraph-card {
   background: white;
@@ -190,6 +216,115 @@ body { font-family: 'Crimson Text', Georgia, serif; line-height: 2; color: #2c3e
   box-shadow: 0 2px 16px rgba(0,0,0,0.08);
   scroll-margin-top: 180px;
   position: relative;
+}
+
+/* Note-section visual grouping */
+.paragraph-card.note-block {
+  background: #fcfcf7;
+  border: 1px solid #ece8d8;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.04);
+}
+
+.paragraph-card.note-block-start {
+  border-left: 4px solid #cdbb8a;
+  margin-top: 1.25rem;
+}
+
+.paragraph-card.note-block-cont {
+  margin-top: 0.35rem;              /* tighter connection inside same note run */
+  border-top-color: #f2efe3;
+  border-left: 4px solid #e6dcc2;   /* lighter continuation rail */
+}
+
+/* Optional: make continuation headers less dominant */
+.paragraph-card.note-block-cont .paragraph-number {
+  opacity: 0.82;
+}
+
+/* tighten spacing between consecutive note-block cards */
+.paragraph-card.note-block-start + .paragraph-card.note-block-cont,
+.paragraph-card.note-block-cont + .paragraph-card.note-block-cont {
+  margin-top: -20 !important;
+}
+
+/* remove visual double-separation from inner spacing look */
+.paragraph-card.note-block-cont {
+  border-top-width: 0;
+  margin-top: -20px;
+}
+
+.paragraph-card.note-block-start {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+.paragraph-card.note-block-cont {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+}
+
+/*.paragraph-card.note-block-nested {
+  left: 20px;
+  border: 1px solid #e7ebf4;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  margin-top: -20px;
+  padding-left: 75px;
+  margin-bottom: 0.12rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}*/
+
+.paragraph-card.note-block-nested {
+  background: #fcfcf7;
+  border: 1px solid #e4e8f1;
+  border-left: 2px solid #cdbb8a;
+  /*box-shadow: inset 0 0 0 1px rgba(184, 198, 221, 0.2), 0 1px 4px rgba(0,0,0,0.03);*/
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  transform: translateX(32px);
+  width: calc(100% - 32px);
+  border-left-width: 2px;
+  margin-top: -25px;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.paragraph-card.note-block-nested::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  background: linear-gradient(
+    to right,
+    rgba(248, 249, 252, 0.95),
+    rgba(248, 249, 252, 0)
+  );
+  pointer-events: none;
+}
+
+.paragraph-card.note-block-nested .paragraph-header {
+  opacity: 0.9;
+}
+
+.paragraph-card.note-block-nested .paragraph-number {
+  color: #6b7a99;
+}
+
+.paragraph-card.note-block-nested .note-back-link {
+  opacity: 0.65;
+}
+
+.paragraph-card.note-block-nested .paragraph-number {
+  opacity: 0.72;
+}
+
+.paragraph-card.note-block-nested .paragraph-header {
+  margin-bottom: 0.25rem;
 }
 
 .paragraph-header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; }
@@ -236,6 +371,17 @@ body { font-family: 'Crimson Text', Georgia, serif; line-height: 2; color: #2c3e
 .apparatus-note { margin-bottom: 0.8rem; padding: 0.4rem; background: #f8f9fa; border-radius: 4px; line-height: 1.6; transition: background 0.2s, transform 0.2s; }
 .apparatus-note.hovering { background: #fff8e1; }
 .apparatus-empty { font-style: italic; color: #adb5bd; }
+
+.apparatus-note-marker {
+  text-decoration: none;
+  font-weight: 700;
+  padding: 0 0.08em;
+  border-radius: 2px;
+}
+
+.apparatus-note-marker:hover {
+  text-decoration: underline;
+}
 
 .inline-highlight { background: #fff3cd; box-shadow: 0 0 0 2px #ffe08a; transition: background 0.15s ease, box-shadow 0.15s ease; }
 
@@ -417,6 +563,11 @@ body { font-family: 'Crimson Text', Georgia, serif; line-height: 2; color: #2c3e
   background: #fff8e1 !important;
   box-shadow: 0 0 0 1px rgba(255, 200, 80, 0.55);
   border-radius: 4px;
+}
+
+.apparatus-note.cm-active-note {
+  outline: 2px solid #ffe08a;
+  box-shadow: 0 0 0 2px #ffe08a;
 }
 
 /* Correction focus: hide apparatus column */

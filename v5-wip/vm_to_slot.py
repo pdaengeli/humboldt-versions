@@ -1,4 +1,3 @@
-
 import json
 import sys
 import unicodedata
@@ -50,6 +49,10 @@ def normalize_literal(raw: str) -> str:
 ANCHOR_CHAR = "⚓"
 SECTION_CHAR = "∬"
 
+REF_MARKER_PATTERN = re.compile(r"※\s*REF\s+id=([^\s※]+)\s*※")
+NOTE_MARKER_PATTERN = re.compile(r"†\s*NOTE\s+([^\s†]+)(?:\s+LEMMA\s+([^†]*?))?\s*†")
+
+
 def strip_leading_anchors(s: str):
     """
     Remove leading anchor chars from a literal chunk and return:
@@ -62,6 +65,14 @@ def strip_leading_anchors(s: str):
         return s, 0
     count = len(m.group(1))
     return s[m.end():], count
+
+
+def _infer_wit_to_edition(wit: str):
+    wit = (wit or "").strip().lstrip("#")
+    for ed in EDITIONS:
+        if wit == ed or wit.endswith(f"-{ed}") or wit.endswith(ed):
+            return ed
+    return None
 
 
 def extract_and_remove_iiif_markers_with_context(l_elem) -> Dict[str, List[Dict]]:
@@ -92,11 +103,7 @@ def extract_and_remove_iiif_markers_with_context(l_elem) -> Dict[str, List[Dict]
             # If this is an rdg, determine its edition
             ed_context = current_edition
             if child.tag == f"{{{NS['tei']}}}rdg":
-                wit = child.get("wit", "").strip().lstrip("#")
-                for ed in EDITIONS:
-                    if wit == ed or wit.endswith(f"-{ed}") or wit.endswith(ed):
-                        ed_context = ed
-                        break
+                ed_context = _infer_wit_to_edition(child.get("wit", "")) or current_edition
 
             process(child, ed_context)
 
@@ -112,6 +119,7 @@ def extract_and_remove_iiif_markers_with_context(l_elem) -> Dict[str, List[Dict]
 
     process(l_elem)
     return metadata_by_edition
+
 
 def extract_and_remove_section_markers_with_context(l_elem) -> Dict[str, List[Dict]]:
     """
@@ -151,7 +159,6 @@ def extract_and_remove_section_markers_with_context(l_elem) -> Dict[str, List[Di
                 title = slug.replace("-", " ")
             return {"slug": slug, "title": title}
 
-        # legacy format: only title
         title = payload
         slug = slugify_fallback(title)
         return {"slug": slug, "title": title}
@@ -181,11 +188,7 @@ def extract_and_remove_section_markers_with_context(l_elem) -> Dict[str, List[Di
         for child in list(e):
             ed_context = current_edition
             if child.tag == f"{{{NS['tei']}}}rdg":
-                wit = child.get("wit", "").strip().lstrip("#")
-                for ed in EDITIONS:
-                    if wit == ed or wit.endswith(f"-{ed}") or wit.endswith(ed):
-                        ed_context = ed
-                        break
+                ed_context = _infer_wit_to_edition(child.get("wit", "")) or current_edition
 
             process(child, ed_context)
 
@@ -193,6 +196,78 @@ def extract_and_remove_section_markers_with_context(l_elem) -> Dict[str, List[Di
                 for match in re.finditer(pattern, child.tail):
                     add_section(match.group(1), ed_context)
                 child.tail = re.sub(pattern, "", child.tail)
+                if child.tail == "":
+                    child.tail = None
+
+    process(l_elem)
+    return metadata_by_edition
+
+
+def extract_and_remove_note_markers_with_context(l_elem) -> Dict[str, List[Dict]]:
+    """
+    Extract and remove LERA note markers:
+      - ※REF id=...※
+      - †NOTE <id> LEMMA <...>†
+
+    Returns:
+      { edition -> [ {type:'note_ref', id:'...'} | {type:'note_entry', id:'...', lemma:'...'} ] }
+    """
+    metadata_by_edition = {e: [] for e in EDITIONS}
+
+    def parse_markers_from_text(raw: str, ed_context):
+        out = []
+        if not raw:
+            return out
+
+        for m in REF_MARKER_PATTERN.finditer(raw):
+            rid = (m.group(1) or "").strip()
+            if rid:
+                out.append({"type": "note_ref", "id": rid})
+
+        for m in NOTE_MARKER_PATTERN.finditer(raw):
+            nid = (m.group(1) or "").strip()
+            lemma = normalize_literal((m.group(2) or "")).strip()
+            if nid:
+                obj = {"type": "note_entry", "id": nid}
+                if lemma:
+                    obj["lemma"] = lemma
+                out.append(obj)
+
+        return out
+
+    def strip_markers(raw: str):
+        if raw is None:
+            return None
+        s = REF_MARKER_PATTERN.sub("", raw)
+        s = NOTE_MARKER_PATTERN.sub("", s)
+        return s
+
+    def attach(entries, ed_context):
+        if not entries:
+            return
+        if ed_context:
+            metadata_by_edition[ed_context].extend(entries)
+        else:
+            for ed in EDITIONS:
+                metadata_by_edition[ed].extend(entries)
+
+    def process(e, current_edition=None):
+        if e.text:
+            attach(parse_markers_from_text(e.text, current_edition), current_edition)
+            e.text = strip_markers(e.text)
+            if e.text == "":
+                e.text = None
+
+        for child in list(e):
+            ed_context = current_edition
+            if child.tag == f"{{{NS['tei']}}}rdg":
+                ed_context = _infer_wit_to_edition(child.get("wit", "")) or current_edition
+
+            process(child, ed_context)
+
+            if child.tail:
+                attach(parse_markers_from_text(child.tail, ed_context), ed_context)
+                child.tail = strip_markers(child.tail)
                 if child.tail == "":
                     child.tail = None
 
@@ -583,8 +658,6 @@ def add_to_global(global_stats: Dict, para_stats: Dict):
         global_stats[k] = global_stats.get(k, 0) + v
 
 
-# -------------------- formatting extraction --------------------
-
 def parse_style_tag(el: ET.Element) -> List[str]:
     tag = el.tag.split("}")[-1]
     styles = []
@@ -598,15 +671,10 @@ def parse_style_tag(el: ET.Element) -> List[str]:
     rendition = (el.get("rendition") or "").strip().lower()
     cls = (el.get("class") or "").strip().lower()
 
-    # spaced
     if rend == "spaced" or "lera-spaced" in cls:
         styles.append("spaced")
-
-    # bold hinted via rend
     if rend == "bold":
         styles.append("bold")
-
-    # rendition font hints
     if "#fr" in rendition:
         styles.append("font-fraktur")
     if "#aq" in rendition:
@@ -658,17 +726,14 @@ def extract_reading_text_and_runs(rdg: ET.Element) -> Tuple[str, List[Dict]]:
     runs: List[Dict] = []
     extract_text_and_runs_from_node(rdg, [], buf, runs)
     text = "".join(buf)
-
-    # Normalize and process
     runs = [r for r in merge_runs(runs) if r["start"] < r["end"]]
     return text, runs
 
 
 def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], int, Dict[str, List[Dict]]]:
-    # FIRST: Extract all IIIF markers from the entire <l> with edition context and remove them
     paragraph_metadata_by_ed = extract_and_remove_iiif_markers_with_context(l_elem)
-    # THEN: Extract all section markers (∬...∬) with edition context and remove them
     section_metadata_by_ed = extract_and_remove_section_markers_with_context(l_elem)
+    note_metadata_by_ed = extract_and_remove_note_markers_with_context(l_elem)
 
     segments: List[Dict] = []
     edition_runs_map: Dict[str, List[Dict]] = {e: [] for e in EDITIONS}
@@ -676,10 +741,10 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
     edition_notes_map: Dict[str, List[Dict]] = {e: [] for e in EDITIONS}
     paragraph_anchor_count = 0
 
-    # Add paragraph-level metadata to the appropriate editions
     for ed in EDITIONS:
         edition_notes_map[ed].extend(paragraph_metadata_by_ed.get(ed, []))
         edition_notes_map[ed].extend(section_metadata_by_ed.get(ed, []))
+        edition_notes_map[ed].extend(note_metadata_by_ed.get(ed, []))
 
     current_literal: List[str] = []
 
@@ -712,7 +777,6 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
             raw = "".join(current_literal)
             s = normalize_literal(raw)
 
-            # strip LERA anchor chars from literal text and store metadata count
             s, c = strip_leading_anchors(s)
             if c:
                 paragraph_anchor_count += c
@@ -743,10 +807,8 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
 
             for rdg in child.findall("./tei:rdg", NS):
                 wit = rdg.get("wit", "").strip().lstrip("#")
-                # map possible witness ids like anchor-1849 -> 1849
                 for ed in EDITIONS:
                     if wit == ed or wit.endswith(f"-{ed}") or wit.endswith(ed):
-                        # Markers already removed at paragraph level; just extract text
                         txt_raw, runs = extract_reading_text_and_runs(rdg)
                         val = normalize_text(txt_raw)
                         texts[ed] = val
@@ -863,6 +925,57 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
     return segments, edition_runs_map, paragraph_anchor_count, edition_notes_map
 
 
+def reconstruct_note_registry(content: List[Dict]) -> Dict[str, Dict]:
+    """
+    Build a simple global note registry from per-paragraph notes.
+    Links by shared stem:
+      1808-1-n001-ref  -> stem 1808-1-n001
+      1808-1-n001-note -> stem 1808-1-n001
+    """
+    registry: Dict[str, Dict] = {}
+
+    def stem(note_id: str) -> str:
+        return re.sub(r"-(ref|note)$", "", (note_id or "").strip())
+
+    for item in content:
+        pnum = item.get("data", {}).get("number")
+        notes_by_ed = item.get("data", {}).get("notes", {}) or {}
+
+        for ed in EDITIONS:
+            for n in notes_by_ed.get(ed, []):
+                typ = n.get("type")
+                nid = (n.get("id") or "").strip()
+                if typ not in ("note_ref", "note_entry") or not nid:
+                    continue
+
+                st = stem(nid)
+                rec = registry.get(st)
+                if not rec:
+                    rec = {
+                        "stem": st,
+                        "edition": ed,
+                        "ref_ids": [],
+                        "note_ids": [],
+                        "ref_positions": [],
+                        "entry_positions": [],
+                        "lemma": {}
+                    }
+                    registry[st] = rec
+
+                if typ == "note_ref":
+                    if nid not in rec["ref_ids"]:
+                        rec["ref_ids"].append(nid)
+                    rec["ref_positions"].append({"paragraph": pnum})
+                else:
+                    if nid not in rec["note_ids"]:
+                        rec["note_ids"].append(nid)
+                    rec["entry_positions"].append({"paragraph": pnum})
+                    if n.get("lemma"):
+                        rec["lemma"][ed] = n["lemma"]
+
+    return registry
+
+
 def build_slots(root) -> Dict:
     l_elems = extract_l_elements(root)
     content = []
@@ -902,12 +1015,15 @@ def build_slots(root) -> Dict:
             }
         })
 
+    note_registry = reconstruct_note_registry(content)
+
     return {
         "meta": {
             "generated_at": "2026-06-30T00:00:00Z",
             "editions": EDITIONS,
             "generator": "vm-to-slot-inline-marginal-format-runs",
-            "stats": global_stats
+            "stats": global_stats,
+            "note_registry": note_registry
         },
         "content": content
     }

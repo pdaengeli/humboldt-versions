@@ -31,6 +31,12 @@ const spanRegistry = new Map();     // variant-id -> DOM node
 const variantMetaById = new Map();  // variant-id -> span object (Phase 2 for correction mode & filtering)
 let correctionMode = null;          // initialized later (avoid TDZ / load order issues)
 
+// NOTE LINKING
+const noteLinkRegistry = new Map();      // refId  -> target note paragraph number
+const noteBackLinkRegistry = new Map();  // noteId -> source ref paragraph number
+const noteEntryToRefRegistry = new Map();    // noteEntryId -> noteRefId
+const noteRefElementRegistry = new Map();    // noteId -> apparatus-note DOM element
+
 // ---------------------------------------------------------------------------
 // Formatting helpers (NEW)
 
@@ -117,6 +123,313 @@ function appendTextWithRuns(parent, text, runs) {
 function findTextFirstIndex(full, needle, from = 0) {
   if (!needle) return -1;
   return full.indexOf(needle, from);
+}
+
+// NOTE HELPERS
+function noteStem(id) {
+  return String(id || '').replace(/-(ref|note)\s*$/, '').trim();
+}
+
+
+function buildNoteLinkRegistry() {
+  noteLinkRegistry.clear();
+  noteBackLinkRegistry.clear();
+  noteEntryToRefRegistry.clear();
+
+  const entryByStem = new Map(); // stem -> { para, ed, noteId }
+  const refByStem = new Map();   // stem -> { para, ed, refId }
+  const prio = { '1849': 3, '1826': 2, '1808': 1 };
+
+  allData.forEach(item => {
+    const para = Number(item?.data?.number);
+    const notesByEd = item?.data?.notes || {};
+    ['1808', '1826', '1849'].forEach(ed => {
+      (notesByEd[ed] || []).forEach(n => {
+        if (n?.type === 'note_entry' && n?.id) {
+          const stem = noteStem(n.id);
+          if (!stem) return;
+          const prev = entryByStem.get(stem);
+          if (!prev || (prio[ed] || 0) > (prio[prev.ed] || 0)) {
+            entryByStem.set(stem, { para, ed, noteId: String(n.id) });
+          }
+        }
+        if (n?.type === 'note_ref' && n?.id) {
+          const stem = noteStem(n.id);
+          if (!stem) return;
+          const prev = refByStem.get(stem);
+          // prefer earliest occurrence; if tie, prefer newer edition
+          if (!prev || para < prev.para || (para === prev.para && (prio[ed] || 0) > (prio[prev.ed] || 0))) {
+            refByStem.set(stem, { para, ed, refId: String(n.id) });
+          }
+        }
+      });
+    });
+  });
+
+  // forward links (ref -> note para)
+  allData.forEach(item => {
+    const notesByEd = item?.data?.notes || {};
+    ['1808', '1826', '1849'].forEach(ed => {
+      (notesByEd[ed] || []).forEach(n => {
+        if (n?.type !== 'note_ref' || !n?.id) return;
+        const stem = noteStem(n.id);
+        const target = entryByStem.get(stem);
+        if (target?.para) noteLinkRegistry.set(String(n.id), target.para);
+      });
+    });
+  });
+
+  // backlinks (note -> ref para) + entry -> ref mapping
+  allData.forEach(item => {
+    const notesByEd = item?.data?.notes || {};
+    ['1808', '1826', '1849'].forEach(ed => {
+      (notesByEd[ed] || []).forEach(n => {
+        if (n?.type !== 'note_entry' || !n?.id) return;
+        const entryId = String(n.id);
+        const stem = noteStem(entryId);
+        const src = refByStem.get(stem);
+        if (src?.para) noteBackLinkRegistry.set(entryId, src.para);
+        if (src?.refId) noteEntryToRefRegistry.set(entryId, src.refId);
+      });
+    });
+  });
+}
+
+function collectRefIdsForParagraph(item) {
+  const out = [];
+  const seen = new Set();
+  const notesByEd = item?.data?.notes || {};
+  ['1808', '1826', '1849'].forEach(ed => {
+    (notesByEd[ed] || []).forEach(n => {
+      if (n?.type === 'note_ref' && n?.id) {
+        const id = String(n.id);
+        if (!seen.has(id)) {
+          seen.add(id);
+          out.push(id);
+        }
+      }
+    });
+  });
+  return out;
+}
+
+function collectNoteEntryIdsForParagraph(item) {
+  const out = [];
+  const seen = new Set();
+  const notesByEd = item?.data?.notes || {};
+  ['1808', '1826', '1849'].forEach(ed => {
+    (notesByEd[ed] || []).forEach(n => {
+      if (n?.type === 'note_entry' && n?.id) {
+        const id = String(n.id);
+        if (!seen.has(id)) {
+          seen.add(id);
+          out.push(id);
+        }
+      }
+    });
+  });
+  return out;
+}
+
+function injectNoteRefLinks(textDiv, item) {
+  if (!textDiv || !item) return;
+
+  const refIds = collectRefIdsForParagraph(item);
+  if (!refIds.length) return;
+
+  const superscriptRE = /[⁰¹²³⁴⁵⁶⁷⁸⁹]+/g;
+  const walker = document.createTreeWalker(textDiv, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) nodes.push(n);
+
+  let refIdx = 0;
+
+  nodes.forEach(tn => {
+    if (refIdx >= refIds.length) return;
+    const raw = tn.nodeValue || '';
+    superscriptRE.lastIndex = 0;
+    if (!superscriptRE.test(raw)) return;
+    superscriptRE.lastIndex = 0;
+
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    let m;
+
+    while ((m = superscriptRE.exec(raw)) !== null) {
+      if (refIdx >= refIds.length) break;
+
+      const before = raw.slice(last, m.index);
+      if (before) frag.appendChild(document.createTextNode(before));
+
+      const refText = m[0];
+      const refId = refIds[refIdx++];
+      const targetPara = noteLinkRegistry.get(refId);
+
+      const a = document.createElement('a');
+      a.className = 'note-ref-link';
+      a.textContent = refText;
+      a.dataset.noteRefId = refId;
+      if (targetPara) {
+        a.href = `#para-${targetPara}`;
+        a.dataset.notePara = String(targetPara);
+        a.title = `Zur Anmerkung springen (§ ${targetPara})`;
+      } else {
+        a.href = '#';
+        a.title = 'Anmerkung';
+      }
+
+      a.addEventListener('click', (e) => {
+        if (!targetPara) return;
+        e.preventDefault();
+        ensureLoaded(targetPara - 1);
+        scrollToParagraph(targetPara);
+      });
+
+      frag.appendChild(a);
+      last = superscriptRE.lastIndex;
+    }
+
+    const tail = raw.slice(last);
+    if (tail) frag.appendChild(document.createTextNode(tail));
+    tn.parentNode.replaceChild(frag, tn);
+  });
+}
+
+function injectNoteBackLinks(textDiv, item) {
+  if (!textDiv || !item) return;
+
+  const entryIds = collectNoteEntryIdsForParagraph(item);
+  if (!entryIds.length) return;
+
+  // One backlink per note paragraph (first note entry id in that paragraph)
+  const noteEntryId = entryIds[0];
+  const noteRefId = noteEntryToRefRegistry.get(noteEntryId);
+  const sourcePara = noteBackLinkRegistry.get(noteEntryId);
+  if (!sourcePara) return;
+
+  const back = document.createElement('a');
+  back.className = 'note-back-link';
+  back.href = `#para-${sourcePara}`;
+  back.title = `Zurück zur Verweisstelle (§ ${sourcePara})`;
+  back.textContent = '⮴';
+
+  back.addEventListener('click', (e) => {
+    e.preventDefault();
+    ensureLoaded(sourcePara - 1);
+    scrollToParagraph(sourcePara);
+
+    if (noteRefId) {
+      const appNote = noteRefElementRegistry.get(noteRefId);
+      if (appNote) {
+        appNote.classList.add('cm-active-note');
+        setTimeout(() => appNote.classList.remove('cm-active-note'), 1200);
+      }
+
+      const refAnchor = document.querySelector(`a.note-ref-link[data-note-ref-id="${noteRefId}"]`);
+      if (refAnchor) {
+        refAnchor.classList.add('inline-highlight');
+        setTimeout(() => refAnchor.classList.remove('inline-highlight'), 1200);
+      }
+    }
+  });
+
+  // prepend before paragraph content
+  textDiv.insertBefore(back, textDiv.firstChild);
+}
+
+
+function linkifyApparatusNoteText(noteText, item, targetId) {
+  const frag = document.createDocumentFragment();
+  const text = String(noteText || '');
+
+  // Linkify only the special markers you said you emit in preprocessing.
+  // Add more symbols here if needed later.
+  const markerRE = /([⁺*])/g;
+
+  const superscriptToNoteId = (marker) => {
+    // Prefer edition-aware note refs from the current paragraph
+    const notesByEd = item?.data?.notes || {};
+    const eds = ['1808', '1826', '1849'];
+
+    // Heuristic: the marker came from the earliest edition that differs in the variant.
+    // We use the variant metadata attached to the target apparatus span to identify
+    // which earlier edition(s) introduced the reading.
+    const span = variantMetaById.get(targetId) || null;
+
+    // If this is a substitution, use the earliest differing edition(s)
+    const candidateEds = [];
+    if (span?.type === 'replaced' && Array.isArray(span.changes)) {
+      const diffs = span.changes.filter(ch => ch.text && ch.text !== span.text);
+      diffs.forEach(ch => {
+        if (ch?.edition && !candidateEds.includes(ch.edition)) candidateEds.push(ch.edition);
+      });
+    }
+
+    // For additions, use the edition(s) in which the addition exists.
+    if (span?.variant_type === 'addition' && Array.isArray(span.editions)) {
+      span.editions.forEach(ed => {
+        if (ed && !candidateEds.includes(ed)) candidateEds.push(ed);
+      });
+    }
+
+    // Fallback: try editions in chronological order
+    if (!candidateEds.length) candidateEds.push(...eds);
+
+    for (const ed of candidateEds) {
+      const ref = (notesByEd[ed] || []).find(n => n?.type === 'note_ref' && n?.id);
+      if (ref?.id) return ref.id;
+    }
+    return null;
+  };
+
+  let last = 0;
+  let m;
+
+  while ((m = markerRE.exec(text)) !== null) {
+    const before = text.slice(last, m.index);
+    if (before) frag.appendChild(document.createTextNode(before));
+
+    const marker = m[1];
+    const noteRefId = superscriptToNoteId(marker);
+    const a = document.createElement('a');
+    a.className = 'note-ref-link apparatus-note-marker';
+    a.textContent = marker;
+    a.href = noteRefId ? `#${noteRefId}` : '#';
+    a.title = noteRefId ? 'Zur Verweisstelle springen' : 'Verweisstelle nicht gefunden';
+    if (noteRefId) a.dataset.noteRefId = noteRefId;
+
+    a.addEventListener('click', (e) => {
+      if (!noteRefId) return;
+      e.preventDefault();
+
+      const targetPara = noteLinkRegistry.get(noteRefId);
+      if (targetPara) {
+        ensureLoaded(targetPara - 1);
+        scrollToParagraph(targetPara);
+      }
+
+      const sourceSpan = spanRegistry.get(targetId);
+      if (sourceSpan) {
+        sourceSpan.classList.add('inline-highlight');
+        setTimeout(() => sourceSpan.classList.remove('inline-highlight'), 1200);
+      }
+
+      const appNote = noteRefElementRegistry.get(noteRefId);
+      if (appNote) {
+        appNote.classList.add('cm-active-note');
+        setTimeout(() => appNote.classList.remove('cm-active-note'), 1200);
+      }
+    });
+
+    frag.appendChild(a);
+    last = markerRE.lastIndex;
+  }
+
+  const tail = text.slice(last);
+  if (tail) frag.appendChild(document.createTextNode(tail));
+
+  return frag;
 }
 
 function getSpanFormatRuns(item, spanText, edition, cursorObj) {
@@ -277,6 +590,33 @@ function mergeAdjacentFormatNotes(notes) {
 // ---------------------------------------------------------------------------
 // Helpers
 
+function isVisuallyEmptyParagraph(item) {
+  if (!item || !item.data) return true;
+
+  const textByEd = item.data.edition_text || {};
+  const unified = item.data.unified_text || [];
+  const notesByEd = item.data.notes || {};
+
+  // any visible edition text?
+  const hasText = Object.values(textByEd).some(t => String(t || '').trim().length > 0);
+  if (hasText) {
+    // still consider paragraphs with only whitespace and no meaningful content as empty
+    const hasNonWhitespace = Object.values(textByEd).some(t => String(t || '').replace(/\s+/g, '').length > 0);
+    if (hasNonWhitespace) return false;
+  }
+
+  // any visible unified text?
+  if (unified.some(s => String(s?.text || '').trim().length > 0)) return false;
+
+  // any note refs / note entries / section markers?
+  for (const ed of ['1808', '1826', '1849']) {
+    const notes = notesByEd[ed] || [];
+    if (notes.some(n => ['note_ref', 'note_entry', 'section'].includes(n?.type))) return false;
+  }
+
+  return true;
+}
+
 function isComparativeView() { return currentEdition === 'all'; }
 
 function editionLabel(ed) {
@@ -415,7 +755,7 @@ function getLastIiifUrlsForParagraph(allDataUpTo, paraIdx) {
 // Helper: Build fragment viewer URL
 function buildFragmentViewerUrl(urls) {
   const params = new URLSearchParams();
-  
+
   if (urls['1808']) params.append('1808', urls['1808']);
   if (urls['1826']) params.append('1826', urls['1826']);
   if (urls['1849']) params.append('1849', urls['1849']);
@@ -746,9 +1086,102 @@ function renderApparatus(merged, spanIds, paraBaseEd) {
 
       classes.forEach(c => span.classList.add(c));
       d.appendChild(span);
+
     } else {
-      d.textContent = n.text;
+      const paraMatch = (n.targetId || '').match(/^v-(\d+)-/);
+      const paraNum = paraMatch ? parseInt(paraMatch[1], 10) : null;
+      const paraItem = paraNum ? allData[paraNum - 1] : null;
+
+      // Build a linkified apparatus note body so markers like ⁺ or * are clickable
+      const bodyFrag = document.createDocumentFragment();
+      const text = String(n.text || '');
+      const markerRE = /([⁺*])/g;
+
+      // Try to resolve the note-ref id that belongs to the edition that introduced this variant.
+      const resolveNoteRefId = () => {
+        if (!paraItem) return null;
+        const notesByEd = paraItem?.data?.notes || {};
+        const span = variantMetaById.get(n.targetId) || null;
+
+        // Prefer the earlier edition(s) that actually differ from 1849 in this span.
+        const candidateEds = [];
+        if (span?.type === 'replaced' && Array.isArray(span.changes)) {
+          const diffs = span.changes.filter(ch => ch && ch.text && ch.text !== span.text);
+          diffs.forEach(ch => {
+            if (ch.edition && !candidateEds.includes(ch.edition)) candidateEds.push(ch.edition);
+          });
+        }
+
+        // For additions, use the edition(s) in which the addition exists.
+        if (span?.variant_type === 'addition' && Array.isArray(span.editions)) {
+          span.editions.forEach(ed => {
+            if (ed && !candidateEds.includes(ed)) candidateEds.push(ed);
+          });
+        }
+
+        // Fallback to chronological order.
+        if (!candidateEds.length) candidateEds.push('1808', '1826', '1849');
+
+        for (const ed of candidateEds) {
+          const ref = (notesByEd[ed] || []).find(x => x?.type === 'note_ref' && x?.id);
+          if (ref?.id) return ref.id;
+        }
+        return null;
+      };
+
+      const noteRefId = resolveNoteRefId();
+
+      // Register the apparatus note element so back-links can highlight it later
+      if (noteRefId) {
+        noteRefElementRegistry.set(noteRefId, d);
+      }
+
+      let last = 0;
+      let m;
+
+      while ((m = markerRE.exec(text)) !== null) {
+        const before = text.slice(last, m.index);
+        if (before) bodyFrag.appendChild(document.createTextNode(before));
+
+        const marker = m[1];
+        const a = document.createElement('a');
+        a.className = 'note-ref-link apparatus-note-marker';
+        a.textContent = marker;
+        a.href = noteRefId ? `#${noteRefId}` : '#';
+        a.title = noteRefId ? 'Zur Verweisstelle springen' : 'Verweisstelle nicht gefunden';
+
+        if (noteRefId) a.dataset.noteRefId = noteRefId;
+
+        a.addEventListener('click', (e) => {
+          if (!noteRefId) return;
+          e.preventDefault();
+
+          const targetPara = noteLinkRegistry.get(noteRefId);
+          if (targetPara) {
+            ensureLoaded(targetPara - 1);
+            scrollToParagraph(targetPara);
+          }
+
+          const sourceSpan = spanRegistry.get(n.targetId);
+          if (sourceSpan) {
+            sourceSpan.classList.add('inline-highlight');
+            setTimeout(() => sourceSpan.classList.remove('inline-highlight'), 1200);
+          }
+
+          d.classList.add('cm-active-note');
+          setTimeout(() => d.classList.remove('cm-active-note'), 1200);
+        });
+
+        bodyFrag.appendChild(a);
+        last = markerRE.lastIndex;
+      }
+
+      const tail = text.slice(last);
+      if (tail) bodyFrag.appendChild(document.createTextNode(tail));
+
+      d.appendChild(bodyFrag);
     }
+
 
     if (n.targetId) d.dataset.target = n.targetId;
 
@@ -782,6 +1215,7 @@ function renderApparatus(merged, spanIds, paraBaseEd) {
   return appDiv;
 }
 
+
 // ---------------------------------------------------------------------------
 // Paragraph rendering
 
@@ -790,6 +1224,43 @@ function renderParagraph(item, idx) {
   const card = document.createElement('div');
   card.className = 'paragraph-card';
   card.id = `para-${paraNum}`;
+
+  // --- note-block grouping classes ---
+  const noteIds = collectNoteEntryIdsForParagraph(item);
+
+  const noteStem = (id) => String(id || '').replace(/-(ref|note)\s*$/, '').trim();
+  const hasNestedNoteId = (ids) => (ids || []).some(id => /\.\d+$/.test(noteStem(id)));
+
+  const hasOwnNoteEntry = noteIds.length > 0;
+  const isNestedNoteBlock = hasNestedNoteId(noteIds);
+
+  const hasSectionMarker = (it) => {
+    if (!it?.data?.notes) return false;
+    return ['1808', '1826', '1849'].some(ed =>
+      (it.data.notes[ed] || []).some(n => n?.type === 'section')
+    );
+  };
+
+  const isContinuationOfNoteBlock = (() => {
+    if (hasOwnNoteEntry) return false;
+
+    for (let j = idx - 1; j >= 0; j--) {
+      const prev = allData[j];
+      if (!prev) break;
+
+      if (collectNoteEntryIdsForParagraph(prev).length > 0) return true;
+      if (hasSectionMarker(prev)) break;
+    }
+    return false;
+  })();
+
+  if (isNestedNoteBlock) {
+    card.classList.add('note-block', 'note-block-nested');
+  } else if (hasOwnNoteEntry) {
+    card.classList.add('note-block', 'note-block-start');
+  } else if (isContinuationOfNoteBlock) {
+    card.classList.add('note-block', 'note-block-cont');
+  }
 
   const header = document.createElement('div');
   header.className = 'paragraph-header';
@@ -875,7 +1346,7 @@ function renderParagraph(item, idx) {
   // Add IIIF button if URLs are available
   const iiifUrls = getLastIiifUrlsForParagraph(allData, idx);
   const hasAnyUrl = iiifUrls['1808'] || iiifUrls['1826'] || iiifUrls['1849'];
-  
+
   if (hasAnyUrl) {
     const iiifLink = buildFragmentViewerUrl(iiifUrls);
     if (iiifLink) {
@@ -914,6 +1385,11 @@ function renderParagraph(item, idx) {
     appendTextWithRuns(el, plain, runs);
 
     textDiv.appendChild(el);
+
+    // note links
+    injectNoteRefLinks(textDiv, item);
+    injectNoteBackLinks(textDiv, item);
+
     body.appendChild(textDiv);
 
     card.appendChild(body);
@@ -926,7 +1402,7 @@ function renderParagraph(item, idx) {
   const textDiv = document.createElement('div');
   textDiv.className = 'unified-text';
   const { frag, spanIds } = renderSpans(merged, paraNum, paraBaseEd || '1849', item);
-  
+
   // paragraph anchor marker (single visual cue)
   const anchorCount = item?.data?.anchor_count || 0;
   if (anchorCount > 0) {
@@ -937,6 +1413,11 @@ function renderParagraph(item, idx) {
     textDiv.appendChild(a);
   }
   textDiv.appendChild(frag);
+
+  // note links
+  injectNoteRefLinks(textDiv, item);
+  injectNoteBackLinks(textDiv, item);
+
   body.appendChild(textDiv);
 
   const appDiv = renderApparatus(merged, spanIds, paraBaseEd || '1849');
@@ -1211,15 +1692,12 @@ correctionMode = {
   findBestStartIndex() {
     if (!this.targets.length) return -1;
 
-    // prefer the first target that is at/under the top of viewport (not hidden)
     const candidates = this.targets
       .map((t, i) => ({ i, top: t.el.getBoundingClientRect().top }))
       .sort((a, b) => a.top - b.top);
 
     const under = candidates.find(c => c.top >= 0);
     if (under) return under.i;
-
-    // otherwise we're past all targets currently loaded: use last one
     return candidates[candidates.length - 1].i;
   },
 
@@ -1391,7 +1869,6 @@ correctionMode = {
   setEnabled(enabled) {
     this.ensureUI();
 
-    // only meaningful in comparative view
     if (enabled && !isComparativeView()) {
       enabled = false;
     }
@@ -1399,41 +1876,33 @@ correctionMode = {
     this.enabled = enabled;
     if (this.ui.btnToggle) this.ui.btnToggle.checked = enabled;
 
-    // clear selection when disabling
     if (!enabled) {
       this.clearSelection();
       this.idx = -1;
       this.updateStatus();
-
-      // reset focus overrides when leaving correction mode
       document.body.classList.remove('cm-hide-apparatus', 'cm-hide-stats');
       return;
     }
 
-    // apply focus overrides from current UI state
     const hideApp = this.ui.root?.querySelector('.cm-focus[data-k="hideApparatus"]')?.checked;
     const hideStats = this.ui.root?.querySelector('.cm-focus[data-k="hideStats"]')?.checked;
     document.body.classList.toggle('cm-hide-apparatus', !!hideApp);
     document.body.classList.toggle('cm-hide-stats', !!hideStats);
 
-    // build initial index + pick start near viewport
     this.refresh(true);
     if (this.targets.length) {
       const start = this.findBestStartIndex();
-      this.select(start >= 0 ? start : 0, { scroll: false }); // don't jump on enable
+      this.select(start >= 0 ? start : 0, { scroll: false });
     }
   },
 
-  // Determine kind/type/length buckets using span meta (best-effort)
   classifyTarget(variantId, el) {
     const span = variantMetaById.get(variantId) || null;
     const kind = el?.classList?.contains('marginal-placeholder') ? 'marginal' : 'inline';
 
-    // normalize variantType for filtering
     let variantType = span?.variant_type || null;
     if (!variantType && span?.type === 'replaced') variantType = 'substitution';
 
-    // best-effort single vs multi-char (substitutions only)
     let isSingleChar = false;
     let isMultiChar = false;
     if (span?.type === 'replaced' && Array.isArray(span.changes)) {
@@ -1442,7 +1911,6 @@ correctionMode = {
       const hasReplaceLenGt1 = ops.some(op => op.operation === 'replace' && ((op.from || '').length > 1));
       isSingleChar = hasReplaceLen1 && !hasReplaceLenGt1;
 
-      // fallback: treat as multi if any replace op is >1 or if earlier vs base lengths differ
       isMultiChar =
         hasReplaceLenGt1 ||
         (span.text && span.changes.some(ch => (ch.text || '').length !== (span.text || '').length));
@@ -1460,7 +1928,6 @@ correctionMode = {
     if (t.variantType === 'addition' && !this.filters.addition) return false;
     if (t.variantType === 'deletion' && !this.filters.deletion) return false;
 
-    // if singleChar or multiChar filters active, require match (substitutions only)
     const lengthFiltersOn = this.filters.singleChar || this.filters.multiChar;
     if (lengthFiltersOn) {
       const anyMatch = (this.filters.singleChar && t.isSingleChar) || (this.filters.multiChar && t.isMultiChar);
@@ -1473,7 +1940,6 @@ correctionMode = {
   refresh(keepCurrent = false) {
     this.ensureUI();
 
-    // Disable correction mode automatically if leaving comparative view
     if (!isComparativeView() && this.enabled) {
       this.setEnabled(false);
       return;
@@ -1486,7 +1952,6 @@ correctionMode = {
       return;
     }
 
-    // index currently rendered variant elements (in DOM order)
     const els = Array.from(document.querySelectorAll('[data-variant-id]'));
     const nextTargets = [];
     els.forEach(el => {
@@ -1496,7 +1961,6 @@ correctionMode = {
       if (this.passesFilters(t)) nextTargets.push(t);
     });
 
-    // try to keep selection on same variantId
     let nextIdx = -1;
     if (keepCurrent && this.idx >= 0 && this.idx < this.targets.length) {
       const currentId = this.targets[this.idx]?.variantId;
@@ -1552,7 +2016,6 @@ correctionMode = {
     const t = this.targets[i];
     if (t?.el) t.el.classList.add('cm-active');
 
-    // highlight apparatus note too (if present)
     const note = document.querySelector(`.apparatus-note[data-target="${t.variantId}"]`);
     if (note) note.classList.add('cm-active-note');
 
@@ -1606,7 +2069,6 @@ function installCorrectionModeKeyboard() {
   document.addEventListener('keydown', (e) => {
     if (!correctionMode?.enabled) return;
 
-    // don’t hijack typing
     const tag = (document.activeElement?.tagName || '').toLowerCase();
     const typing = tag === 'input' || tag === 'textarea' || document.activeElement?.isContentEditable;
     if (typing) return;
@@ -1637,7 +2099,6 @@ document.addEventListener('change', (e) => {
     document.querySelectorAll('.reading-mode-item').forEach(l => l.classList.remove('active'));
     e.target.closest('.reading-mode-item').classList.add('active');
 
-    // auto-disable correction mode when leaving comparative view
     if (!isComparativeView() && correctionMode?.enabled) correctionMode.setEnabled(false);
 
     rerenderAll();
@@ -1662,6 +2123,7 @@ function rerenderAll() {
   displayedCount = 0;
   spanRegistry.clear();
   variantMetaById.clear();
+  noteRefElementRegistry.clear();
   document.getElementById('content').innerHTML = '';
   loadNextBatch(true);
 }
@@ -1685,7 +2147,8 @@ fetch('slot_output.json')
   .then(r => { if (!r.ok) throw new Error('Datei nicht gefunden'); return r.json(); })
   .then(data => {
     metaData = data.meta || {};
-    allData = data.content || [];
+    allData = (data.content || []).filter(item => !isVisuallyEmptyParagraph(item));
+    buildNoteLinkRegistry();
     document.getElementById('content').innerHTML = '';
     buildSectionTOC();
     buildTOC();
