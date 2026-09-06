@@ -38,7 +38,7 @@ const noteEntryToRefRegistry = new Map();    // noteEntryId -> noteRefId
 const noteRefElementRegistry = new Map();    // noteId -> apparatus-note DOM element
 
 // ---------------------------------------------------------------------------
-// Formatting helpers (NEW)
+// Formatting helpers
 
 function runClass(style) {
   if (style === 'bold') return 'fmt-bold';
@@ -456,6 +456,10 @@ function getSpanFormatRuns(item, spanText, edition, cursorObj) {
     }
   });
   return overlap;
+}
+
+function isParagraphMergeMarker(span) {
+  return span?.type === 'paragraph_merge_marker' || span?.marker_kind === 'paragraph_merge';
 }
 
 // ---------------------------------------------------------------------------
@@ -899,6 +903,25 @@ function renderSpans(merged, paraNum, paraBaseEd, item) {
   };
 
   merged.forEach((span, idx) => {
+    if (isParagraphMergeMarker(span)) {
+      if (!isComparativeView()) return;
+
+      const el = document.createElement('span');
+      el.className = 'paragraph-merge-inline';
+
+      const eds = (span.editions || []).slice().sort((a, b) => (editionOrder[a] ?? 99) - (editionOrder[b] ?? 99));
+
+      // choose latest changed edition for color (1826 in your case)
+      const colorEd = eds.length ? eds[eds.length - 1] : (span.source || BASE_EDITION);
+      const color = editionColors[colorEd] || '#6c757d';
+
+      el.style.setProperty('--merge-marker-color', color);
+      el.title = `Absatzzusammenführung (${eds.join(', ') || colorEd})`;
+
+      frag.appendChild(el);
+      return;
+    }
+
     const txt = editionText(span, currentEdition);
     if (txt === null) return;
 
@@ -1407,13 +1430,21 @@ function renderParagraph(item, idx) {
     const plain = item?.data?.edition_text?.[currentEdition]
       ?? reconstructParagraphText(item.data.unified_text || [], currentEdition);
 
-    const el = document.createElement('span');
-    el.className = 'word plain-edition';
+    const chunks = String(plain || '').split(/\n{2,}/);
 
     const runs = item?.data?.format_runs?.[currentEdition] || [];
-    appendTextWithRuns(el, plain, runs);
 
-    textDiv.appendChild(el);
+    chunks.forEach((chunk, i) => {
+      const el = document.createElement('span');
+      el.className = 'word plain-edition';
+      appendTextWithRuns(el, chunk, runs); // acceptable fallback even if runs not remapped per chunk
+      textDiv.appendChild(el);
+
+      if (i < chunks.length - 1) {
+        textDiv.appendChild(document.createElement('br'));
+        textDiv.appendChild(document.createElement('br'));
+      }
+    });
 
     // note links
     injectNoteRefLinks(textDiv, item);

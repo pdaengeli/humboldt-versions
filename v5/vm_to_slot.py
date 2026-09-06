@@ -49,6 +49,11 @@ def normalize_literal(raw: str) -> str:
 
 ANCHOR_CHAR = "⚓"
 SECTION_CHAR = "∬"
+PARAGRAPH_MERGE_MARKER = "ᔑparagraph-mergedᔑ"
+EXPORT_WORKAROUND_RE = re.compile(r"^EXPORTWORKAROUND:(1808|1826|1849)")
+WORKAROUND_PLUS_MERGE_AT_START_RE = re.compile(
+    r"^EXPORTWORKAROUND:(1808|1826|1849)" + re.escape(PARAGRAPH_MERGE_MARKER)
+)
 
 REF_MARKER_PATTERN = re.compile(r"※\s*REF\s+id=([^\s※]+)\s*※")
 NOTE_MARKER_PATTERN = re.compile(r"†\s*NOTE\s+([^\s†]+)(?:\s+LEMMA\s+([^†]*?))?\s*†")
@@ -325,12 +330,15 @@ def trim_space_before_punct_spans(spans: List[Dict]) -> List[Dict]:
             spans[i]["text"] = spans[i]["text"].lstrip()
     return spans
 
-
 def add_word_boundaries(spans: List[Dict]) -> List[Dict]:
     def wordy(text: str) -> bool:
         return bool(text) and text[0].isalnum()
     for i in range(len(spans) - 1):
         a, b = spans[i], spans[i + 1]
+
+        if a.get("type") == "paragraph_merge_marker" or b.get("type") == "paragraph_merge_marker":
+            continue
+
         if not a["text"].endswith(" ") and not b["text"].startswith(" "):
             if wordy(a["text"]) and wordy(b["text"]):
                 a["text"] += " "
@@ -575,24 +583,30 @@ def split_replaced_tokenwise(spans: List[Dict]) -> List[Dict]:
         out.extend(new_spans if new_spans else [s])
     return out
 
-
 def reconstruct_for_edition(segments: List[Dict], edition: str) -> str:
     parts = []
     for s in segments:
-        if edition in s["editions"]:
-            if s["type"].startswith("added_in_"):
+        if edition not in s.get("editions", []):
+            continue
+
+        # paragraph merge marker: render as paragraph break in plain edition text
+        if s.get("type") == "paragraph_merge_marker" or s.get("marker_kind") == "paragraph_merge":
+            parts.append("\n\n")
+            continue
+
+        if s["type"].startswith("added_in_"):
+            parts.append(s["text"])
+        elif s["type"] == "replaced":
+            if edition == BASE_EDITION:
                 parts.append(s["text"])
-            elif s["type"] == "replaced":
-                if edition == BASE_EDITION:
-                    parts.append(s["text"])
-                else:
-                    ch = next((c for c in s.get("changes", []) if c["edition"] == edition), None)
-                    if ch:
-                        parts.append(ch.get("text", s["text"]))
-                    else:
-                        parts.append(s["text"])
             else:
-                parts.append(s["text"])
+                ch = next((c for c in s.get("changes", []) if c["edition"] == edition), None)
+                if ch:
+                    parts.append(ch.get("text", s["text"]))
+                else:
+                    parts.append(s["text"])
+        else:
+            parts.append(s["text"])
     return "".join(parts)
 
 
@@ -768,6 +782,23 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
                 "styles": r["styles"]
             })
 
+    def emit_merge_marker_span(marker_eds: List[str]):
+        if not marker_eds:
+            return
+        marker_eds = sorted(set(marker_eds), key=lambda e: EDITIONS.index(e))
+        first = earliest(marker_eds)
+        marker_span = {
+            "text": "",
+            "type": "paragraph_merge_marker",
+            "variant_type": None,
+            "editions": marker_eds,
+            "source": first,
+            "changes": [],
+            "marker_kind": "paragraph_merge"
+        }
+        annotate_span(marker_span)
+        segments.append(marker_span)
+
     def flush_literal():
         if current_literal:
             raw = "".join(current_literal)
@@ -786,14 +817,54 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
                 push_to_all_editions(s, [])
             current_literal.clear()
 
+#    def append_literal_with_merge_markers(raw_text: str, ed_context: str = None):
+#        """
+#        Append literal text, but split out PARAGRAPH_MERGE_MARKER as inline control spans.
+#        Marker is removed from analyzed text and preserved as positional span.
+#        """
+#        if not raw_text:
+#            return
+#
+#        parts = raw_text.split(PARAGRAPH_MERGE_MARKER)
+#        marker_eds = [ed_context] if ed_context else EDITIONS[:]
+#
+#        for i, part in enumerate(parts):
+#            if part:
+#                current_literal.append(part)
+#
+#            # marker existed between parts
+#            if i < len(parts) - 1:
+#                flush_literal()
+#                first = earliest(marker_eds)
+#
+#                marker_span = {
+#                    "text": "",  # no visible text, purely positional marker
+#                    "type": "paragraph_merge_marker",
+#                    "variant_type": None,
+#                    "editions": marker_eds[:],
+#                    "source": first,
+#                    "changes": [],
+#                    "marker_kind": "paragraph_merge"
+#                }
+#                annotate_span(marker_span)
+#                segments.append(marker_span)
+
+    def append_literal_with_merge_markers(raw_text: str, ed_context: str = None):
+        if not raw_text:
+            return
+        current_literal.append(raw_text)
+
     if l_elem.text:
         txt, c = clean_analysis_text(l_elem.text)
         paragraph_anchor_count += c
-        current_literal.append(txt)
+        append_literal_with_merge_markers(txt)
 
     for child in l_elem:
         if child.tag == f"{{{NS['tei']}}}app":
             flush_literal()
+
+            app_merge_marker_editions = []
+            app_merge_marker_at_start = False
 
             texts = {e: "" for e in EDITIONS}
             rdg_runs = {e: [] for e in EDITIONS}
@@ -802,8 +873,24 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
                 wit = rdg.get("wit", "").strip().lstrip("#")
                 for ed in EDITIONS:
                     if wit == ed or wit.endswith(f"-{ed}") or wit.endswith(ed):
+
                         txt_raw, runs = extract_reading_text_and_runs(rdg)
+                        raw0 = txt_raw or ""
+
+                        # detect deterministic workaround+merge marker at rdg start
+                        if WORKAROUND_PLUS_MERGE_AT_START_RE.match(raw0):
+                            app_merge_marker_at_start = True
+                            if ed not in app_merge_marker_editions:
+                                app_merge_marker_editions.append(ed)
+
+                        # strip pseudo export workaround
+                        txt_raw = EXPORT_WORKAROUND_RE.sub("", raw0)
+
+                        # strip merge marker from rdg payload
+                        txt_raw = txt_raw.replace(PARAGRAPH_MERGE_MARKER, "")
+
                         val = normalize_text(txt_raw)
+
                         texts[ed] = val
                         if val:
                             if len(txt_raw) == len(val):
@@ -811,6 +898,9 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
                             else:
                                 rdg_runs[ed] = []
                         break
+
+            if app_merge_marker_at_start and app_merge_marker_editions:
+                emit_merge_marker_span(app_merge_marker_editions)
 
             vtype, vsub, eds = classify_variant(texts)
 
@@ -892,19 +982,19 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
             if child.tail:
                 txt, c = clean_analysis_text(child.tail)
                 paragraph_anchor_count += c
-                current_literal.append(txt)
+                append_literal_with_merge_markers(txt)
         else:
             if child.text:
                 txt, c = clean_analysis_text(child.text)
                 paragraph_anchor_count += c
-                current_literal.append(txt)
+                append_literal_with_merge_markers(txt)
             if child.tail:
                 txt, c = clean_analysis_text(child.tail)
                 paragraph_anchor_count += c
-                current_literal.append(txt)
+                append_literal_with_merge_markers(txt)
 
     flush_literal()
-    segments = [s for s in segments if s["text"]]
+    segments = [s for s in segments if s.get("text") or s.get("type") == "paragraph_merge_marker"]
     segments = coalesce_spans(segments)
     segments = cleanup_punctuation(segments)
     segments = trim_space_before_punct_spans(segments)
