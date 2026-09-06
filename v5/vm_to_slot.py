@@ -54,6 +54,10 @@ EXPORT_WORKAROUND_RE = re.compile(r"^EXPORTWORKAROUND:(1808|1826|1849)")
 WORKAROUND_PLUS_MERGE_AT_START_RE = re.compile(
     r"^EXPORTWORKAROUND:(1808|1826|1849)" + re.escape(PARAGRAPH_MERGE_MARKER)
 )
+PARAGRAPH_SPLIT_MARKER = "¶paragraph-split¶"
+WORKAROUND_PLUS_SPLIT_AT_START_RE = re.compile(
+    r"^EXPORTWORKAROUND:(1808|1826|1849)" + re.escape(PARAGRAPH_SPLIT_MARKER)
+)
 
 REF_MARKER_PATTERN = re.compile(r"※\s*REF\s+id=([^\s※]+)\s*※")
 NOTE_MARKER_PATTERN = re.compile(r"†\s*NOTE\s+([^\s†]+)(?:\s+LEMMA\s+([^†]*?))?\s*†")
@@ -301,6 +305,9 @@ def coalesce_spans(spans: List[Dict]) -> List[Dict]:
     out = [spans[0]]
     for s in spans[1:]:
         last = out[-1]
+        if s.get("marker_kind") in ("paragraph_merge", "paragraph_split") or last.get("marker_kind") in ("paragraph_merge", "paragraph_split"):
+            out.append(s)
+            continue
         if (
             s["type"] == last["type"]
             and s.get("variant_type") == last.get("variant_type")
@@ -336,7 +343,7 @@ def add_word_boundaries(spans: List[Dict]) -> List[Dict]:
     for i in range(len(spans) - 1):
         a, b = spans[i], spans[i + 1]
 
-        if a.get("type") == "paragraph_merge_marker" or b.get("type") == "paragraph_merge_marker":
+        if a.get("marker_kind") in ("paragraph_merge", "paragraph_split") or b.get("marker_kind") in ("paragraph_merge", "paragraph_split"):
             continue
 
         if not a["text"].endswith(" ") and not b["text"].startswith(" "):
@@ -782,22 +789,39 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
                 "styles": r["styles"]
             })
 
-    def emit_merge_marker_span(marker_eds: List[str]):
+    def emit_structure_marker_span(marker_eds: List[str], marker_kind: str):
         if not marker_eds:
             return
         marker_eds = sorted(set(marker_eds), key=lambda e: EDITIONS.index(e))
         first = earliest(marker_eds)
         marker_span = {
             "text": "",
-            "type": "paragraph_merge_marker",
+            "type": f"{marker_kind}_marker",   # paragraph_merge_marker | paragraph_split_marker
             "variant_type": None,
             "editions": marker_eds,
             "source": first,
             "changes": [],
-            "marker_kind": "paragraph_merge"
+            "marker_kind": marker_kind          # paragraph_merge | paragraph_split
         }
         annotate_span(marker_span)
         segments.append(marker_span)
+
+#    def emit_merge_marker_span(marker_eds: List[str]):
+#        if not marker_eds:
+#            return
+#        marker_eds = sorted(set(marker_eds), key=lambda e: EDITIONS.index(e))
+#        first = earliest(marker_eds)
+#        marker_span = {
+#            "text": "",
+#            "type": "paragraph_merge_marker",
+#            "variant_type": None,
+#            "editions": marker_eds,
+#            "source": first,
+#            "changes": [],
+#            "marker_kind": "paragraph_merge"
+#        }
+#        annotate_span(marker_span)
+#        segments.append(marker_span)
 
     def flush_literal():
         if current_literal:
@@ -849,10 +873,41 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
 #                annotate_span(marker_span)
 #                segments.append(marker_span)
 
+#    def append_literal_with_merge_markers(raw_text: str, ed_context: str = None):
+#        if not raw_text:
+#            return
+#        current_literal.append(raw_text)
+
+    pending_marker_editions: List[str] = []
+
     def append_literal_with_merge_markers(raw_text: str, ed_context: str = None):
         if not raw_text:
             return
-        current_literal.append(raw_text)
+
+        marker_eds = [ed_context] if ed_context else (pending_marker_editions[:] if pending_marker_editions else EDITIONS[:])
+
+        i = 0
+        while i < len(raw_text):
+            j_merge = raw_text.find(PARAGRAPH_MERGE_MARKER, i)
+            j_split = raw_text.find(PARAGRAPH_SPLIT_MARKER, i)
+
+            candidates = [x for x in [j_merge, j_split] if x != -1]
+            if not candidates:
+                current_literal.append(raw_text[i:])
+                break
+
+            j = min(candidates)
+            if j > i:
+                current_literal.append(raw_text[i:j])
+
+            flush_literal()
+
+            if j == j_merge:
+                emit_structure_marker_span(marker_eds, "paragraph_merge")
+                i = j + len(PARAGRAPH_MERGE_MARKER)
+            else:
+                emit_structure_marker_span(marker_eds, "paragraph_split")
+                i = j + len(PARAGRAPH_SPLIT_MARKER)
 
     if l_elem.text:
         txt, c = clean_analysis_text(l_elem.text)
@@ -865,6 +920,8 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
 
             app_merge_marker_editions = []
             app_merge_marker_at_start = False
+            app_split_marker_editions = []
+            app_split_marker_at_start = False
 
             texts = {e: "" for e in EDITIONS}
             rdg_runs = {e: [] for e in EDITIONS}
@@ -883,13 +940,25 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
                             if ed not in app_merge_marker_editions:
                                 app_merge_marker_editions.append(ed)
 
+                        if WORKAROUND_PLUS_SPLIT_AT_START_RE.match(raw0):
+                            app_split_marker_at_start = True
+                            if ed not in app_split_marker_editions:
+                                app_split_marker_editions.append(ed)
+
                         # strip pseudo export workaround
                         txt_raw = EXPORT_WORKAROUND_RE.sub("", raw0)
 
-                        # strip merge marker from rdg payload
+                        had_workaround_prefix = bool(EXPORT_WORKAROUND_RE.match(raw0))
+
+                        # strip structure markers from rdg payload
                         txt_raw = txt_raw.replace(PARAGRAPH_MERGE_MARKER, "")
+                        txt_raw = txt_raw.replace(PARAGRAPH_SPLIT_MARKER, "")
 
                         val = normalize_text(txt_raw)
+
+                        if had_workaround_prefix and not val.strip():
+                            if ed not in app_merge_marker_editions:
+                                app_merge_marker_editions.append(ed)
 
                         texts[ed] = val
                         if val:
@@ -899,8 +968,19 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
                                 rdg_runs[ed] = []
                         break
 
+            # If this app is only a workaround carrier (no real variant text),
+            # keep its editions as context for next literal marker.
+            nonempty_after_strip = [e for e, v in texts.items() if (v or "").strip()]
+            if not nonempty_after_strip:
+                pending_marker_editions = sorted(set(app_merge_marker_editions + app_split_marker_editions), key=lambda e: EDITIONS.index(e))
+            else:
+                pending_marker_editions = []
+
             if app_merge_marker_at_start and app_merge_marker_editions:
-                emit_merge_marker_span(app_merge_marker_editions)
+                emit_structure_marker_span(app_merge_marker_editions, "paragraph_merge")
+
+            if app_split_marker_at_start and app_split_marker_editions:
+                emit_structure_marker_span(app_split_marker_editions, "paragraph_split")
 
             vtype, vsub, eds = classify_variant(texts)
 
@@ -994,7 +1074,10 @@ def build_segments_from_l(l_elem) -> Tuple[List[Dict], Dict[str, List[Dict]], in
                 append_literal_with_merge_markers(txt)
 
     flush_literal()
-    segments = [s for s in segments if s.get("text") or s.get("type") == "paragraph_merge_marker"]
+    segments = [
+        s for s in segments
+        if s.get("text") or s.get("marker_kind") in ("paragraph_merge", "paragraph_split")
+    ]    
     segments = coalesce_spans(segments)
     segments = cleanup_punctuation(segments)
     segments = trim_space_before_punct_spans(segments)

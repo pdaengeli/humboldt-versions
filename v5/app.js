@@ -458,9 +458,17 @@ function getSpanFormatRuns(item, spanText, edition, cursorObj) {
   return overlap;
 }
 
-function isParagraphMergeMarker(span) {
-  return span?.type === 'paragraph_merge_marker' || span?.marker_kind === 'paragraph_merge';
+function getStructureMarkerKind(span) {
+  const k = span?.marker_kind;
+  if (k === 'paragraph_merge' || k === 'paragraph_split') return k;
+
+  // fallback for type-only payloads
+  if (span?.type === 'paragraph_merge_marker') return 'paragraph_merge';
+  if (span?.type === 'paragraph_split_marker') return 'paragraph_split';
+
+  return null;
 }
+
 
 // ---------------------------------------------------------------------------
 // Formatting diff helpers (NEW)
@@ -903,20 +911,29 @@ function renderSpans(merged, paraNum, paraBaseEd, item) {
   };
 
   merged.forEach((span, idx) => {
-    if (isParagraphMergeMarker(span)) {
+    const markerKind = getStructureMarkerKind(span);
+    if (markerKind) {
       if (!isComparativeView()) return;
 
       const el = document.createElement('span');
-      el.className = 'paragraph-merge-inline';
+      el.className = markerKind === 'paragraph_split'
+        ? 'paragraph-split-inline'
+        : 'paragraph-merge-inline';
 
-      const eds = (span.editions || []).slice().sort((a, b) => (editionOrder[a] ?? 99) - (editionOrder[b] ?? 99));
+      const eds = (span.editions || [])
+        .slice()
+        .sort((a, b) => (editionOrder[a] ?? 99) - (editionOrder[b] ?? 99));
 
-      // choose latest changed edition for color (1826 in your case)
+      // Use latest changed edition for color
       const colorEd = eds.length ? eds[eds.length - 1] : (span.source || BASE_EDITION);
       const color = editionColors[colorEd] || '#6c757d';
-
       el.style.setProperty('--merge-marker-color', color);
-      el.title = `Absatzzusammenführung (${eds.join(', ') || colorEd})`;
+
+      if (markerKind === 'paragraph_split') {
+        el.title = `Absatztrennung (${eds.join(', ') || colorEd})`;
+      } else {
+        el.title = `Absatzzusammenführung (${eds.join(', ') || colorEd})`;
+      }
 
       frag.appendChild(el);
       return;

@@ -439,6 +439,27 @@ body { font-family: 'Crimson Text', Georgia, serif; line-height: 2; color: #2c3e
   line-height: 1;
 }
 
+.paragraph-split-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.95em;
+  height: 0.95em;
+  margin: 0 0.18em;
+  vertical-align: -0.08em;
+  position: relative;
+  color: var(--merge-marker-color, #6c757d);
+  line-height: 1;
+  font-weight: 700;
+}
+
+.paragraph-split-inline::before {
+  content: "¶"; 
+  color: var(--merge-marker-color, #6c757d);
+  font-size: 0.95em;
+  line-height: 1;
+}
+
 /* If mask is supported, switch to SVG icon and suppress glyph */
 /*@supports ((-webkit-mask: url("")) or (mask: url(""))) {
   .paragraph-merge-inline {
