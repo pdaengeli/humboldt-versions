@@ -31,6 +31,9 @@ jobs:
           shopt -s nullglob
           mkdir -p _site
 
+          # Copy facsimile viewer to the site root
+          cp facsimile-viewer.html _site/facsimile-viewer.html
+
           # Copy all versioned folders as-is
           for dir in v*/; do
             [ -d "$dir" ] || continue
